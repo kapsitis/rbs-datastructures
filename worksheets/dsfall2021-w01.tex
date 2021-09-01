@@ -31,28 +31,58 @@
 \item The sign of an integer \texttt{int} is given by the bit \texttt{-} in front of the \texttt{int}.
 \item Since one byte can have 256 different values, 10 bytes can have $2560$ different values.
 \end{enumerate}
+\end{enumerate}
 
-\item Consider the following \texttt{C++} code, compiled as a program \texttt{power} .
+\vfill
+\noindent
+The next two problems refer to the following \texttt{C++} code. When compiled, the code on the left is a program called \texttt{power}, and the code on the right is a program called \texttt{readstop}.
+\begin{multicols}{2}
 {\fontsize{9}{10}\selectfont
 \begin{verbatim}
     #include <iostream>
     using namespace std;
-    int main() 
-    {
+    int main() {
         float base;
         int exp;
         cin >> base;
         cin >> exp;
         float result = base;
-        for (int i = 1; i < exp; i++)
-        {
+        for (int i = 1; i < exp; i++) {
             result = result*base;
         }
         cout << result << "\n";
         return 0;
     }
+
 \end{verbatim}
 }
+{\fontsize{9}{10}\selectfont
+\begin{verbatim}
+    #include <iostream>
+    using namespace std;
+    int main() {
+        char x;
+        bool stop;
+        stop = false;
+        while (!stop) {
+            x = cin.peek();
+            if (x == 'x') {
+                stop = true;
+            }
+            cin >> x;
+            cout << x;
+        }
+        cout << endl;
+        return 0;
+    }
+\end{verbatim}
+}
+\end{multicols}
+
+\vfill
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item This question is about the program \texttt{power}.
 \begin{enumerate}
 \item Complete the table below for a given input to the program \texttt{power}.
 \begin{center}
@@ -63,11 +93,17 @@
 \hline
 \end{tabular}
 \end{center}
-
 \item Recall that \texttt{float} has a limited range. What is the largest number \texttt{X} for which the input \texttt{X 2} will output the square of \texttt{X}?
 \end{enumerate}
 
-\item Consider the following \texttt{C++} code, compiled as a program \texttt{stop}.
+\vfill
+\item This question is about the program \texttt{readstop}.
+\begin{enumerate}
+\item What will be output if a file with contents \texttt{dexterous} will be used as input?
+\item Modify the code so that the \texttt{while} loop exits at the occurence of two sequential characters \texttt{ax}, but not at each separately.
+\item Modify the code so that the \texttt{while} loop exits at the second occurence of \texttt{x}.
+\item Modify the line containing \texttt{if} so that the \texttt{while} loops exits either if \texttt{x} is encountered, or if the end-of-file character is encountered. Hint: use the boolean \texttt{cin.eof()}.
+\end{enumerate}
 
 
 \clearpage
