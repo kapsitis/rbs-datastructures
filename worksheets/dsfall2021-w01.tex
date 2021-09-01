@@ -2,7 +2,7 @@
 
 \usepackage{amsmath,amssymb,multicol,tikz,enumitem}
 \usepackage[margin=2cm]{geometry}
-\usetikzlibrary{calc}
+\usetikzlibrary{calc,shapes}
 
 \pagestyle{empty}
 
@@ -56,9 +56,10 @@
 \begin{enumerate}
 \item Complete the table below for a given input to the program \texttt{power}.
 \begin{center}
+\renewcommand\arraystretch{1.5}
 \begin{tabular}{|r|c|c|c|c|c|c|c|c|c|}
-\hline input & \texttt{2\ 4} & \texttt{-2\ 4} & \texttt{2\ -4} & \texttt{-2\ -4} & \texttt{2.9\ 4} & \texttt{2.9 4.9} & \texttt{2E10 4}\\
-\hline output &&&&& \\
+\hline input & \texttt{2\ 4} &  \texttt{4\ 4\ 4} & \texttt{-2\ 4} & \texttt{2\ -4} & \texttt{-2\ -4} & \texttt{2.9\ 4} & \texttt{2.9 4.9} & \texttt{2E10 4}\\
+\hline output &&&&&&&& \\
 \hline
 \end{tabular}
 \end{center}
@@ -66,7 +67,55 @@
 \item Recall that \texttt{float} has a limited range. What is the largest number \texttt{X} for which the input \texttt{X 2} will output the square of \texttt{X}?
 \end{enumerate}
 
+\item Consider the following \texttt{C++} code, compiled as a program \texttt{stop}.
+
+
+\clearpage
+
+\item This question is about \textit{flowcharts}.
+\begin{enumerate}
+\item Write a program that corresponds to the following flowchart and uses \texttt{switch}.
+\[
+\begin{tikzpicture}
+\node[circle,draw] (1) at (0,0) {start};
+\node[rectangle,draw] (2) at (3,0) {\texttt{cin >> x}};
+\node[diamond,draw] (3) at (6,0) {\texttt{x == 1}};
+\node[diamond,draw] (4b) at (6,-3) {\texttt{x == 2}};
+\node[diamond,draw] (4d) at (6,-6) {\texttt{x > 3}};
+\node[rectangle,draw] (4a) at (10,0) {\texttt{x = x*x}};
+\node[rectangle,draw] (4c) at (10,-3) {\texttt{x = x*x*x}};
+\node[rectangle,draw] (4e) at (10,-6) {\texttt{x = x+x}};
+\node[rectangle,draw] (5) at (13,-9) {\texttt{x = 2*x}};
+\node[rectangle,draw] (6) at (13,-11) {\texttt{cout << x}};
+\node[circle,draw] (7) at (13,-13) {end};
+\foreach \x\y in {1/2, 2/3, 5/6, 6/7}{
+  \draw[-latex] (\x) -- (\y);
+}
+\draw[-latex] (4a) -| (5);
+\draw[-latex] (4d) |- node[left,pos=.2] {false} (5);
+\draw[-latex] (3) to node[left] {false} (4b);
+\draw[-latex] (4b) to node[left] {false} (4d);
+\draw[-latex] (3) to node[above] {true} (4a);
+\draw[-latex] (4b) to node[above] {true} (4c);
+\draw[-latex] (4d) to node[above] {true} (4e);
+\draw[-latex] (4c)--(13,-3);
+\draw[-latex] (4e)--(13,-6);
+\end{tikzpicture}
+\]
+\item Write a program for the same flowchart, but using \texttt{if} and without \texttt{switch}.
+\vfill
+\item What will the program ouput if 3 is input?
+\vfill
+\item Is it ever possible to get an odd number output?
+\vfill
+\item Find two different numbers that give the same output.
+\end{enumerate}
+
+\vfill
 \item Write a \texttt{C++} program called \texttt{dropunits} that takes as input an integer, and outputs the same integer, but without the units (that is, as a multiple of 10). For example, if the input \texttt{145} is given, then the program will print out \texttt{140}.
+
+\vfill
+
 
 \end{enumerate}
 
