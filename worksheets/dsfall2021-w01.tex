@@ -1,0 +1,76 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath,amssymb,multicol,tikz,enumitem}
+\usepackage[margin=2cm]{geometry}
+\usetikzlibrary{calc}
+
+\pagestyle{empty}
+
+\newcommand\Q{\mathbf{Q}}
+\newcommand\R{\mathbf{R}}
+\newcommand\Z{\mathbf{Z}}
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+\begin{document}
+
+\begin{center}
+\parbox{3.5cm}{\flushleft\bf Data Structures\linebreak BITL2} \hfill {\bf\Huge Worksheet 1} \hfill \parbox{3.5cm}{\flushright\bf Fall 2021} \\[8pt]
+\rm\small 2 September 2020
+\end{center}
+
+\hrule\vspace{2pt}\hrule
+
+\begin{enumerate}
+
+\item \textbf{Warm up:} Answer the following True / False questions.
+\begin{enumerate}
+\item One byte is four bits.
+\item One integer \texttt{int} is four bytes.
+\item The sign of an integer \texttt{int} is given by the bit \texttt{-} in front of the \texttt{int}.
+\item Since one byte can have 256 different values, 10 bytes can have $2560$ different values.
+\end{enumerate}
+
+\item Consider the following \texttt{C++} code, compiled as a program \texttt{power} .
+{\fontsize{9}{10}\selectfont
+\begin{verbatim}
+    #include <iostream>
+    using namespace std;
+    int main() 
+    {
+        float base;
+        int exp;
+        cin >> base;
+        cin >> exp;
+        float result = base;
+        for (int i = 1; i < exp; i++)
+        {
+            result = result*base;
+        }
+        cout << result << "\n";
+        return 0;
+    }
+\end{verbatim}
+}
+\begin{enumerate}
+\item Complete the table below for a given input to the program \texttt{power}.
+\begin{center}
+\begin{tabular}{|r|c|c|c|c|c|c|c|c|c|}
+\hline input & \texttt{2\ 4} & \texttt{-2\ 4} & \texttt{2\ -4} & \texttt{-2\ -4} & \texttt{2.9\ 4} & \texttt{2.9 4.9} & \texttt{2E10 4}\\
+\hline output &&&&& \\
+\hline
+\end{tabular}
+\end{center}
+
+\item Recall that \texttt{float} has a limited range. What is the largest number \texttt{X} for which the input \texttt{X 2} will output the square of \texttt{X}?
+\end{enumerate}
+
+\item Write a \texttt{C++} program called \texttt{dropunits} that takes as input an integer, and outputs the same integer, but without the units (that is, as a multiple of 10). For example, if the input \texttt{145} is given, then the program will print out \texttt{140}.
+
+\end{enumerate}
+
+%\end{enumerate}
+
+
+\end{document}
