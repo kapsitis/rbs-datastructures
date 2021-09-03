@@ -34,3 +34,5 @@
 # Python Sphinx
 **/_build/*
 **/_static/*
+!**/_build/latex/*.pdf
+topics/*.pdf
