@@ -61,16 +61,16 @@ The next two problems refer to the following \texttt{C++} code. When compiled, t
     #include <iostream>
     using namespace std;
     int main() {
-        char x;
+        char next;
         bool stop;
         stop = false;
         while (!stop) {
-            x = cin.peek();
-            if (x == 'x') {
+            next = cin.peek();
+            if (next == 'x') {
                 stop = true;
             }
-            cin >> x;
-            cout << x;
+            cin >> next;
+            cout << next;
         }
         cout << endl;
         return 0;
@@ -97,12 +97,12 @@ The next two problems refer to the following \texttt{C++} code. When compiled, t
 \end{enumerate}
 
 \vfill
-\item This question is about the program \texttt{readstop}.
+\item This question is about the program \texttt{readstop}. You may assume the input has no spaces.
 \begin{enumerate}
 \item What will be output if a file with contents \texttt{dexterous} will be used as input?
-\item Modify the code so that the \texttt{while} loop exits at the occurence of two sequential characters \texttt{ax}, but not at each separately.
 \item Modify the code so that the \texttt{while} loop exits at the second occurence of \texttt{x}.
-\item Modify the line containing \texttt{if} so that the \texttt{while} loops exits either if \texttt{x} is encountered, or if the end-of-file character is encountered. Hint: use the boolean \texttt{cin.eof()}.
+\item Modify the code so that the \texttt{while} loops exits either if \texttt{x} is encountered, or if the end-of-file character is encountered. Hint: use the boolean \texttt{cin.eof()}.
+\item \textbf{Bonus:} Modify the code so that the \texttt{while} loop exits at the occurence of two sequential characters \texttt{ax}, but not at each separately.
 \end{enumerate}
 
 
