@@ -1,0 +1,3 @@
+2
+H Andrejs 100
+M Cintija 120
