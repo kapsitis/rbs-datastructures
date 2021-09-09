@@ -75,9 +75,8 @@ The next two problems refer to the following uncompiled \texttt{C++} files.
 \texttt{struct Bank \{}\linebreak
 \indd\texttt{string name;} \linebreak
 \indd\texttt{int employeeNum;} \linebreak
-\indd\texttt{Bank();} \linebreak
+\indd\texttt{Bank() \{ employeeNum = 0; \};} \linebreak
 \texttt{\};}\linebreak
-\texttt{Bank::Bank() \{employeeNum = 0;\}}\linebreak
 %	bool isOpen;
 %	int employeeNum;
 %	void hired(int x);
@@ -123,6 +122,7 @@ What will be the output? How can you change this line 7 so that the output is \t
 
 \item This question is about \texttt{database.cpp} and \texttt{header.h}.
 \begin{enumerate}
+\item Which (nonempty) line in \texttt{header.h} is unnecessary? That is, removing which line will produce the same program?
 \item For each the following options to place in the line \texttt{...} of \texttt{database.cpp}, decide wether or not an error will be produced when the file is compiled. If no error is produced, what will be the ouput when the resulting program is executed?
 \begin{enumerate}
 \item \texttt{cout << Trusty.employeeNum << endl;}
