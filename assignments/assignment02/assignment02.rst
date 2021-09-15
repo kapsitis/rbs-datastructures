@@ -28,36 +28,40 @@ Septeber 10, 2021 by checking it into GitHub repository, directory ``assignment-
   
     struct Node { int info; Node* next; }; 
   
-  There is a linked list containing at least :math:`4` nodes. 
-  We should implement a function ``void checkAndDeleteThirdNode(Node*& arg) { ... }`` satisfying the following requirements:
+  A linked list contains at least :math:`4` nodes. 
+  Implement a function ``void checkAndDeleteThirdNode(Node*& arg) { ... }`` to satisfy these requirements:
   
-    * The parameter ``arg`` initially points to the very first node in the list.
+    * The parameter ``arg`` of the function initially points to the very first node in the list.
     * Set the parameter ``arg`` of this function to point to the third node. 
-    * The function should check, if the fourth node equals :math:`17` as its ``info`` field.
-      If it does, remove the fourth node from the list.
+    * Check, if ``info`` field of the 4th node equals :math:`17`. 
+      If it does, remove the 4th node from the list.
 
   What is a possible body of this function?  (Select one correct answer and briefly explain your choice.)
   
   .. code-block:: text
-
-     // Answer (A) 
-     arg = arg -> next -> next -> next; 
-	 if (arg -> next -> info == 17) { arg -> next = arg -> next -> next; }
 	 
-	 // Answer (B) 
-     arg = arg -> next -> next -> next -> next; 
-	 if (arg -> info == 17) { arg -> next = arg -> next -> next; }
+    // Answer (A) 
+    arg = arg -> next -> next -> next -> next; 
+    if (arg -> info == 17) { arg -> next = arg -> next -> next; }
 	 
-	 // Answer (C) 
-     arg = arg -> next -> next -> next; 
-	 if (arg -> info == 17) { arg -> next = arg; }
+  .. code-block:: text
 
-	 // Answer (D) 
-     arg = arg -> next -> next -> next -> next; 
-	 if (arg -> info == 17){ arg -> next = arg -> next -> next; }
-    
-  **Explanation:** ________________________________________________
-  
+    // Answer (B) 
+    arg = arg -> next -> next -> next; 
+    if (arg -> info == 17) { arg -> next = arg; }
+
+  .. code-block:: text
+
+    // Answer (C) 
+    arg = arg -> next -> next -> next -> next; 
+    if (arg -> info == 17){ arg -> next = arg -> next -> next; }
+
+  .. code-block:: text
+
+    // Answer (D) 
+    arg = arg -> next -> next;
+    if (arg -> next -> info == 17) { arg -> next = arg -> next -> next; }
+
   
 
 
@@ -80,42 +84,37 @@ Septeber 10, 2021 by checking it into GitHub repository, directory ``assignment-
           this->energyPoints = energyPoints;
           cout << "Creating H(" << name << ")" << endl;
         }
-        ~Human() {
-          cout << "Freeing H(" << name << ")" << endl;
-        }
+        ~Human() { cout << "Freeing H(" << name << ")" << endl; }
         string toString() {
           return "H " + name +  " " +  to_string(energyPoints);
         }
-        void adjustEnergy() {
-          energyPoints += 10;
-        }
-      };
+        void adjustEnergy() { energyPoints += 10; }
+    };
 
-      class Manager: public Human {
-        public:
-          Manager(string name, int energyPoints) : Human(name, energyPoints) {
+    class Manager: public Human {
+      public:
+        Manager(string name, int energyPoints) : Human(name, energyPoints) {
           cout << "Creating M(" << name << ")" << endl;
         }
-        ~Manager() {
-          cout << "Freeing M(" << name << ")" << endl;
-        }
-        void adjustEnergy() {
-          cout << " ***********************" << endl;
-          energyPoints *= 2;
-        }
+        ~Manager() { cout << "Freeing M(" << name << ")" << endl; }
+        void adjustEnergy() { energyPoints *= 2; }
     }; 
 	
   Write a ``main()`` method (and, if necessary, modify the above code) 
-  so as to read an input with ``N`` humans or managers (with their names
-  and current energy levels). Then call ``adjustEnergy()`` for them all 
-  and output the result of the method ``toString()`` to display their
-  current energy levels. 
-  Number ``N`` is provided on the very first line. E.g., if ``N=2`` we
-  can have this Sample input/output:
+  that reads standard input of ``N`` humans or managers with their names
+  and energy levels. 
+  
+    * Create an array of ``Human*`` pointers pointing to
+      ``Human`` or ``Manager`` objects. 
+    * Call ``adjustEnergy()`` on every pointer in this array. 
+    * After that output the (updated) energy levels for each pointer
+      (and free the ``Human`` object by calling ``delete`` on its pointer). 
+  
+  The number of humans ``N`` is provided on the first line of input:
   
   **Sample Input:** 
   
-  .. code-block text
+  .. code-block:: text
   
     2
     H Andrejs 100
@@ -124,7 +123,13 @@ Septeber 10, 2021 by checking it into GitHub repository, directory ``assignment-
 
   **Sample Output:**  
 
-  .. code-block text
+  .. code-block:: text
   
+    Creating H(Andrejs)
+    Creating H(Cintija)
+    Creating M(Cintija)
     H Andrejs 110
+    Freeing H(Andrejs)
     M Cintija 202
+    Freeing M(Cintija)
+    Freeing H(Cintija)

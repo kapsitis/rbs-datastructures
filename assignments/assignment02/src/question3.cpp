@@ -1,19 +1,19 @@
 #include <iostream>
 #include <string>
-#include <vector>
 
 using namespace std;
 class Human { 
     protected: 
     string name;
     int energyPoints; 
-    public:    
+    public:
+    Human() {}
     Human(string name, int energyPoints) {
         this->name = name;
         this->energyPoints = energyPoints;
         cout << "Creating H(" << name << ")" << endl;
     }
-    ~Human() {
+    virtual ~Human() {
         cout << "Freeing H(" << name << ")" << endl;
     }
     Human(const Human& h) {
@@ -37,8 +37,10 @@ class Manager: public Human {
     ~Manager() {
         cout << "Freeing M(" << name << ")" << endl;
     }
-    virtual void adjustEnergy() {
-        cout << " ***********************" << endl;
+    string toString() {
+        return "M " + name +  " " +  to_string(energyPoints);
+    }
+    void adjustEnergy() {
         energyPoints *= 2;
     }
 }; 
@@ -46,25 +48,28 @@ class Manager: public Human {
 int main() {
     int n; 
     cin >> n;
-    Human arr[10];
+    Human** humans = new Human*[n];
 
+    for (int i = 0; i < n; i++) {        
+        char type; 
+        string name;
+        int energy;
+        cin >> type >> name >> energy;
+        if (type == 'H') {
+            humans[i] = new Human(name,energy);
+        }
+        else {
+            humans[i] = new Manager(name,energy);
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        humans[i] -> adjustEnergy();
+    }
+    for (int i = 0; i < n; i++) {
+        cout << humans[i] -> toString() << endl;
+        delete humans[i];
+    }
 
-    // vector<Human> humans;
-    // for (int i = 0; i < n; i++) {
-    //     char type; 
-    //     string name;
-    //     int energy;
-    //     cin >> type >> name >> energy;
-    //     if (type == 'H') {
-    //         humans.push_back(Human(name, energy));            
-    //     }
-    //     else {
-    //         humans.push_back(Manager(name, energy));
-    //     }        
-    // }
-    // for (vector<Human>::iterator it = humans.begin(); it != humans.end(); ++it) {
-    //     (*it).adjustEnergy();
-    //     cout << (*it).toString() << endl;
-    // }
+    delete[] humans;
 }
 

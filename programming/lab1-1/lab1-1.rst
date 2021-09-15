@@ -108,14 +108,14 @@ We repeat the following step :math:`n` times:
 
   .. code-block:: text
     
-    3 8 5
-    5 10 12
+    5 8 3 
+    5 10 12 
 
 **Explanation:** 
     
-  * During the first step we remove :math:`A[0]=3` and :math:`A[2]=5`. 
+  * During the first step we remove :math:`A[2]=5` and :math:`A[3]=5`. 
   * During the second step we remove :math:`A[1]=10` and :math:`A[4]=8`. 
-  * During the third step we remove :math:`A[3]=5` and :math:`A[5]=12`.
+  * During the third step we remove :math:`A[0]=3` and :math:`A[5]=12`.
 	
 
 
@@ -131,6 +131,10 @@ and ``arg[i-1]`` is **not** alphabetically before ``arg[i]``,
 then ``arg[i]`` is removed. 
 The algorithm leaves all lower-case
 letters, digits and special characters unchanged. 
+(*The deletion is reapplied while there are any not-in-order 
+capital letters next to each other --- the following letter is always removed. 
+Ultimately, all the the sequences of 
+capital letters are in strictly increasing alphabetical order.*)
 
 The algorithm should process the C-strings (arrays of type ``char*`` and 
 edit its argument in place without creating another array). The algorithm of deleting characters has
