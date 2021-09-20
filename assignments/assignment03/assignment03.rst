@@ -84,10 +84,15 @@ Septeber 17, 2021 by checking it into GitHub repository, directory ``assignment-
 	
     // Your definition of struct Pair	
 
+    void Pair_print(Pair const &arg) { 
+      // your code to print a pair as (...,...)
+    }
+
     bool Pair_cmp(Pair const &left, Pair const &right) {
       // print out the pair you are comparing: "(...,...) vs. (...,...)" 
       // do the comparison itself. Return true iff left <= right
     }
+	
 
     int main() {
       vector<Pair> vv{

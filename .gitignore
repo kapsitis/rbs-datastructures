@@ -38,3 +38,7 @@
 **/_static/*
 !**/_build/latex/*.pdf
 topics/*.pdf
+
+# Python simple
+programming/src/.idea/*
+programming/src/venv/*

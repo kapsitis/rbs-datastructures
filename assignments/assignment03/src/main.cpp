@@ -18,23 +18,6 @@ bool Pair_cmp(Pair const &left, Pair const &right) {
 }
 
 
-struct StrInt { string s; int a; };
-
-static int numOfCompareCalls = 0;
-
-// This function should return 0, if both arguments are equal
-// It should return negative number, if "left" is less than "right"
-// It should return positive number, if "left" is more than "right"
-int compare(StrInt left, StrInt right) {
-    numOfCompareCalls++; // increment the counter of calls
-    int strCompare = left.s.compare(right.s);
-    if (strCompare != 0) {
-        return strCompare;
-    }
-    else {
-        return (left.a - right.a);
-    }
-}
 
 
 int main() {
