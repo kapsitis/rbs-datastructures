@@ -11,9 +11,9 @@ def main():
         for j in range(0, 5):
             vv.append(random.randint(3, 4))
         lines.append(' '.join(list(map(lambda x: str(x), vv))))
-        with open('test1.04.txt', mode='w') as myfile:
-            myfile.write('\n'.join(lines))
-            myfile.write('\n')
+    #    with open('test1.04.txt', mode='w') as myfile:
+    #        myfile.write('\n'.join(lines))
+    #        myfile.write('\n')
 
     # Test05:
     lines = list()
@@ -22,9 +22,9 @@ def main():
         for j in range(0, 5):
             vv.append(random.randint(999999994, 1000000000))
         lines.append(' '.join(list(map(lambda x: str(x), vv))))
-        with open('test1.05.txt', mode='w') as myfile:
-            myfile.write('\n'.join(lines))
-            myfile.write('\n')
+    #    with open('test1.05.txt', mode='w') as myfile:
+    #        myfile.write('\n'.join(lines))
+    #        myfile.write('\n')
 
     # Test06:
     lines = list()
@@ -33,9 +33,9 @@ def main():
         for j in range(0, 5):
             vv.append(random.randint(-1000000000, 1000000000))
         lines.append(' '.join(list(map(lambda x: str(x), vv))))
-        with open('test1.06.txt', mode='w') as myfile:
-            myfile.write('\n'.join(lines))
-            myfile.write('\n')
+    #    with open('test1.06.txt', mode='w') as myfile:
+    #        myfile.write('\n'.join(lines))
+    #        myfile.write('\n')
 
 
 
