@@ -1,10 +1,41 @@
 import random
 
-#9
-#1 2 0 3 0 0 4 0 5
-
 def main():
 
+    # Test01...Test03 - Manual
+
+    # Test04:
+    lines = list()
+    for i in range(0, 3):
+        vv = list()
+        for j in range(0, 5):
+            vv.append(random.randint(3, 4))
+        lines.append(' '.join(list(map(lambda x: str(x), vv))))
+        with open('input1-04.txt', mode='w') as myfile:
+            myfile.write('\n'.join(lines))
+            myfile.write('\n')
+
+    # Test05:
+    lines = list()
+    for i in range(0, 3):
+        vv = list()
+        for j in range(0, 5):
+            vv.append(random.randint(999999994, 1000000000))
+        lines.append(' '.join(list(map(lambda x: str(x), vv))))
+        with open('input1-05.txt', mode='w') as myfile:
+            myfile.write('\n'.join(lines))
+            myfile.write('\n')
+
+    # Test06:
+    lines = list()
+    for i in range(0, 3):
+        vv = list()
+        for j in range(0, 5):
+            vv.append(random.randint(-1000000000, 1000000000))
+        lines.append(' '.join(list(map(lambda x: str(x), vv))))
+        with open('input1-06.txt', mode='w') as myfile:
+            myfile.write('\n'.join(lines))
+            myfile.write('\n')
 
 
 
