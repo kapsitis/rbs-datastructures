@@ -1,0 +1,8 @@
+Creating H(Andrejs)
+Creating H(Cintija)
+Creating M(Cintija)
+H Andrejs 110
+Freeing H(Andrejs)
+M Cintija 202
+Freeing M(Cintija)
+Freeing H(Cintija)
