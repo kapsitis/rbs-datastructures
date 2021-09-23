@@ -6,6 +6,7 @@
 
 \pagestyle{empty}
 
+\newcommand\N{\mathbf{N}}
 \newcommand\Q{\mathbf{Q}}
 \newcommand\R{\mathbf{R}}
 \newcommand\Z{\mathbf{Z}}
@@ -35,7 +36,93 @@
 \texttt{void func(int\& this, char that)}
 \end{center}
 \item If the body of \texttt{try \{..\}} contains a complation error, then the body of  \texttt{catch \{..\}} will be executed. 
-\item 
+\item Every function $f(n)$ is both $\Omega(1)$ and $O(e^n)$.
+\item If a function is $O(1)$, then it must be constant.
+\end{enumerate}
+
+\item The \textit{time complexity} of an algorithm is $O(f(n))$ if as $n\to\infty$, where $n$ is the size of the input, the algorithm takes at most $M|f(n)|$ time, for some $M\in \R$. You are given Algorithm 1, which is $O(n^a)$, and Algorithm 2, which is $O(n^b)$, for $a,b\in \N$.
+\begin{enumerate}
+\item Give another function $f(n) \neq n^a$, so that Algorithm 1 is $O(f(n))$.
+\item What is the complexity of the algorithm that:
+\begin{enumerate}
+\item first executes Algorithm 1, then Algorithm 2? 
+\item exeutes Algorithm 1 and Algorithm 2 in parallel?
+\end{enumerate}
+\item Suppose that Algorithm 3 is $O(2^{n+1})$ and Algorithm 4 is $O(2^{2n})$. Are either / both / none of these algorithms $O(2^n)$?
+\end{enumerate}
+
+\vfill
+
+\item Consider the pseudocode on the left, which takes as input a set of numbers $X = \{x_1,\dots,x_n\}$.
+\newcommand\ind{${}$\hspace{10pt}}
+\newcommand\yfac{1.5}
+\begin{center}
+\begin{tabular}{r l}
+1 & \textbf{for} $i=n,n-1,\dots,2$: \\
+2 & \ind \textbf{for} $j=1,2,\dots,i-1$: \\
+3 & \ind \ind $x = x_j$ \\
+4 & \ind \ind \textbf{if} $x > x_{j+1}$: \\
+5 & \ind \ind \ind $x_j = x_{j+1}$ \\
+6 & \ind \ind \ind $x_{j+1} = x$
+\end{tabular}
+\hspace{2cm}
+\begin{tikzpicture}[scale=.8,baseline=-2cm]
+\foreach \y in {0,1,2,3,4}{
+  \draw (0,-\yfac*\y)--(4,-\yfac*\y) (0,1-\yfac*\y)--(4,1-\yfac*\y);
+  \foreach \x in {0,...,4}{
+    \draw (\x,-\yfac*\y)--(\x,1-\yfac*\y);
+  }
+  \node[anchor=east] at (-.5,.5-\yfac*\y) {step $\y$:};
+}
+\foreach \x\n in {0/1, 1/3, 2/4, 3/2}{
+  \node at (\x+.5,.5) {$\n$};
+}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}
+\item How many times is line 3 called?
+\item What is an upper bound on the number of times line 5 is called?
+\item In the boxes on the right above, starting with $X$ as given in step 0, write what $X$ looks like every time the order of its elements changes.
+\item What do you think the code does to $X$?
+\end{enumerate}
+
+\clearpage
+
+\item This question is about the following uncompiled \texttt{C++} code:
+{\fontsize{9}{10}\selectfont
+\begin{verbatim}
+ 1       #include <iostream>
+ 2       #include <vector>
+ 3       #include <string>
+ 4       using namespace std;
+ 5
+ 6       class Player {
+ 7           \\ Your code here
+ 8       };
+ 9
+10       bool player_compare(Player &A, Player &B) {
+11           \\ Your code here
+12       };
+13
+14       int main() {
+15           vector<Player> gg{
+16               {"Chad", 10}, {"Brad", 15}, {"Mad", 7}, {"Dad", 20}, {"Tad", 12}
+17           };
+18           Player& currentwinner = gg[0];
+19           for (vector<Player>::iterator it = gg.begin(); it != gg.end(); ++it) {
+20               if (player_compare(*it, currentwinner)) {
+21                   currentwinner = *it;
+22               }
+23           }
+24           cout << currentwinner.name << endl;
+25       }
+\end{verbatim}
+}
+\vspace{5pt}
+\begin{enumerate}
+\item Fill in the mising spots in lines 7 and 11 to make this code print out the name of the player with the largest score.\\
+\item If line 18 is changed to ``\texttt{const Player\& currentwinner = gg[0];}'', then compilation will produce (at least) two errors. On which lines will these errors occur, and why?\\
+\item Modify the code so that instead of just the winner being printed, it prints out by how much the winner won, for example, ``\texttt{Dad wins by 5 points}''.
 \end{enumerate}
 
 \end{enumerate}
