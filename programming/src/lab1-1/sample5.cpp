@@ -48,42 +48,28 @@ string twoArrays(int k, vector<int> A, vector<int> B) {
 
 int main() {
 
-    string line; 
-    cout << "AA0\n";
+    string line1; 
+	string line2;
+    istringstream istream(line);
+	
+    if (!getline(cin, line)) {
+        break;
+    }
+	
+    int t; 
+    istream >> t; 
     
-    //while (getline(cin, line)) {
-    //    cout << line << endl;   
-    //}
-       cout << "Please enter your name: \n"; 
-    getline(cin, line); 
-    cout << "Hello, '" << line << "' welcome to CSP 31A!" << endl; 
+    if (t == 0) { break; }
+	
+    if (!getline(cin, line1) || !getline(cin,line2)) {
+        break;
+    }
 
-
-    /*
-        cout << "AA1\n";
-        istringstream istream(line);
-        int num;
-        int t; 
-        istream >> t; 
-        if (t == 0) { break; }
-        cout << "AA2\n";
-
-        if (!getline(cin, line)) {
-            break;
-        }
-        cout << "AA3\n";
-
-        vector<int> v1 = getNumbers(line);
-        if (!getline(cin, line)) {
-            break;
-        }
-        cout << "AA4\n";
-
-        vector<int> v2 = getNumbers(line);
-        string result = twoArrays(t, v1, v2); 
+    vector<int> v1 = getNumbers(line1);
+    vector<int> v2 = getNumbers(line2);
+    string result = twoArrays(t, v1, v2);
         cout << result << endl;
     }
-    */   
     return 0;
 }
 
