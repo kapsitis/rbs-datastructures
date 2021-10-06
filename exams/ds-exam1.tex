@@ -125,49 +125,27 @@ Write code that modifies this doubly linked list in the following way:
 \clearpage
 
 %%%%%%%%
-%% 03 %%
-%%%%%%%%
-\item
-% 3.A. Find the asymptotic growth for a given function.
-
-Consider the functions $f_1(n)$, $f_2(n)$, $f_3(n)$ below, mapping positive integers $n \geq 5$
-to positive real numbers $t>0$: 
-% n^3.5
-% 
-\begin{align*}
-f_1(n) & = (1 + \cos n) \sqrt{2^{7 \cdot \log_2 (n)}},\\
-f_2(n) & = 13^{\log_2 (n)},\\
-f_3(n) & = \frac{1}{n^2} \cdot {n \choose 5},\\
-f_4(n) & = f_1(n) + f_2(n) + f_3(n).
-\end{align*}
-
-For each function $f_i(n)$, $i=1,2,3,4$, find functions 
-\begin{itemize}
-\item $g_i(n)$ such that $f_i(n)$ is $O(g_i(n))$,
-\item $h_i(n)$ such that $f_i(n)$ is $\Omega(h_i(n))$, 
-\item $k_i(n)$ such that $f_i(n)$ is $\Theta(g(n))$. 
-\end{itemize}
-Give justifications for all your answers.
-
-
-%%%%%%%%
 %% 04 %%
 %%%%%%%%
-\item
+\item \label{q:q4}
 % 4.B. (C++ code) Use STL classes for lists, stacks, queues with iterators.
 
 The following C++ program declares a class {\tt Pair}. 
 Pairs are {\em lexicographically ordered}: 
-$(x_1, y_1) < (x_2, y_2)$ iff $x_1 < x_2\ \vee\ (x_1 = x_2\ \wedge\ y_1 < y_2)$. 
-
-Complete the program to input a positive integer $n$, then input $n$ pairs from the standard input, 
-push them on the stack while skipping those pairs which are not lexicographically larger
-than the current top element of the stack. Finally, output the remaining
-pairs to the standard output as separate lines in their original order.
+\[
+(x_1, y_1) < (x_2, y_2)\ \ \text{iff} x_1 < x_2\ \vee\ (x_1 = x_2\ \wedge\ y_1 < y_2).
+\]
+Complete the code below so that, when compiled and executed, in order:
+\begin{itemize}
+\item a positive integer $n$ is input,
+\item $n$ pairs from the standard input are input,
+\item the $n$ pairs are pushed on the stack, skipping pairs which are not lexicographically larger than the current top element of the stack,
+\item the remaining pairs are output to the standard output as separate lines in their original order.
+\end{itemize}
 
 Use the overloaded operators ``{\tt cout << pair}'', ``{\tt cin >> pair}'', ``{\tt p1 < p2}''
 for input, output and comparisons. The only data structure to use is STL stack. 
-If necessary, you can use several stacks.
+If necessary, you may use several stacks.
 
 \begin{Verbatim}[frame=single,numbers=left]
 #include <iostream>
@@ -208,15 +186,15 @@ int main() {
 7 12
 \end{Verbatim}
 
-
+\clearpage
 
 %%%%%%%%
 %% 05 %%
 %%%%%%%%
 \item 
 % 2.B. The order how constructors and destructors are executed.
-In your code from the previous exercise, define the default (no argument) constructor, copy constructor 
-and destructor. Describe the order in which these are called as you run {\tt main()} on this input:
+In your code from Question \ref{q:q4}, define the default (no argument) constructor, copy constructor 
+and destructor. Describe the order in which these are called when your compiled code is executed with the input below.
 
 \begin{Verbatim}[frame=single]
 2
@@ -224,6 +202,32 @@ and destructor. Describe the order in which these are called as you run {\tt mai
 1 4
 \end{Verbatim}
 
+\vspace{1cm}
+
+%%%%%%%%
+%% 03 %%
+%%%%%%%%
+\item
+% 3.A. Find the asymptotic growth for a given function.
+
+Consider the functions $f_1(n)$, $f_2(n)$, $f_3(n)$ below, mapping positive integers $n \geq 5$
+to positive real numbers $t>0$: 
+% n^3.5
+% 
+\begin{align*}
+f_1(n) & = (1 + \cos n) \sqrt{2^{7 \cdot \log_2 (n)}},\\
+f_2(n) & = 13^{\log_2 (n)},\\
+f_3(n) & = \frac{1}{n^2} \cdot {n \choose 5},\\
+f_4(n) & = f_1(n) + f_2(n) + f_3(n).
+\end{align*}
+
+For each function $f_i(n)$, $i=1,2,3,4$, find functions 
+\begin{itemize}
+\item $g_i(n)$ such that $f_i(n)$ is $O(g_i(n))$,
+\item $h_i(n)$ such that $f_i(n)$ is $\Omega(h_i(n))$, 
+\item $k_i(n)$ such that $f_i(n)$ is $\Theta(g(n))$. 
+\end{itemize}
+Give justifications for all your answers.
 
 
 \end{enumerate}
