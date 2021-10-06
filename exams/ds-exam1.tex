@@ -88,14 +88,13 @@ cout << hex << b;
 \end{Verbatim}
 
 
-\begin{itemize}
-\item Write the hexadecimal representation of variable "a", if its decimal value is $-3$.
-\item Write the binary representation of the same variable "a".
-\item Write the hexadecimal representation of variable "x" --- how to rewrite Line 2 of the 
-code snippet above to make variable "b" equal to {\tt 0xffffabcd}. 
-\end{itemize}
+\begin{enumerate}
+\item Write the hexadecimal representation of variable \texttt{a}, if its decimal value is $-3$.
+\item Write the binary representation of the same variable \texttt{a}.
+\item Write the hexadecimal representation of variable \texttt{x}. That is, rewrite line 2 of the code snippet above to make variable \texttt{b} equal to {\tt 0xffffabcd}. 
+\end{enumerate}
 
-
+\vfill
 
 %%%%%%%%
 %% 02 %%
@@ -103,10 +102,9 @@ code snippet above to make variable "b" equal to {\tt 0xffffabcd}.
 \item 
 % 1.E. Run pseudocode pointer operations, draw arrows.
 
-A doubly linked list has 3 nodes of type {\tt Node}, see Figure~\ref{fig:nodes}: 
+A doubly linked list has 3 structures of type {\tt Node} (see Figure~\ref{fig:nodes}): 
 it has {\tt prev} and {\tt next} pointers of type {\tt Node*} 
-and also a constant {\tt info} field storing constant positive integers 
-(i.e. {\tt info} field does not change over the lifetime of the given node). 
+and also a constant {\tt info} field storing constant positive integers. That is, the {\tt info} field does not change over the lifetime of the \texttt{Node}. 
 
 \begin{figure}[!htb]
 \center{\includegraphics[width=3in]{ds-exam1/nodes.png}}
@@ -117,12 +115,14 @@ Variables {\tt P, Q, R} are pointers of type {\tt Node*},
 initially {\tt P} points to the first node in this list. 
 The {\tt info} fields in this list have values $10$, $a$ and $b$. 
 
-Write a code that modifies this doubly linked list: If $a > b$ 
-it changes the pointers in the list so that the node with info $10$
-points to $b$, then $b$ points to $a$.
-If $a \leq b$ then your code should leave the list unchanged.
+Write code that modifies this doubly linked list in the following way:
+\begin{itemize}
+\item If $a > b$, the pointers in the list change so that the \texttt{Node} with \texttt{info} field value $10$ points to $b$ (that \texttt{Node} is now second), and the \texttt{Node} with \texttt{info} field $b$ points to $a$ (that \texttt{Node} is now third). 
+\item If $a \leq b$, then your code should leave the list unchanged.
+\end{itemize}
 
-
+\vfill
+\clearpage
 
 %%%%%%%%
 %% 03 %%
@@ -130,22 +130,24 @@ If $a \leq b$ then your code should leave the list unchanged.
 \item
 % 3.A. Find the asymptotic growth for a given function.
 
-Define the following functions $f_1(n)$, $f_2(n)$, $f_3(n)$ mapping positive integers $n \geq 5$
+Consider the functions $f_1(n)$, $f_2(n)$, $f_3(n)$ below, mapping positive integers $n \geq 5$
 to positive real numbers $t>0$: 
-
 % n^3.5
 % 
+\begin{align*}
+f_1(n) & = (1 + \cos n) \sqrt{2^{7 \cdot \log_2 (n)}},\\
+f_2(n) & = 13^{\log_2 (n)},\\
+f_3(n) & = \frac{1}{n^2} \cdot {n \choose 5},\\
+f_4(n) & = f_1(n) + f_2(n) + f_3(n).
+\end{align*}
 
-\[ \left\{ \begin{array}{l}
-f_1(n) = (1 + \cos n) \sqrt{2^{7 \cdot \log_2 n}},\\[1ex]
-f_2(n) = 13^{\log_2 n},\\[1ex]
-f_3(n) = \frac{1}{n^2} \cdot {n \choose 5},\\[1ex]
-f_4(n) = f_1(n) + f_2(n) + f_3(n).\\
-\end{array} \right.
-\]
-
-For each function find Big-O notation $O(g(n))$, Big-Omega notation $\Omega(g(n))$, and Big-Theta notation $\Theta(g(n))$. 
-Show algebraic and/or verbal justifications to your answers.
+For each function $f_i(n)$, $i=1,2,3,4$, find functions 
+\begin{itemize}
+\item $g_i(n)$ such that $f_i(n)$ is $O(g_i(n))$,
+\item $h_i(n)$ such that $f_i(n)$ is $\Omega(h_i(n))$, 
+\item $k_i(n)$ such that $f_i(n)$ is $\Theta(g(n))$. 
+\end{itemize}
+Give justifications for all your answers.
 
 
 %%%%%%%%
