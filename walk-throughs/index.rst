@@ -12,8 +12,7 @@ Welcome to DS-Fall2021 Walk-Throughs's documentation!
    
    walk-through-01-vscode
    walk-through-02-virtual-linux
-..   walk-through-03-catch2-testing
-..   walk-through-04-cmake-and-dlls
+   walk-through-03-catch2-testing
 ..   walk-through-05-external-libs
 ..   walk-through-06-valgrind
 ..   walk-through-07-webassembly

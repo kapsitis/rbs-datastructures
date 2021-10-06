@@ -1,4 +1,4 @@
-Walk-Through 2: Running C++ on Virtual Linux
+Walk-Through: System Tests on Virtual Linux
 =============================================
 
 Unlike the previous walk-through (preoccupied with development environment on Windows), 
@@ -92,8 +92,8 @@ Step 1: Install VirtualBox software
    to Admin-level, if asked to do so), and pick the default values to install it.
 3. Run the newlly installed application **Oracle VM VirtualBox**.
 
-..   .. image:: figs/virtualbox1.png
-..      :width: 500 px
+   .. image:: figs/virtualbox1.png
+      :width: 500 px
 
 4. Click button **New** and enter the name of your new virtual guest, for example, ``xubuntu``.
 
@@ -106,8 +106,8 @@ Step 1: Install VirtualBox software
 7. Leave the default option **Dynamically allocated**. 
 8. Confirm the location of virtual memory image.
 
-..   .. image:: figs/virtualbox7.png
-..      :width: 300 px
+   .. image:: figs/virtualbox7.png
+      :width: 300 px
 
 
 
@@ -123,8 +123,8 @@ Step 2: Create Xubuntu Guest
    select ``xubuntu`` machine and click button **Settings**. 
 3. Under **Settings** select **Storage** > **Controller IDE** > **Empty**.
 
-..   .. image:: figs/virtualbox9.png
-..      :width: 3in
+   .. image:: figs/virtualbox9.png
+      :width: 3in
 
 4. Click on the browse button (highlighted in red in the above image). Select the
    Xubuntu image that you downloaded earlier.
@@ -133,8 +133,8 @@ Step 2: Create Xubuntu Guest
 6. Wait about 5 minutes until Xubuntu image loads from the virtual CD-ROM drive.
    Click on the button **Install Xubuntu**.
    
-..   .. image:: figs/xubuntu3.png
-..      :width: 3in
+   .. image:: figs/xubuntu3.png
+      :width: 3in
 
 7. Leave the default keyboard layout **English (US)** > **English (US)**.
 8. Selecting the checkbox **Select third party software...** in the Xubuntu installer
@@ -144,8 +144,8 @@ Step 2: Create Xubuntu Guest
 11. Enter an Xubuntu Linux machine name (some short name with lower-case English letters such as 
     ``miuse``), your username (e.g. ``student``) and some password (e.g. ``Bitl2!``).
 	
-..    .. image:: figs/xubuntu7.png
-..       :width: 3in
+    .. image:: figs/xubuntu7.png
+       :width: 2.5in
 	   
     .. note:: At this point you would need to wait about 15 minutes until VirtualBox finishes installing Xubuntu guest.
 	
@@ -155,8 +155,8 @@ Step 2: Create Xubuntu Guest
     select **Add to Desktop**. This would make easier to create Linux-like terminal windows
     and run command-lines.
 	
-..    .. image:: figs/xubuntu9.png
-..       :width: 3in
+    .. image:: figs/xubuntu9.png
+       :width: 2.5in
 
 
 
@@ -179,22 +179,22 @@ Step 3: Install Basic Software on Xubuntu
       sudo apt-get update
       sudo apt-get upgrade
 
-3. Install Java JDK (prerequisite for Jenkins). First search all the ``openjdk'' related installations, 
-   then install the package ``openjdk-8-jdk``. Finally, check if your Java has the right version 1.8.
-   
-   .. code-block:: bash
-   
-      sudo apt-get search openjdk
-      sudo apt-get install openjdk-8-jdk
-      java -version
+.. 3. Install Java JDK (prerequisite for Jenkins). First search all the ``openjdk'' related installations, 
+..   then install the package ``openjdk-8-jdk``. Finally, check if your Java has the right version 1.8.
+..   
+..   .. code-block:: bash
+..   
+..      sudo apt-get search openjdk
+..      sudo apt-get install openjdk-8-jdk
+..      java -version
 
-4. Install C++ compiler (named ``g++``) and also ``make`` utility:
+3. Install C++ compiler (named ``g++``) and also ``make`` utility:
 
    .. code-block:: bash
    
       sudo apt-get install build-essential
 
-5. Install Git client:
+4. Install Git client:
 
    .. code-block:: bash
    

@@ -1,0 +1,230 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,multicol,tikz,enumitem}
+\usepackage{hyperref}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyvrb}
+\usetikzlibrary{calc}
+
+\newcommand\N{\mathbf{N}}
+\newcommand\Q{\mathbf{Q}}
+\newcommand\R{\mathbf{R}}
+\newcommand\Z{\mathbf{Z}}
+
+\newcommand\rem{\textup{rem}}
+
+% Comment out one or the other
+
+\newcommand\answer[1]{}
+\newcommand\ans[1]{}
+\newcommand\anscommand[1]{}
+%\newcommand\answer[1]{${}$\\[5pt]{\color{blue}{#1}}\hfill{\color{blue}$\qed$}\\[-5pt]} 
+%\newcommand\ans[1]{{\color{blue}{#1}}}
+%\newcommand\anscommand[1]{#1}
+
+
+\begin{document}
+
+\begin{center}
+{\bf\Huge Exam 1} \\[5pt]
+Data Structures \\
+Thursday, October 7, 2021\\[5pt]
+\textit{*You must justify all your answers to recieve full credit*}
+\end{center}
+
+\hrule
+\vspace{2pt}
+\hrule
+\vspace{12pt}
+
+% 1. C++ apart from Object Orientation
+% 1.A. Restore/drop parentheses, use syntax trees.
+% 1.B. Translate between flowcharts and C++ control structures. 
+% 1.C. Use bit arithmetic.
+% 1.D. Side-effects in operators, arrays, short-circuit Boolean evaluation.
+% 1.E. Run pseudocode pointer operations, draw arrows.
+% 1.F. (C++ code) Perform bit manipulation.
+% 1.G. (C++ code) Manipulate arrays, char arrays (C-strings), 2D arrays.
+% 1.H. (C++ code) Input data using "iostream", "sstream", "getLine", "get", "peek"
+
+% 2. C++ with Object Orientation
+% 2.A. Parameter passing to functions, "const" modifier, default parameters.
+% 2.B. The order how constructors and destructors are executed.
+% 2.C. (C++ code) Implement inheritance with virtual/non-virtual functions.
+% 2.D. (C++ code) Custom comparison function to generic sorting, max or similar algorithm.
+
+% 3. Big-O, Omega, Theta Notation
+% 3.A. Find the asymptotic growth for a given function.
+% 3.B. Compare classes of function growth or order them.
+% 3.C. Express time complexity for recursively defined functions. 
+% 3.D. Express time complexity for a code snippet ``from the inside out''. 
+% 3.E. Find the amortized time complexity for an operation on a given data structure.
+% 3.F. Count the number of calls for comparisons or similar functions.
+
+% 4. Lists, stacks, queues.} 
+% 4.A. Use Abstract Data Type (ADT) to write algorithms.
+% 4.B. (C++ code) Use STL classes for lists, stacks, queues with iterators.
+
+
+% "1C" "1E" "2B" "3A" "4B" 
+
+
+\begin{enumerate}
+
+%%%%%%%%
+%% 01 %%
+%%%%%%%%
+\item 
+% 1.C. Use bit arithmetic.
+
+Consider a code fragment using the bitwise XOR.
+
+\begin{Verbatim}[frame=single,numbers=left]
+int a = -3;
+int x = ???  // replace this ??? with a number
+int b = a^x;
+cout << hex << b;
+// This outputs the hexadecimal representation of "b": "ffffabcd".
+\end{Verbatim}
+
+
+\begin{itemize}
+\item Write the hexadecimal representation of variable "a", if its decimal value is $-3$.
+\item Write the binary representation of the same variable "a".
+\item Write the hexadecimal representation of variable "x" --- how to rewrite Line 2 of the 
+code snippet above to make variable "b" equal to {\tt 0xffffabcd}. 
+\end{itemize}
+
+
+
+%%%%%%%%
+%% 02 %%
+%%%%%%%%
+\item 
+% 1.E. Run pseudocode pointer operations, draw arrows.
+
+A doubly linked list has 3 nodes of type {\tt Node}, see Figure~\ref{fig:nodes}: 
+it has {\tt prev} and {\tt next} pointers of type {\tt Node*} 
+and also a constant {\tt info} field storing constant positive integers 
+(i.e. {\tt info} field does not change over the lifetime of the given node). 
+
+\begin{figure}[!htb]
+\center{\includegraphics[width=3in]{ds-exam1/nodes.png}}
+\caption{\label{fig:nodes} Doubly linked list}
+\end{figure}
+
+Variables {\tt P, Q, R} are pointers of type {\tt Node*}, 
+initially {\tt P} points to the first node in this list. 
+The {\tt info} fields in this list have values $10$, $a$ and $b$. 
+
+Write a code that modifies this doubly linked list: If $a > b$ 
+it changes the pointers in the list so that the node with info $10$
+points to $b$, then $b$ points to $a$.
+If $a \leq b$ then your code should leave the list unchanged.
+
+
+
+%%%%%%%%
+%% 03 %%
+%%%%%%%%
+\item
+% 3.A. Find the asymptotic growth for a given function.
+
+Define the following functions $f_1(n)$, $f_2(n)$, $f_3(n)$ mapping positive integers $n \geq 5$
+to positive real numbers $t>0$: 
+
+% n^3.5
+% 
+
+\[ \left\{ \begin{array}{l}
+f_1(n) = (1 + \cos n) \sqrt{2^{7 \cdot \log_2 n}},\\[1ex]
+f_2(n) = 13^{\log_2 n},\\[1ex]
+f_3(n) = \frac{1}{n^2} \cdot {n \choose 5},\\[1ex]
+f_4(n) = f_1(n) + f_2(n) + f_3(n).\\
+\end{array} \right.
+\]
+
+For each function find Big-O notation $O(g(n))$, Big-Omega notation $\Omega(g(n))$, and Big-Theta notation $\Theta(g(n))$. 
+Show algebraic and/or verbal justifications to your answers.
+
+
+%%%%%%%%
+%% 04 %%
+%%%%%%%%
+\item
+% 4.B. (C++ code) Use STL classes for lists, stacks, queues with iterators.
+
+The following C++ program declares a class {\tt Pair}. 
+Pairs are {\em lexicographically ordered}: 
+$(x_1, y_1) < (x_2, y_2)$ iff $x_1 < x_2\ \vee\ (x_1 = x_2\ \wedge\ y_1 < y_2)$. 
+
+Complete the program to input a positive integer $n$, then input $n$ pairs from the standard input, 
+push them on the stack while skipping those pairs which are not lexicographically larger
+than the current top element of the stack. Finally, output the remaining
+pairs to the standard output as separate lines in their original order.
+
+Use the overloaded operators ``{\tt cout << pair}'', ``{\tt cin >> pair}'', ``{\tt p1 < p2}''
+for input, output and comparisons. The only data structure to use is STL stack. 
+If necessary, you can use several stacks.
+
+\begin{Verbatim}[frame=single,numbers=left]
+#include <iostream>
+#include <stack>
+using namespace std;
+class Pair { public: int x, int y }; 
+istream &operator>>(istream  &input, Pair &p ) { 
+  input >> p.x >> p.y;   return input;            
+}
+ostream &operator<<(ostream &output, const Pair &p ) { 
+  output << "(" << p.x << "," << p.y << ")";   return output;            
+}
+bool operator<(const Pair &left, const Pair &right) {
+  // implement the lexicographic comparison operator.
+}
+int main() {
+  // Input the total number of pairs, then 2*n integers (the pairs). 
+  // Output those pairs which are in lexicographically increasing order.
+}
+\end{Verbatim}
+
+{\bf Sample input}
+
+\begin{Verbatim}[frame=single]
+5
+4 17
+4 17
+5 1000
+7 12
+7 9
+\end{Verbatim}
+
+{\bf Sample output}
+
+\begin{Verbatim}[frame=single]
+4 17
+5 1000
+7 12
+\end{Verbatim}
+
+
+
+%%%%%%%%
+%% 05 %%
+%%%%%%%%
+\item 
+% 2.B. The order how constructors and destructors are executed.
+In your code from the previous exercise, define the default (no argument) constructor, copy constructor 
+and destructor. Describe the order in which these are called as you run {\tt main()} on this input:
+
+\begin{Verbatim}[frame=single]
+2
+2 3
+1 4
+\end{Verbatim}
+
+
+
+\end{enumerate}
+
+
+\end{document}

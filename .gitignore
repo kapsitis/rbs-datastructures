@@ -49,3 +49,7 @@ topics/*.pdf
 # Python simple
 programming/src/.idea/*
 programming/src/venv/*
+
+# LaTeX files
+*.aux
+*.log

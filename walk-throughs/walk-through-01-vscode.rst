@@ -40,19 +40,32 @@ Outline of Steps
 Steps in Detail
 ----------------
 
-Set up an IDE on Windows
+Step 1: Set up an IDE on Windows
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can follow the guide `Configure VS Code for Microsoft C++ <https://code.visualstudio.com/docs/cpp/config-msvc>`_.
 
+Visual Studio Code should have its C++ plugin enabled and Microsoft Developer Tools should be installed.
+Go to some directory (can name it ``ds-workspace`` or similar). 
+To create the initial directory structure, you can also check out code
+from GitHub classroom's invitation (contact instructor for details). 
+
+Open **Developer Command Prompt for VSC**. Go to the directory ``ds-workspace``. 
+Create an empty subdirectory there and open **Visual Studio Code**: 
+
+.. code-block:: text
+  
+  mkdir hello
+  code .
+  
 
 
-Configure the Compilation Task
+Step 2: Configure the Compilation Task
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To enable easy compilation of simple one-file projects 
 directly from Visual Studio Code, 
-you can configure the ``.vscode\tasks.json`` file
+you can configure the ``hello\.vscode\tasks.json`` file
 with the following content: 
 
 .. code-block:: javascript 
@@ -104,24 +117,42 @@ are more robust ways to compile C++ programs, but
 they will be covered in subsequent walk-throughs17. 
 
 
-Build C++ Code 
+Step 3: Build C++ Code 
 ^^^^^^^^^^^^^^^^^^^^^^^
 
+Create a minimalistic C++ program. For example, name this file ``hello.cpp``
 
+.. code-block:: cpp
+
+  #include <iostream>
+  using namespace std;
+  int main() {
+    cout << "Print hello" << endl;
+  }
+  
+Save this file in your directory ``hello``. 
+Then press three buttons simultaneously: 
+**Ctrl**-**Shift**-**B**. 
+Select the first compiler (``cl.exe``) from the drop down list
+(or just wait until your code compiles.
 
 
 Run Executables from Terminal
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Return to the PowerShell **Developer Command Prompt for VSC**. 
+Run the newly created executable: 
+
+.. code-block:: cpp
+
+  hello.exe
+  
+It should print out a greeting (``"Print hello"``). 
 
 
 
 Redirect I/O Streams to Files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Interactive 
-
-
 
 To display return code (the integer value returned by the
 function ``main()``) you can use the following in
@@ -129,6 +160,7 @@ a Windows terminal:
 
 .. code-block:: 
 
+  hello.exe > myoutput.txt
   echo Exit Code is %errorlevel%
 
 On Linux a similar code would look like this: 
@@ -170,26 +202,26 @@ The suggested of actions is the following:
 
 
 
-Use grading server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-For some labs we can check, if they work 
-correctly on testfiles (including private ones, which 
-are not visible to the students before the deadline). 
-
-.. note::
-   We cannot guarantee that the grading server will 
-   be available and work properly whenever you need it
-   (unlike Git repository it is not installed on a 
-   high-availability server).
-   
-   On the other hand, the grading server 
-   can clarify misunderstandings regarding the functionality
-   and shows how close is your code to being done.   
-
-1. Log into Jenkins. 
-2. Select the task to test. 
-3. Run tests and view the testing report. 
-4. Commit to Git some change that causes testing errors. 
-5. Re-test to see that only the tagged code matters for grading.
+.. Use grading server
+.. ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. 
+.. For some labs we can check, if they work 
+.. correctly on testfiles (including private ones, which 
+.. are not visible to the students before the deadline). 
+.. 
+.. .. note::
+..    We cannot guarantee that the grading server will 
+..    be available and work properly whenever you need it
+..    (unlike Git repository it is not installed on a 
+..    high-availability server).
+..    
+..    On the other hand, the grading server 
+..    can clarify misunderstandings regarding the functionality
+..    and shows how close is your code to being done.   
+.. 
+.. 1. Log into Jenkins. 
+.. 2. Select the task to test. 
+.. 3. Run tests and view the testing report. 
+.. 4. Commit to Git some change that causes testing errors. 
+.. 5. Re-test to see that only the tagged code matters for grading.
 
