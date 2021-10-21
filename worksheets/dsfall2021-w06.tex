@@ -36,11 +36,11 @@ Recall that a \textbf{red-black} tree satisfies the following properties:
 
 \begin{enumerate}
 
-\item \textbf{Warm up 1:} Answer the following True / False statements.
+\item \textbf{Warm up 1:} Answer the following True / False statements about red-black trees.
 \begin{enumerate}
 \item A subtree of a red-black tree is itself a red-black tree.
 \item The sibling of a leaf is either a leaf or it is red.
-\item Every red-black tree is an AVL (heigh-balaned) tree.
+\item Every red-black tree is an AVL (height-balanced) tree.
 \end{enumerate}
 
 \vfill
@@ -55,8 +55,8 @@ Recall that a \textbf{red-black} tree satisfies the following properties:
 \item Recall the \textbf{insertion} sort, \textbf{selection} sort, \textbf{merge} sort, and \textbf{quick} sort algorithms.
 \begin{enumerate}
 \item Which of these are in-place algorithms? Deterministic algorithms?
-\item If an input list is already sorted, which algorithm will be fastest? Slowest?
-\item The list below is not sorted, and both insertion and selection sort take the same number of steps to sort it. How many comparisons are done in each step?
+\item If an input list is already sorted, which algorithm will be fastest?
+\item How many comparisons do each of insertion and selection sort do in each step, when sorting the list below? A comparison is when two list elements are compared in size.
 \[
 \begin{tikzpicture}
 \foreach \x\n in {1/1, 2/4, 3/19, 4/5, 5/15, 6/10, 7/2, 8/3}{
@@ -72,9 +72,8 @@ comparisons for selection sort & & & & & & & &
 \end{tabular}};
 \end{tikzpicture}
 \]
-A comparison is when two elements are compared in size.
 \item Draw all the steps that merge sort would take on this list.
-\item For quick sort, which of the values are good pivots? Draw all the steps that quick sort would take on the list, if the pivot is element number $\lfloor\frac{\text{length of list}}{2}\rfloor$.
+\item For quick sort, which of the values in the list are good pivots? Draw all the steps that quick sort would take on the list, if the pivot is element number $\lfloor\frac{\text{length of list}}{2}\rfloor$.
 \end{enumerate}
 
 
