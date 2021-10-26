@@ -1,0 +1,212 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,multicol,tikz,enumitem}
+\usepackage{hyperref}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyvrb}
+\usetikzlibrary{calc}
+
+\newcommand\N{\mathbf{N}}
+\newcommand\Q{\mathbf{Q}}
+\newcommand\R{\mathbf{R}}
+\newcommand\Z{\mathbf{Z}}
+
+\newcommand\rem{\textup{rem}}
+
+% Comment out one or the other
+
+\setlength{\parindent}{0pt}
+
+\newcommand\answer[1]{}
+\newcommand\ans[1]{}
+%\newcommand\notanswer[1]{#1}
+%\newcommand\answer[1]{\\[5pt]{\color{blue}{#1}}\hfill{\color{blue}$\qed$}\\[-5pt]}
+%\newcommand\ans[1]{{\color{blue}{#1}}}
+%\newcommand\notanswer[1]{}
+
+
+
+\begin{document}
+
+\begin{center}
+{\bf\Huge Midterm 2 Review Topics} \\[5pt]
+Data Structures \\
+%(4 separate times)\\[5pt]
+\textit{*You must justify all your answers to recieve full credit*}
+\end{center}
+
+\hrule
+\vspace{2pt}
+\hrule
+\vspace{12pt}
+
+Midterm 2 has 4 theory questions and 1 short C++ program.
+Total time is 90 minutes. 
+
+{\small
+\begin{enumerate}
+\item \textbf{Write algorithms with List, Stack or Queue ADTs}
+\begin{enumerate}[label=1.\Alph*.]
+\item Given a list/stack/queue algorithm pseudocode, find its time complexity.
+\item Given an algorithm pseudocode, draw the list state at a certain moment.
+\item Given a problem description, implement the algorithm at ADT Level to implement it.
+\item Write algorithms and estimate the time complexity of algorithms processing expressions.
+\end{enumerate}
+\item \textbf{Use properties of rooted, ordered trees, traverse their nodes} 
+\begin{enumerate}[label=2.\Alph*.]
+\item Given some tree properties and element counts, calculate or estimate other counts.
+\item Use Tree ADT to implement some algorithms to manipulate trees.
+\item Use tree traversal to solve related algorithmic problems.
+\item Estimate the time complexity of a tree operation given input data distribution.
+\end{enumerate}
+\item \textbf{Manipulate binary search trees (BST)} 
+\begin{enumerate}[label=3.\Alph*.]
+\item Perform insert and delete operations in arbitrary binary search tree. 
+\item Verify some properties of binary search trees assuming their element counts.
+\item Use binary trees to encode another structure such as a multiway tree.
+\item Build AVL trees, perform rotations, run insert and delete operations.
+\end{enumerate}
+\item \textbf{Use and analyze priority queues and heaps} 
+\begin{enumerate}[label=4.\Alph*.]
+\item Use priority queue ADT to implement and analyze simple algorithms.
+\item Store binary trees into arrays.
+\item Perform and analyze heap operations for insert and delete.
+\item Use and analyze Heapsort.
+\end{enumerate}
+\item \textbf{Use and analyze sorting algorithms} 
+\begin{enumerate}[label=5.\Alph*.]
+\item Use and analyze Selection sort, Insertion sort, Bubble sort algorithms.
+\item Use and analyze Merge sort. 
+\item Use and analyze Quicksort algorithms.
+\item Use and analyze Radix sort and Counting sort.
+\end{enumerate}
+\item \textbf{(C++ code) Use STL structures, implement custom inheritance and polymorphism} 
+\begin{enumerate}[label=6.\Alph*.]
+\item (C++ code) Use STL classes for lists, stacks, queues with iterators.
+\item (C++ code) Use STL classes for tree-related operations. 
+\item (C++ code) Use STL classes for priority queue operations.
+\item (C++ code) Use inheritance and virtual functions. 
+\item (C++ code) Use polymorphism and template classes or functions.
+\end{enumerate}
+\end{enumerate}
+}
+
+
+\clearpage
+
+\section{Write algorithms with List, Stack or Queue ADTs}
+
+\begin{enumerate}[label=1.\Alph*.]
+\item {\bf Given a list/stack/queue algorithm pseudocode, find its time complexity.}
+A small C++ program or a pseudocode is given to solve some specific task (filter list elements by predicate, 
+reverse a list, return a new list containing elements with even numbers only, etc.)
+Verify, if this code works in all cases and find its time complexity in terms of 
+input length $n$, if the list/vector/stack/queue are implemented in a certain way.
+\item {\bf Given an algorithm pseudocode, draw the list state at a certain moment.}
+A small C++ program or a pseudocode is given to solve some specific task. At some point in the algorithm 
+(when a condition succeeds or during the $k$-th iteration of a loop etc.) 
+show the state of the data structures involved.
+\item {\bf Given a problem description, implement the algorithm at ADT Level to implement it.}
+There is one or more lists/stacks/queues and an algorithmic task to process them. 
+Implement this task as a small C++ program or as a pseudocode.
+\item {\bf Write algorithms and estimate the time complexity of algorithms processing expressions.}
+An expression with numbers (or Boolean values) and some operators is given. 
+Transform it into a prefix (or infix, or postfix) notation or perform some calculations in this expression.
+\end{enumerate}
+
+
+\section{Use properties of rooted, ordered trees, traverse their nodes}
+
+\begin{enumerate}[label=2.\Alph*.]
+\item {\bf Given some tree properties and element counts, calculate or estimate other counts.}
+Given some tree properties or assumptions (is it a full $n$-ary tree, a complete tree, a perfect tree)
+and a number of elements (total nodes, internal nodes, leaves, height, min depth of a leave, 
+average number of children), estimate some other counts.
+\item {\bf Use Tree ADT to implement some algorithms to manipulate trees.}
+Use Tree ADT functions to perform some editing algorithms on trees; 
+implement them as small C++ programs or pseudocode.
+\item {\bf Use tree traversal to solve related algorithmic problems.} 
+Do some variant of tree traversal (BFS or DFS - in particular, preorder, inorder, postorder), 
+to do some aggregation or mass edit.
+\item {\bf Estimate the time complexity of a tree operation given input data distribution.}
+Calculate the expected value of running time (or number of certain operations), 
+given the tree structure and probabilistic distribution of inputs. 
+\end{enumerate}
+
+\section{Manipulate binary search trees (BST)}
+
+\begin{enumerate}[label=3.\Alph*.]
+\item {\bf Perform insert and delete operations in arbitrary binary search tree.}
+Given a binary search tree (possibly not complete or not balanced), 
+perform operations to preserve the order relation of the tree.
+\item {\bf Verify some properties of binary search trees assuming their element counts.}
+Given assumptions about the BST element counts, check some statement about the BST.
+\item {\bf Use binary trees to encode another structure such as a multiway tree.}
+Encode or decode multiway trees, parenthesized expressions and similar structures into BSTs.
+\item {\bf Build AVL trees, perform rotations, run insert and delete operations.}
+Verify AVL tree properties, check what happens to the properties as we rotate, insert or delete nodes.
+\end{enumerate}
+
+
+\section{Use and analyze priority queues and heaps}
+
+\begin{enumerate}[label=4.\Alph*.]
+\item {\bf Use priority queue ADT to implement sorting and similar tasks.}
+Write an algorithm to find the second largest
+element in array, to find the median, etc. Use the ADT of Priority queues -- and estimate
+the time complexity of your algorithm. 
+\item {\bf Store binary trees into arrays.}
+Store complete (or close to complete) binary trees into arrays -- either 0-based or 1-based. 
+Convert trees into arrays and back. Write expressions on array indices to locate
+elements in the binary tree (parents, grandparents, children, siblings, etc.)
+\item {\bf Perform and analyze heap operations for insert and delete.}
+Run several heap operations and estimate how many comparisons and swaps you may need to 
+run these operations.
+\item {\bf Use and analyze Heapsort.} 
+Analyze an optimal {\tt buildHeap()} operation which proceeds from the bottom up. 
+For example, estimate how many swaps are necessary 
+to add a single element at a certain level of the heap. 
+Estimate the total number of comparisons to run heapsort. 
+\end{enumerate}
+
+\section{Use and analyze sorting algorithms}
+
+\begin{enumerate}[label=5.\Alph*.]
+\item {\bf Use and analyze Selection sort, Insertion sort, Bubble sort algorithms.}
+Run Selection (Insertion and Bubble) sorting algorithms on certain initial arrays, 
+for example those that are nearly sorted. Also trace the swaps of individual numbers
+in sortable arrays.
+\item {\bf Use and analyze Merge sort.}
+Estimate the runtime of divide and conquer algorithms (Merge sort or variants of it).
+Count the full number of comparisons as you run mergesort. 
+\item {\bf Use and analyze Quicksort algorithms.}
+Run one or more iterations of Quicksort -- and draw the intermediate states of an array. 
+\item {\bf Use and analyze Radix sort and Counting sort.}
+Run Radix sort or Counting sort as pseudocode, draw some intermediate results created 
+by these algorithms.
+\end{enumerate}
+
+\section{(C++ code) Use STL structures, implement custom inheritance and polymorphism}
+
+\begin{enumerate}[label=6.\Alph*.]
+\item {\bf (C++ code) Use STL classes for lists, stacks, queues with iterators.}
+Implement a simple algorithm using {\tt std::list}, {\tt std::stack}, {\tt std::queue}, 
+{\tt std::vector}.
+\item {\bf (C++ code) Use STL classes for tree-related operations.}
+Implement a simple algorithm using {\tt std::set} or {\tt std::map} data structures 
+-- possibly with a custom comparator.
+\item {\bf (C++ code) Use STL classes for priority queue operations.}
+Implement a simple algorithm using {\tt std::priority\textunderscore{}queue} data structure
+-- possibly with a custom comparator.
+\item {\bf (C++ code) Use inheritance and virtual functions.}
+Implement a class with one or more subclasses and class method overriding. 
+Understand constructor chaining and initialization. 
+Declare some of them virtual to ensure that the right behavior is invoked.
+\item {\bf (C++ code) Use polymorphism and template classes or functions.}
+Use STL classes parametrized with different template class types; 
+ensure that polymorphic algorithms can run -- the same algorithm and the same 
+data structure works with different underlying types.
+\end{enumerate}
+
+
+\end{document}

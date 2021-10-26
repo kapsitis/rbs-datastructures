@@ -4,8 +4,10 @@ Programming Task 2, Part 2
 Place your files in the directory ``ds-workspace-YourName/lab2-2``, push it to your GitHub repository.
 The following files should be present in your repository: 
 
-* ``lab2-2\src\CircularList.cpp`` (updated data structure as a template class)
 * ``lab2-2\src\CircularList.h`` (the header file with declarations for this data structure)
+* ``lab2-2\src\CircularList.cpp`` -- probably not needed for this lab (and therefore optional).
+  This is because template code is typically implemented in header file only. 
+  See `<https://bit.ly/3lsjYUY>`_. 
 * ``lab2-2\src\CircularListMain.cpp`` (a client class to demo this data structure)
 * ``lab2-2\test\TestCircularList.cpp`` (your Catch2 unit tests)
 
@@ -15,9 +17,9 @@ and applicable to more datatypes.
 .. warning:: 
   The C++ classes in this lab have same names as before and they 
   still belong to the ``ds_course`` namespace.
-  Attempt to compile them together with any unchanged classes from Lab2-1 will cause naming
+  An attempt to compile them together with any unchanged classes from Lab2-1 will cause naming
   conflicts.
-   
+  
 
 
 
@@ -47,13 +49,14 @@ the following behaviors should be added.
      CircularList<string> stringList { "aa", "ab", "ba", "bb" };
 
 4. Support deep copy of a circular list using copy constructor.
-5. Enable appending two circular lists obtaining one circular list 
+   Overload assignment operator (``=``) to do the same deep copy upon assignment.
+5. Overload plus operator (``+``) to concatenate two circular lists into a new circular list 
    (the ``tail_`` of the second list  becomes the ``tail_`` of the resulting list).
 6. Enable a function that reverses the list -- rewrites it from the other end (so that the 
    tail of the old list becomes the head of the new list and vice versa).
-7. Preserve the existing ``CircularList`` object, but remove all existing elements from it. 
-8. Ensure that the CircularList has all memory leaks fixed, if there were any 
-   in Lab2-1. 
+7. Implement a function to remove all existing elements from the current ``CircularList`` object.
+8. Ensure that the CircularList has all memory leaks fixed, if there are any. 
+   (Use Valgrind for diagnostics, if necessary.)
 
 All these requirements should be tested by unit-tests. 
 You will develop your own unit-tests in Catch2 
@@ -131,14 +134,16 @@ Requirements from the previous subsection are implemented as follows:
    allow arbitrary type (including class types), defining ``CLNode`` and ``CircularList``
    as template classes with "parameter" ``<T>``.
 2. ``CircularList`` should have one more constructor (in addition to the no-arguments 
-   default constructor). Namely, ``CircularList(int n, T val)``  would create 
+   default constructor). Namely, ``CircularList<T>(int n, T val)``  would create 
    a ``CircularList`` object with ``n`` values -- all copies of value ``val`` having type ``T``.
 3. ``CircularList`` should have one more constructor using the ``initialization list`` 
    (listing all the elements in curly braces).
-4. ``CircularList`` has a copy constructor that performs a deep cop in an assignment.
-5. Appending of two ``CircularLists`` is done by overloading the operator "+". 
-6. Implement ``CircularList::reverse()`` to reverse the order of list's elements.
-7. Implement ``CircularList::clear()`` to empty a list without destroying it.
+4. ``CircularList`` has a copy constructor that performs a deep copy in an assignment.
+   It also overloads the assignment operator to do the deep copy.
+5. Concatenation of two ``CircularLists`` is done by overloading the operator "+". 
+6. Implement ``CircularList<T>::reverse()``, it returns ``CircularList<T>`` where the 
+   current object's elements are deep-copied in reverse order (and does not modify the current object).
+7. Implement ``void CircularList<T>::clear()`` to empty a list without destroying it (this modifies the current object).
 8. Run the testcases with ``CircularListMain`` using Valgrind memory leaks report -- ensure that there are 
    no messages about memory leaks.
 
@@ -155,17 +160,31 @@ whether you read tokens or use this pseudocode at all.
 
 | `level` := 0
 | `nodeLists` := ``CircularList<CircularList<string>>`` . `empty`
+| `outputLines` := ``CircularList<string>`` . `empty`
 | **do**
 |     `token` := `readToken`
 |     **if** `token` == ``'('``:
-|         `siblings` := ``CircularList<string>`` . `empty`
-|         `nodeLists` . `push_front` (`siblings`)
+|         `isFirst` := ``true``
 |         `level` := :math:`\text{\em level} + 1`
 |     **else if** `token` is alphanumeric:
-|         `nodeLists.head.push(token)`
+|         **if** :math:`\text{\em nodeLists.size} > 0`: 
+|             *// if we are not the root of the tree*
+|             rotate back "siblingCount" positions (which child is this to its parent)
+|             *// append oneself as a child to the parent*
+|             `nodeLists.head.pushFront(token)`
+|             rotate forward "siblingCount" positions (get back to the original position)
+|         **if** `isFirst`                
+|             *// process the parent: put it at the front of children list "siblings"*
+|             `siblings` := ``CircularList<string>`` . `empty`
+|             `siblings` . `pushFront(token)`
+|             `nodeLists` . `pushFront(siblings)`
+|             `isFirst` := ``false``
 |     **else if** `token` == ``')'``:
-|         `siblings` := `nodeLists.pop_front()`
-|         **print** `complete_siblings.reverse()`
+|         `siblings` := `nodeLists` . `head`
+|         `nodeLists` . `popFront`
+|         *// move root node to the front of reversed child list*
+|         `siblings` . `movePrev`
+|         `outputLines` . `pushFront(siblings.toString)`
 |         **if** :math:`\text{\em level}` == 0 **then**
 |             Parse error: Too many closing parentheses
 |         **else**:
@@ -175,6 +194,9 @@ whether you read tokens or use this pseudocode at all.
 |     **else if** `token` == ``EOF`` **and** :math:`\text{\em level} > 0`
 |         Parse error: Some node lists were not complete
 | **while** :math:`\text{\em level} > 0`
+| **while** **not** `outputLines` . `isEmpty`: 
+|     **print** `outputLines` . `head`
+|     `outputLines` . `popFront`
 
 
 If we have ``intTree`` instead of ``stringTree`` the pseudocode is almost identical.
@@ -244,9 +266,9 @@ and ``CR`` (``"\r"`` or byte or byte ``0x0D``).
 .. code-block:: text   
 
   stringTree  
-  (Hotel 
-    (Lima (Mike (Oscar November)) (Juliett India)) 
-    (Echo (Foxtrot Golf) (Bravo Delta)))
+  ( Hotel 
+    ( Lima ( Mike ( Oscar November ) ) ( Juliett India ) ) 
+    ( Echo ( Foxtrot Golf ) ( Bravo Delta ) ) )
   
   
   
@@ -256,16 +278,106 @@ and ``CR`` (``"\r"`` or byte or byte ``0x0D``).
 .. code-block:: text   
 
   Hotel Echo Lima
+  Echo Bravo Foxtrot
+  Bravo Delta
+  Foxtrot Golf
   Lima Juliett Mike
   Juliett India
   Mike Oscar
   Oscar November
-  Echo Bravo Foxtrot
-  Bravo Delta
-  Foxtrot Golf
   0
 
 
+Behaviors to Test with Catch2 
+-------------------------------
+
+Your file ``lab2-2\test\TestCircularList.cpp`` should test various behaviors 
+of the polymorphic data structure ``TestCircular<T>`` (including those which are 
+not needed for your application program ``TestCircularMain``. 
+Here is an overview of things to test (the unit tests themselves is
+something you can program as you see fit). 
+
+1. Can create an empty ``CircularList`` of types ``int`` and ``string`` (using default constructor).
+2. Can create a ``CircularList<T>`` with a non-default constructor initialized with `n` identical elements.
+3. Can create a ``CircularList<T>`` initialized with elements from an initialization list. 
+4. Can create a ``CircularList<T>`` using a copy constructor (it causes deep copy). 
+5. Can assign a ``CircularList<T>`` object to another one with overloaded ``=`` operator (and all elements are deep copied). To verify 
+   that a deep copy took place, modify (with ``assignAt`` or similar) one of the circular list objects. 
+   The second one should not change.
+6. Can concatenate two ``CircularList<T>`` objects with overloaded ``+`` operator. The result 
+   contains copies of the elements of the original list.
+7. Function ``reverse()`` works (returns a reversed list of the original list). 
+8. Function ``clear()`` works (the original list is purged from all the elements).
+9. Any illegal access of an empty list (head, tail, popFront) causes ``out_of_range`` exception. 
+10. Any illegal access of a list beyond its position causes ``out_of_range`` exception. 
 
 
+
+Appendix: Declaring Friends of Template Classes
+-------------------------------------------------
+
+Assume that you need a template class ``A<T>`` to use another template
+class ``B<T>`` (just as our ``CircularList<T>`` is using ``CLNode<T>`` class. 
+Moreover, you also need the class ``A<T>`` to access private fields
+of ``B<T>`` (so ``A<T>`` should be declared friend of ``B<T>``). 
+
+This is tricky to achieve in your header file. If you define ``B<T>`` above the class ``A<T>``, 
+then class ``A<T>`` turns out to be declared as a friend (inside ``B<T>``) -- but it 
+is not a template class at that point (yet). 
+
+On the other hand, if you define ``B<T>`` below the class ``A<T>``, 
+then ``A<T>`` cannot reference class ``B<T>`` -- as it is not visible at that point yet. 
+We have therefore a typical problem when two classes need to refer to each other. 
+
+The only reasonable way to break this dependence loop is to introduce a forward declaration: 
+At first you just declare ``class B`` (but do not define anything in it; no member functions, friends etc.). 
+Then define ``class A`` referring to ``class B``. Finally define ``class B`` referring to ``class A``.
+See the discussion here -- `<https://bit.ly/3mJxsLo>`_.
+
+
+.. code-block:: cpp
+
+  template <class T> class B; // forward decl.
+ 
+  template <class T>
+  class A {
+    T t;
+    public:
+      void Test(const B<T> &b) {t = b.t;}
+  }; //A
+ 
+  template <class T>
+  class B {
+    friend class A<T>; // friend decl.
+    T t;
+  };//B
+  
+
+
+Appendix: Checking the Memory Leaks
+------------------------------------
+
+1. Make sure that Lab2-2 code compiles and runs on Linux. 
+2. Install Valgrind (``sudo apt-get install valgrind``)
+3. Run Valgrind with a flag ``--leak-check=full`` and executable as a parameter. 
+   For example, if you have already implemented Lab2-1, it is possible to run Valgrind
+   and display all the existing leaks.
+   
+.. code-block:: text
+
+  cd lab2-1/build  
+  valgrind --leak-check=full ./circlist_main < ../test06.txt
+  
+  
+.. figure:: figs/valgrind-screenshot.png
+   :width: 4in
+   :alt: Valgrind screenshot
+   
+   Running Valgrind
+
+The objective is to make these memory leaks to become zero. Memory leaks are created every time 
+when new memory is reserved (with commands like ``new`` or ``malloc``), but not freed with ``delete``, 
+``delete[]`` or ``free`` commands. 
+
+See `<https://bit.ly/3oPDFrX>`_ for details and more options of Valgrind to debug the memory leaks.
 

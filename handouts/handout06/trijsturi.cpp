@@ -46,5 +46,5 @@ int main() {
     while (!otherStack.empty()) {
         cout << otherStack.top() << endl;
         otherStack.pop();
-    }    
+    }      
 }
