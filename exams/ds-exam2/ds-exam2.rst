@@ -1,5 +1,5 @@
-Midterm Exam 2, October 28, 2021
-=================================
+Midterm Exam 2
+===============
 
 .. 1. Write algorithms with List, Stack or Queue ADTs
 .. 1A. Given a list/stack/queue algorithm pseudocode, find its time complexity.
@@ -38,126 +38,172 @@ Midterm Exam 2, October 28, 2021
 .. 6D. (C++ code) Use inheritance and virtual functions. 
 .. 6E. (C++ code) Use polymorphism and template classes or functions.
 
+.. note:: 
+  Midterm 2 contains 5 questions.
+  Questions written on paper should be photographed and uploaded as JPEG or PDF. 
+  Question 5 should be submitted as C++ source file in a separate folder.
 
-.. "6E" "4C" "5A" "2A" "3A"
+
+.. "2D" "3B" "4A" "5B" "6D"
 
 
-.. 1A. Given a list/stack/queue algorithm pseudocode, find its time complexity.
-
-.. **Question 0:**
-..  Consider the following code (given a pseudocode - it erases elements that fall under a filter; then reverses the list.). 
-..  Show what is the result if you run it on an example list. 
-..  What is the time complexity.
-.. 2A. Given some tree properties and element counts, calculate or estimate other counts.
-
-*The last question should be submitted as the C++ source file in a separate folder.*
+.. 2.D. Estimate the time complexity of a tree operation given input data distribution.
 
 **Question 1:**
 
-  Consider a tree :math:`T` with the following properties: 
+  Alice sends messages to Bob using only eight voiced consonants from this alphabet:
+  :math:`\{ B, D, G, J, N, R, V, Z \}`. Each consontant is encoded 
+  as a sequence of bits (0s and 1s) using the binary tree shown below:
   
-  * :math:`T` has exactly :math:`12` internal nodes, 
-  * Every internal node of :math:`T` has one or two children. 
-  * The average number of children for an internal node is exactly :math:`1.5`. 
-  * Tree :math:`T` is built from ``TNode`` structures:
+  .. figure:: figs/huffman-tree.png
+     :width: 3in
+     :alt: Binary Tree with codes
+	 
+     A Binary Tree used by Alice to encode 8 consonant letters.
   
-  .. code-block:: cpp
-  
-    struct TNode { int info; TNode* left; TNode* right; };
-  
-  **(A)**
-    What is the number of leaves in tree :math:`T`?
-
-  **(B)**
-    What is the number of ``NULL`` values among all the ``TNode.left`` and ``TNode.right`` pointers
-    used to build the tree :math:`T`?
-	
-  **(C)**
-    What is the largest and the smallest value of the height of the tree :math:`T`. 
-    (Write your estimates for minimum height and maximum height, and explain why these
-    estimates cannot be improved.)
-	
-  .. note::
-    We define *height* of a tree as the number of edges to traverse on the path that connects its
-    root with the deepmost leaf. (In particular, a tree with just the root node has height 0, 
-    but a tree with the root and a single child leaf has height 1.) 
-    
-
-
-.. 3A. Perform insert and delete operations in arbitrary binary search tree. 
-
-**Question 2:**
-
-  .. image:: figs/bst-tree.png
-     :width: 5in
-
-  **(A)**
-    Draw the Binary Search tree shown in figure after node :math:`21` is deleted. 
-	
-  **(B)**
-    Draw the Binary Search tree obtained in (A) after node :math:`35` is deleted. 
-
-  .. note::
-    Deletion is done by replacing the node to be deleted by its inorder successor. 
-
-
-
-.. 4D. Use and analyze Heapsort.
-
-**Question 3B:** 
-  An array of :math:`10` elements is used to initialize a minimum heap (as the first stage of 
-  the Heap sort algorithm): 
-  
-  .. math::
-  
-    \{ 5, 3, 7, 10, 1, 2, 9, 8, 6, 4 \}
-
-  Assume that the minimum heap is initialized in the most efficient way (inserting elements
-  level by level -- starting from the bottom levels). 
+  For example, ``VZJ`` is encoded as ``1110.11111.11110`` 
+  (``V`` becomes ``1110``, ``Z``  becomes ``11111`` and
+  ``J`` becomes ``11110``). Each code is obtained by 
+  following the edges from the root to the respective leaf in this tree.
   
   **(A)**
-    How many levels will the heap tree have? (The root of the heap is considered :math:`L_0` -- level zero.
-    the last level is denoted by :math:`L_{k-1}`. Just find the number :math:`k` for this array.)
+    Show how Alice can encode the following 8-letter word:
+    :math:`\mathtt{BRBDNGNG}`. How many bits does it use?
+    (Please separate the codes of individual letters with dots for better readability.)
   
-  **(B)**
-    Draw the intermediate states of the heap after each level is filled in. Represent the heap as a binary tree. 
-    (If some level :math:`L_k` is only partially filled and contains less than :math:`2^k` nodes, 
-    please draw all the nodes as little circles, but leave the unused nodes empty.)
+  **(B)** 
+    In Alice's language the probabilities of letters are the following: 
+	
+    =====  =====  =====  =====  =====  =====  =====  =====	
+    ``R``  ``N``  ``D``  ``G``  ``B``  ``V``  ``J``  ``Z``
+    32%    28%    14%    11%    9%     4%     1%     1%
+    =====  =====  =====  =====  =====  =====  =====  =====	
 
-  **(C)** 
-    What is the total count of comparisons (:math:`a < b`) that is necessary to build the final
-    minimum heap?
+    Find the expected value of the total bits (0s and 1s) that she uses in order to send a random 10-letter word to Bob.
+    (The letters in a random word are chosen independently according to the probabilities given above).
 
 
-.. 5A. Use and analyze Selection sort, Insertion sort, Bubble sort algorithms.
 
-**Question 4:**
 
-  .. image:: figs/bubblesort.png
-     :width: 4in
+.. 3.B. Verify some properties of binary search trees assuming their element counts.
 
-  The image shows Bubble sort algorithm for a 0-based array :math:`A[0]\ldots{}A[n-1]` of :math:`n` elements.
+**Question 2:** 
+
+  Some binary tree :math:`T` has exactly :math:`32` internal nodes.
 
   **(A)** 
-    How many comparisons (``A[i-1] > A[i]``) in this algorithm are used to sort the following array (where 
-    :math:`A[0] = 9` and :math:`A[9] = 8`: 
+    Can tree :math:`T` be a full binary tree? (In a full binary tree every node has either 
+    two children or no children at all.)
+    Can tree :math:`T` be a perfect binary tree? (In a perfect binary tree 
+    all leaves have the same depth.)
 	
-	.. math::
-	  
-      \{ 9, 0, 1, 2, 3, 4, 5, 6, 7, 8 \}
-	  
-  **(B)**  
-    How many comparisons (``A[i-1] > A[i]``) in this algorithm are used to sort the following array (where 
-    :math:`A[0] = 1` and :math:`A[9] = 0`: 
+  **(B)** 
+    What is the largest and the smallest value for :math:`n` -- the total number of nodes in the 
+    tree :math:`T`? Explain your estimates.
 	
-	.. math::
-	  
-      \{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 \}
+  **(C)** 
+   What is the largest and the smallest value for :math:`h` -- the height of :math:`T`? 
+   Explain your estimates.
+ 
 
-.. 6E. (C++ code) Use polymorphism and template classes or functions.
+.. 4.A. Use priority queue ADT to implement and analyze simple algorithms.
+
+**Question 3:**
+  
+  Minimum Priority Queue has this ADT (Abstract Data Type): 
+  
+  =============================  ========================  =======================================================================
+  `PQ.getEmpty()`                :math:`\Theta(1)`         // initialize ``PQ`` to an empty priority queue
+  `void PQ.insert(E item)`       :math:`\Theta(\log_2 n)`  // insert ``item`` into the priority queue ``PQ``.
+  `E PQ.min()`                   :math:`\Theta(1)`         // return an item with minimum key value, do not modify ``PQ``.
+  `void PQ.removeMin()`          :math:`\Theta(\log_2 n)`  // remove an item with minimum key from ``PQ``
+  `int PQ.size()`                :math:`\Theta(1)`         // return the number of items in the priority queue ``PQ``
+  =============================  ========================  =======================================================================
+
+  Every function in this ADT has its time complexity written in the 2nd column -- it corresponds to the heap implementation.
+  
+  Consider the following pseudocode. Denote the number of items in the original list ``L`` by :math:`n` 
+  (assume that :math:`n \geq 10` and all items in this list have different keys). 
+  
+  | :math:`\text{\sc ProcessList}(L)`:
+  |   `PQ.getEmpty()`
+  |   **foreach** `item` **in** `L`:
+  |     `PQ.insert(item)`
+  |   **while** `PQ.size() > 5`: 
+  |     `PQ.removeMin()`
+  |   **return** `PQ.min()`
+
+  **(A)**
+    Describe in English what does the function :math:`\text{\sc ProcessList}(L)` return. 
+	
+  **(B)**
+    Express the time complexity of this algorithm in Big-:math:`\Theta` notation: Find a
+    function :math:`g(n)` such that the time complexity of :math:`\text{\sc ProcessList}(L)` is
+    :math:`\Theta(g(n))`. 
+	
+
+.. 5.B.Use and analyze Merge sort.
+
+**Question 4:**
+  
+  We have a 1-based array with 11 elements: :math:`A[1],\ldots,A[11]`. 
+  We want to sort it efficiently. 
+  Consider the following Merge sort pseudocode: 
+  
+  | :math:`\text{\sc MergeSort}(A,p,r)`:
+  | :math:`1\;\;` **if** :math:`p < r`
+  | :math:`2\;\;\;\;\;\;\;\;` :math:`q = \left\lfloor (p+r)/2 \right\rfloor`
+  | :math:`3\;\;\;\;\;\;\;\;` :math:`\text{\sc MergeSort}(A,p,r)`
+  | :math:`4\;\;\;\;\;\;\;\;` :math:`\text{\sc MergeSort}(A,q+1,r)`
+  | :math:`5\;\;\;\;\;\;\;\;` :math:`\text{\sc Merge}(A,p,q,r)`
+  
+  Assume that initially you call this function as :math:`\text{\sc MergeSort(A,1,11)}`, 
+  where :math:`p = 1` and :math:`r = 11` are the left and the right endpoint of the 
+  array being sorted (it includes both ends). 
+  
+  What is the total number of calls to :math:`\text{\sc MergeSort}` for this array 
+  (this includes the initial call as well as the 
+  recursive calls on lines 3 and 4 of this pseudocode). 
+
+.. 6.D. (C++ code) Use inheritance and virtual functions.
 
 **Question 5:** 
-  Create a C++ program that inputs :math:`100` space-separated positive integers. 
-  It should output the first :math:`5` largest of them (also separating them with spaces). 
-  Use ``std::priority_queue`` to implement this.
+
+  Complete the C++ program that converts a tree into a string using function 
+  ``toString()``. A tree can be built from two types of objects: 
+  objects of class ``Leaf`` and objects of class ``Internal``.
+  They are both inherited from a common parent class ``Node``. 
+  All nodes have attribute ``label``. 
+  Moreover, ``Internal`` nodes have attribute ``children`` of
+  type ``list<Node*>`` -- it is a list of pointers to the child nodes
+  (either leaves or other internal nodes).
+  
+  .. literalinclude:: figs/virtual_functions.cpp
+
+  
+  A tree that is a leaf is converted to a string: the value of ``label``.
+  A tree that is an internal node is converted to a string as the parent's label followed by 
+  all the subtrees under that parent -- they are all separated by single spaces and 
+  enclosed in parentheses.
+  
+  Here is the expected output from the program:
+  
+  .. code-block:: text
+  
+    AAA
+
+    (AA BB CC)
+
+    (A (B (C D E) (F G (H I J))) (K (L M)))
+	
+  In this task you can complete the functions ``toString()`` and possibly make other
+  changes. You should not modify the method ``main()``; your code should preserve the 
+  inheritance relations between ``Node``, ``Leaf`` and ``Internal``. 
+  Solutions that use "hard-coded" output that does not depend on the 
+  values and structures defined in ``main()`` will not be considered valid.
+  
+	
+
+
+
   

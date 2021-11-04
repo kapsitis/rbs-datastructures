@@ -49,6 +49,7 @@ topics/*.pdf
 # Python simple
 programming/src/.idea/*
 programming/src/venv/*
+programming/lab4-1/src/*
 
 # LaTeX files
 *.aux

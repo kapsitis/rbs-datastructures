@@ -13,6 +13,8 @@ FiveTasks <- c("5A", "5B", "5C", "5D")
 
 cppTasks <- c("6A", "6B", "6C", "6D", "6E")
 
+oldTasks <- c("1A", "2A", "3A", "4D", "5A", "6C")
+
 
 found <- FALSE
 while (isFALSE(found)) {
@@ -20,6 +22,8 @@ while (isFALSE(found)) {
   found <- length(intersect(xx,cppTasks)) == 1
   
   found <- found && (length(unique(c(substr(xx,1,1)))) == 5)
+  
+  found <- found && (length(intersect(xx,oldTasks)) == 0)
 }
 
 print(paste0(xx))

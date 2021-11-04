@@ -1,0 +1,446 @@
+Midterm Exam 2 (Sample) 
+========================
+
+.. 1. Write algorithms with List, Stack or Queue ADTs
+.. 1A. Given a list/stack/queue algorithm pseudocode, find its time complexity.
+.. 1B. Given an algorithm pseudocode, draw the list state at a certain moment.
+.. 1C. Given a problem description, implement the algorithm at ADT Level to implement it.
+.. 1D. Write algorithms and estimate the time complexity of algorithms processing expressions.
+
+.. 2. Use properties of rooted, ordered trees, traverse their nodes
+.. 2A. Given some tree properties and element counts, calculate or estimate other counts.
+.. 2B. Use Tree ADT to implement some algorithms to manipulate trees.
+.. 2C. Use tree traversal to solve related algorithmic problems.
+.. 2D. Estimate the time complexity of a tree operation given input data distribution.
+
+.. 3. Manipulate binary search trees (BST)
+.. 3A. Perform insert and delete operations in arbitrary binary search tree. 
+.. 3B. Verify some properties of binary search trees assuming their element counts.
+.. 3C. Use binary trees to encode another structure such as a multiway tree.
+.. 3D. Build AVL trees, perform rotations, run insert and delete operations.
+
+.. 4. Use and analyze priority queues and heaps
+.. 4A. Use priority queue ADT to implement and analyze simple algorithms.
+.. 4B. Store binary trees into arrays.
+.. 4C. Perform and analyze heap operations for insert and delete.
+.. 4D. Use and analyze Heapsort.
+
+.. 5. Use and analyze sorting algorithms
+.. 5A. Use and analyze Selection sort, Insertion sort, Bubble sort algorithms.
+.. 5B. Use and analyze Merge sort. 
+.. 5C. Use and analyze Quicksort algorithms.
+.. 5D. Use and analyze Radix sort and Counting sort.
+
+.. 6. (C++ code) Use STL structures, implement custom inheritance and polymorphism
+.. 6A. (C++ code) Use STL classes for lists, stacks, queues with iterators.
+.. 6B. (C++ code) Use STL classes for tree-related operations. 
+.. 6C. (C++ code) Use STL classes for priority queue operations.
+.. 6D. (C++ code) Use inheritance and virtual functions. 
+.. 6E. (C++ code) Use polymorphism and template classes or functions.
+
+.. 1A, 2A, 3A, 4D, 5A, 6C
+
+
+.. note:: 
+  The actual Midterm 2 will contain exactly 5 questions. In this sample exam the number of questions may differ.
+  (*You must justify all your answers to recieve full credit.
+  The questions that are written on paper should be photographed and uploaded as JPEG or PDF. 
+  The C++ programming question should be submitted as the C++ source file in a separate folder.*)
+
+
+**Question 1:**
+
+  (*1.A. Given a list/stack/queue algorithm pseudocode, find its time complexity.*)
+  
+  Consider the following List ADT (Abstract Data Type): 
+  
+  =============================   =============================================================
+  `void L.add(E item)`            // add `item` to the end of the list `L`.
+  `void L.add(int pos, E item)`	  // add `item` at position `pos`; shift other items forward.
+  `boolean L.contains(E item)`    // return ``true`` iff the item is in the list `L`
+  `int L.size()`                  // return the number of items in the list `L`
+  `boolean L.isEmpty()`           // return ``true`` iff the list is empty
+  `E L.get(int pos)`              // return the item at position pos in the List
+  `E L.remove(int pos)`           // remove and return the item at position pos in the List
+  =============================   =============================================================
+
+  Consider the following pseudocode  -- it erases all the odd elements and reverses the remaining list: 
+  
+  | function `ModifyList(L: List[int])`: 
+  | `pos` := :math:`0`
+  | **while** `pos < L.size()`: 
+  |     **if** `L.get(pos) % 2 == 1`:
+  |         `L.remove(pos)`
+  |     **else**: 
+  |         `pos := pos+1`
+  | `n` := `L.size()`
+  | **for** `i` **from** :math:`n-1` **to** `0` **by** `-1`:
+  |     `item := L.get(i)`
+  |     `L.add(item)`
+  | **repeat** `n` **times**:
+  |     `L.remove(0)`
+  
+  
+  What is the worst-case time complexity of the three loops 
+  (**while**, **for** and **repeat**) in the function `ModifyList(L)`. 
+  Express the complexity in terms of :math:`n` (the size of the original list :math:`L`)? 
+  Consider two cases: 
+  
+  **(A)** 
+    Assume that the List ADT is implemented as a doubly linked list
+    with the pointers to the first and the last element
+    and an additional number ``size`` telling the current number of items -- 
+    the number of nodes in this linked list.
+
+  **(B)**
+    Assume that the List ADT is implemented as an array (assume that the array has enough space for any possible input)
+    and an additional number ``size`` telling the current number of items (namely, 
+    only the array elements from 0 to ``size - 1`` contain actual values, everything else in 
+    the array should be ignored). 
+  
+
+  **Answer:** 
+  
+  **(A)**
+  
+    **while** takes :math:`O(n^2)`, **for** takes :math:`O(n^2)`, **repeat** takes :math:`O(n)` steps. 
+	
+    Indeed, if no item in the list is odd, then ``pos`` is incremented
+    every time in the **while** loop. And then the calls 
+    to ``L.get(pos)`` become slower every time. 
+    (Unfortunately, the ADT methods ``L.get()`` cannot use iterator (or pointer to the linked list
+    nodes -- the implementation of list is encapsulated and hidden from the user). Using 
+    linked list explicitly, it can be traversed in :math:`O(n)` -- in linear time (and it is possible
+    to remove all the odd elements as well). 
+	
+    **for** loop also takes :math:`O(n^2)` as you need to travel :math`n-1`, then :math:`n-2` steps, 
+    and so on. (Once again, you cannot benefit from the links in the linked list as the ADT methods
+    do not exposse any internal pointers). 
+	
+    **repeat** loop (removing the first element :math:`n` times) takes :math:`O(n)` steps. 
+    In this case no need to traverse the linked list. 
+	
+  **(B)** 
+
+    **while** takes :math:`O(n^2)`, **for** takes :math:`O(n)`, **repeat** takes :math:`O(n^2)` steps. 
+    
+    Once again **while** loop can take quadratic time, but this time the worst case happens, if
+    there are many odd elements that need to be removed (and all the array elements to the right need to be shifted 
+    to the left). For example, if every second element is odd, we would still get :math:`O(n^2)` steps.
+
+    **for** loop takes :math:`O(n)` as it is possible to access every item at position ``pos`` directly 
+    in a single step. It is also easy to add it to the end of the list (and increment :math:`size`). 
+	
+    **repeat** loop takes :math:`O(n^2)` as one hs to shift the elements to the left many times. 
+	
+  .. note::
+    The algorithmic task (remove odd elements and reverse the list) can be done in :math:`O(n)` steps -- 
+    all three loops can become efficient, if we keep using using  the doubly linked list implementation. 
+	
+    In this case one needs additional ADT methods (for example, an iterator allowing 
+    to traverse the given list in both directions). Such operations are efficient in a linked list, 
+    if we do not require that the cursor (for reading or deletion) 
+    moves to ``pos`` from the beginning of the list every time.
+  
+  :math:`\square`
+  
+
+**Question 2:**
+  
+  (*2.A. Given some tree properties and element counts, calculate or estimate other counts.*)
+
+  Consider a tree :math:`T` with the following properties: 
+  
+  * :math:`T` has exactly :math:`12` internal nodes, 
+  * Every internal node of :math:`T` has one or two children. 
+  * The average number of children for an internal node is exactly :math:`1.5`. 
+  * Tree :math:`T` is built from ``TNode`` structures:
+  
+  .. code-block:: cpp
+  
+    struct TNode { int info; TNode* left; TNode* right; };
+  
+  **(A)**
+    What is the number of leaves in tree :math:`T`?
+
+  **(B)**
+    What is the number of ``NULL`` values among all the ``TNode.left`` and ``TNode.right`` pointers
+    used to build the tree :math:`T`?
+	
+  **(C)**
+    What is the largest and the smallest value of the height of the tree :math:`T`. 
+    (Write your estimates for minimum height and maximum height, and explain why these
+    estimates cannot be improved.)
+	
+  .. note::
+    We define *height* of a tree as the number of edges to traverse on the path that connects its
+    root with the deepmost leaf. (In particular, a tree with just the root node has height 0, 
+    but a tree with the root and a single child leaf has height 1.) 
+    
+
+  **Answer:** (A) 7, (B) 20, (C) 4 (min) and 12 (max).
+
+  **(A)**
+    Out of 12 internal nodes there must be exactly :math:`6` nodes with two children 
+    and :math:`6` nodes with one child each (to achieve the average :math:`1.5`). 
+    A tree without two-child nodes would have just one "branch" that is terminated by a leaf. 
+    Each internal node having two children increases the number of downgoing "branches" by one, 
+    so it increases the number of leaves by one as well. 
+    Consequently, six two-child nodes cause seven leaves. 
+	
+  **(B)**
+    The total number of nodes (both internal and leaves) is :math:`12 + 7 = 19`. 
+    Consider another tree which is a full binary tree -- it adds all the ``NULL`` pointers
+    as new leaves; in this case all the former nodes (internal and leaves) become internal nodes. 
+	
+    One can prove by induction that the number of leaves exceeds the number of 
+    internal nodes exactly by 1 (Drozdek 2013, p.217).  
+    So there must be exactly :math:`19 + 1 = 20` leaves in the new tree (corresponding to the ``NULL`` pointers).
+	
+  **(C)**
+    The smallest height can be achieved locating all the six nodes with two children in the upper three levels
+    (its height is 4). The largest heigth can be achieved by arranging the internal nodes 
+    of a binary tree one under another (its height is 12). 
+	
+    .. figure:: figs/extreme-trees.png
+       :width: 3in
+       :alt: Minimum height and maximum height
+	   
+       Trees with the minimum height (4) and the maximum height (12).
+	
+    It is impossible to improve these estimates: Any tree with height three cannot have more nodes than 
+    the perfect tree of height three -- it has just :math:`7` internal nodes (not :math:`12` as in our case). 
+    Also, no tree with :math:`12` internal nodes can be taller than :math:`12` (at most one 
+    level is added with every internal node). 
+	
+  .. note:: 
+    Both trees of "extremal" height (as well as all the other binary tree satisfying the conditions of 
+    this problem) have the same number of leaves and the same number of ``NULL`` pointers -- 
+    they are *invariants* of any binary tree with the given parameters.
+	
+  
+  
+  :math:`\square`
+
+
+
+
+
+**Question 3:**
+
+  (*3.A. Perform insert and delete operations in an arbitrary binary search tree.*)
+
+  .. image:: figs/bst-tree.png
+     :width: 5in
+
+  **(A)**
+    Draw the Binary Search tree obtained when the tree shown in figure has its node :math:`47` deleted. 
+	
+  **(B)**
+    Draw the Binary Search tree obtained when the tree from (A) has its node :math:`26` deleted. 
+
+  :note:
+    To avoid ambiguity, try to replace the node to be deleted with its inorder successor whenever 
+    it is possible. (You do not need to balance the resulting tree as an AVL or as a red-black tree 
+    -- as long as it stays a binary search tree and preserves the tree ordering property.) 
+	
+
+  **Answer:** 
+  
+  **(A)**
+    Since :math:`47` is the very last node (in the given ordering), this is precisely the 
+    case when it does not have an inorder successor (so it has to be replaced by its inorder
+    predecessor, namely the node :math:`45`. (In this case the node :math:`44` becomes the right
+    child of :math:`43`). 
+	
+
+  **(B)**
+    The root :math:`26` should be replaced by its inorder successor -- the node :math:`28`.
+	
+  Pictures are not shown, but you are encouraged to draw them.
+
+  :math:`\square`  
+	
+	
+	
+
+**Question 4:** 
+
+  (*4.D. Use and analyze Heapsort.*)
+
+  An array of :math:`10` elements is used to initialize a minimum heap (as the first stage of 
+  the Heap sort algorithm): 
+  
+  .. math::
+  
+    \{ 5, 3, 7, 10, 1, 2, 9, 8, 6, 4 \}
+
+  Assume that the minimum heap is initialized in the most efficient way (inserting elements
+  level by level -- starting from the bottom levels). All slots are filled in with the elements
+  of the 10-element array in the order they arrive.
+  
+  
+  **(A)**
+    How many levels will the heap tree have? (The root of the heap is considered :math:`L_0` -- level zero.
+    the last level is denoted by :math:`L_{k-1}`. Just find the number :math:`k` for this array.)
+  
+  **(B)**
+    Draw the intermediate states of the heap after each level is filled in. Represent the heap as a binary tree. 
+    (If some level :math:`L_k` is only partially filled and contains less than :math:`2^k` nodes, 
+    please draw all the nodes as little circles, but leave the unused nodes empty.)
+
+  **(C)** 
+    What is the total count of comparisons (:math:`a < b`) that is necessary to build the final
+    minimum heap? (In this part you can assume the worst case time complexity -- 
+    it is not necessarily achieved for the array given above.)
+	
+
+	
+
+  **Answer:** 
+  
+  **(A)** 
+    10 elements need a tree with four levels (complete tree with 10 nodes). The last level :math:`L_3` 
+    will have just three nodes filled in. 
+
+  **(B)**
+    See the picture with all four stages of adding elements (unused slots are gray; the nodes that 
+    swap their places during the downheap operations are shown in pink). 
+	
+    .. image:: figs/heap-stages.png
+       :width: 4in
+	   
+  
+  **(C)**
+    In a downheap operation (when you add a new node on top of two other nodes), you first need to compare 
+    the two siblings, then compare their parent with the smallest of the two siblings (and if it is larger than 
+    its child, then swap). So every time some node moves one level down, you need to spend at most two comparisons. 
+	
+    .. image:: figs/heap-heights.png
+       :width: 2in
+    	
+    For our complete tree (with five grayed out slots in the last level), 
+    the worst case happens, if every node inserted at height :math:`h` needs to spend :math:`2h` comparisons to travel to the
+    very bottom (if we assume the worst case -- that it is larger than everything that has been inserted so far).
+    So the total number of comparisons is :math:`2 \cdot (1 + 1 + 1 + 2 + 3) = 16`. 
+    In general, this time should grow as :math:`O(n)`, where :math:`n` is the number of items in the heap being built.
+      	
+  :math:`\square`
+	 
+
+
+
+
+**Question 5:**
+
+  (*5.A. Use and analyze Selection sort, Insertion sort, Bubble sort algorithms.*)
+
+  .. image:: figs/bubblesort.png
+     :width: 4in
+
+  The image shows Bubble sort pseudocode for a 0-based array :math:`A[0]\ldots{}A[n-1]` of :math:`n` elements.
+
+  **(A)** 
+    How many comparisons (``A[i-1] > A[i]``) in this algorithm are used to sort the given array. 
+    Show the state of the array after each ``for`` loop in the pseudocode is finished. 
+	
+    .. math::
+	  
+       A[0]=9,\; 0,\; 1,\; 2,\; 3,\; 4,\; 5,\; 6,\; 7,\; A[9]=8.
+	  
+  **(B)**  
+    How many comparisons (``A[i-1] > A[i]``) in this algorithm are used to sort the following array: 
+	
+    .. math::
+	  
+      A[0]=1,\; 2,\; 3,\; 4,\; 5,\; 6,\; 7,\; 8,\; 9,\; A[9]= 0.
+	  
+  **Answer:**
+
+  **(A)** 
+    18 comparisons, 2 executions of the **for** loop: 
+	
+    After the first **for** loop the array is sorted: 
+  
+    .. math::
+	  
+      A[0]=0,\; 1,\; 2,\; 3,\; 4,\; 5,\; 6,\; 7,\; 8,\; A[9]=9.
+	
+    After the second **for** loop and 9 more comparisons no further swaps occur and the algorithm stops.
+    The array is still the same:	
+	
+    .. math::
+	  
+      A[0]=0,\; 1,\; 2,\; 3,\; 4,\; 5,\; 6,\; 7,\; 8,\; A[9]=9.
+
+  **(B)** 
+    
+    90 comparisons, 10 executions of the **for** loop: 
+	
+    After the first **for** loop:
+
+    .. math::
+	  
+      A[0]=1,\; 2,\; 3,\; 4,\; 5,\; 6,\; 7,\; 8,\; 0,\; A[9]= 9.
+
+    After the second **for** loop:
+	
+    .. math::
+	  
+      A[0]=1,\; 2,\; 3,\; 4,\; 5,\; 6,\; 7,\; 0,\; 8,\; A[9]= 9.
+
+    After the ninth **for** loop: 
+	
+    .. math::
+	  
+      A[0]=0,\; 1,\; 2,\; 3,\; 4,\; 5,\; 6,\; 7,\; \; 8,\; A[9]= 9.
+	
+    After the tenth **for** loop the array stays the same and the algorithm stops:
+	
+    .. math::
+	  
+      A[0]=0,\; 1,\; 2,\; 3,\; 4,\; 5,\; 6,\; 7,\; \; 8,\; A[9]= 9.
+
+
+  :math:`\square`
+
+
+  .. note:: 
+    Small values near the end of the list will slow down the Bubble sort considerably. 
+    The authors of an accelerated Bubble-sort variant (Comb sort) call such values *turtles*.
+    See `<https://bit.ly/3mmS6C4>`_.
+
+
+**Question 6:** 
+
+  (*6.C. (C++ code) Use STL classes for priority queue operations.*)
+
+  Create a C++ program that reads from the standard input a positive integer :math:`n`, 
+  and then exactly :math:`n` space-separated integers. 
+  It should output the median of these integers to the standard output as a real number.
+  Use ``std::priority_queue`` to find the median.
+  (You can assume that the program will receive data that matches this 
+  description and you do not need to handle erroneous input.)
+  
+  .. note:: 
+    Recall that the *median* of a collection of :math:`n` numbers :math:`a_1,a_2,\ldots,a_n` is 
+    the middle number in the sorted order of :math:`a_i` (if :math:`n` is odd), or the arithmetic
+    mean of the two middle numbers in the sorted order of :math:`a_i` (if :math:`n` is even). 
+
+  **Answer:** 
+    The solution is given below. We build a maximum heap using default comparator (since it is median, the sorting
+    direction does not matter; it could also be a minimum heap). 
+    Operation ``pop()`` removes the maximum element, but ``top()`` returns the maximum without modifying the queue. 
+	
+  
+
+  .. literalinclude:: ../src/priority_queue.cpp
+   :language: cpp
+
+  
+  :math:`\square`
+  
+
+
+
+  
