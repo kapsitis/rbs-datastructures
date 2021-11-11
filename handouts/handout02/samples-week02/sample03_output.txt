@@ -1,3 +1,0 @@
-Enter the count of numbers: 
-Enter 10 integers: 
-The total of 10 numbers is 55
