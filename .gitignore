@@ -47,9 +47,9 @@ programming/src/lab1-2/sample6
 topics/*.pdf
 
 # Python simple
-programming/src/.idea/*
-programming/src/venv/*
+.idea/*
 programming/lab4-1/src/*
+venv/*
 
 # LaTeX files
 *.aux
