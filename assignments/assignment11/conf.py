@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'DS-Fall2021-Programming'
+project = 'Assignment11'
 copyright = '2021, RBS'
 author = 'RBS'
 
@@ -65,3 +65,4 @@ latex_elements = {
 #]
 
 latex_additional_files = ["mystyle.sty"]
+

@@ -1,17 +1,16 @@
-.. DS-Fall2021-Programming documentation master file, created by
-   sphinx-quickstart on Sat Nov  6 21:55:13 2021.
+.. Handout12 documentation master file, created by
+   sphinx-quickstart on Mon Nov 15 23:55:53 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to DS-Fall2021-Programming's documentation!
-===================================================
+Welcome to Handout12's documentation!
+=====================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   lab5-1
-
+   ho-rolling-hash
 
 .. Indices and tables
 .. ==================

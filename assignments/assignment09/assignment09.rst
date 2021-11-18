@@ -7,7 +7,8 @@ Written Assignment 09
 Let :math:`G(V,E)` be an *undirected* graph. Let :math:`w:E\rightarrow{}\mathbf{Z}` 
 be a function assigning integer weights to all the graph's edges and
 let :math:`r` be the root vertex that will start to grow the minimum spanning tree (MST).
-Every vertex :math:`v \in V` stores :math:`v.key` -- the sorting key for a prioirty queue of all vertices. 
+Every vertex :math:`v \in V` stores :math:`v.key` -- the key for a priority queue (initially containing
+all the vertices). 
 A vertex also stores :math:`v.p` -- 
 its "parent" (the parent vertex in the ultimate MST; it is assigned only once). 
 Prim's algorithm to find the minimum spanning tree in :math:`G`
@@ -45,31 +46,51 @@ In this task the input graph :math:`G = (V,E)` is given by its adjacency matrix:
 
 .. math::
 
-  M_G = \left( \begin{array}{ccccccccc}
-  0 & 7 & 4 & 3 & 0 & 7 & 0 & 7 & 0 \\
-  7 & 0 & 0 & 0 & 0 & y & 5 & 0 & 6 \\
-  4 & 0 & 0 & 0 & 0 & 0 & 2 & 0 & 6 \\
-  3 & 0 & 0 & 0 & z & 5 & 0 & 0 & 0 \\
-  0 & 0 & 0 & z & 0 & 2 & 8 & 0 & 0 \\
-  7 & y & 0 & 5 & 2 & 0 & 0 & 0 & 3 \\
-  0 & 5 & 2 & 0 & 8 & 0 & 0 & x & 0 \\
-  7 & 0 & 0 & 0 & 0 & 0 & x & 0 & 0 \\
-  0 & 6 & 6 & 0 & 0 & 3 & 0 & 0 & 0 \\
+  M_G = \left( \begin{array}{cccccccc}
+  0 & 0 & 5 & 8 & y & 0 & 0 & 0 \\
+  0 & 0 & 3 & 7 & 0 & z & 0 & 0 \\
+  5 & 3 & 0 & 3 & 0 & 0 & 0 & 0 \\
+  8 & 7 & 3 & 0 & 1 & 7 & 0 & 0 \\
+  y & 0 & 0 & 1 & 0 & 6 & 9 & 6 \\
+  0 & z & 0 & 7 & 6 & 0 & x & 2 \\
+  0 & 0 & 0 & 0 & 9 & x & 0 & 7 \\
+  0 & 0 & 0 & 0 & 6 & 2 & 7 & 0 \\
   \end{array} \right). 
 
-
-
-
 **(A)**
-  In your graph replace :math:`x,y,z` with your values 
-  calculated from the Student ID. 
-  Run Prim's algorithm about the shortest paths. 
-  After each phase show the set of vertices of MST
-  (those currently deleted from the MST), and
-  also those values of :math:`v.key` and :math:`v.p`, 
-  if they are modified during that phase. 	
+  Draw the graph as a diagram with nodes and edges.
+  Replace :math:`x,y,z` with values
+  calculated from your Student ID.
+  Label the vertices with letters
+  :math:`A,B,C,D,E,F,G,H` (they correspond 
+  to the consecutive rows and columns in the matrix).
+  
+  If you wish, you can use the following layout
+  (edges are not shown, but the vertice positions allow
+  to draw the edges without much intersection). 
+  But you can use any other layout as well. 
+  
+  .. image:: figs-mst/mst-vertices.png
+     :width: 3in
 
 
 **(B)**
+  Run Prim's algorithm to find MST using
+  :math:`r = A` as the root.
+  If you do not have time to redraw the graph many times, 
+  just show the table with :math:`v.key` 
+  values after each phase. 
+  (No need to show :math:`v.p`, as the parents do not change
+  and they are easy to find once you have the final rooted tree drawn.)
+  The top of the table would look like this (it shows Phase 0 -- 
+  the key values before any edges have been added).
+  
+  ======  =========  ==============  ==============  ==============  ==============  ==============  ==============  ==============
+  Phase   A          B               C               D               E               F               G               H
+  0       :math:`0`  :math:`\infty`  :math:`\infty`  :math:`\infty`  :math:`\infty`  :math:`\infty`  :math:`\infty`  :math:`\infty`
+  ======  =========  ==============  ==============  ==============  ==============  ==============  ==============  ==============
+  
+
+**(C)**
   Summarize the result: Draw the MST obtained as the 
   result of Prim's algorithm, find its total weight. 

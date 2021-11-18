@@ -1,17 +1,16 @@
-.. DS-Fall2021-Programming documentation master file, created by
-   sphinx-quickstart on Sat Nov  6 21:55:13 2021.
+.. Assignment10 documentation master file, created by
+   sphinx-quickstart on Mon Nov 15 23:04:47 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to DS-Fall2021-Programming's documentation!
-===================================================
+Welcome to Assignment10's documentation!
+========================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   lab5-1
-
+   assignment10
 
 .. Indices and tables
 .. ==================
