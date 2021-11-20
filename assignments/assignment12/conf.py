@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Midterm 2'
+project = 'Assignment12'
 copyright = '2021, RBS'
 author = 'RBS'
 
@@ -65,8 +65,3 @@ latex_elements = {
 #]
 
 latex_additional_files = ["mystyle.sty"]
-
-
-def setup(app):
-    app.add_config_value('releaselevel', 'beta', 'env')
-

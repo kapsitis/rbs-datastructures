@@ -51,8 +51,10 @@ Midterm Exam 2
 
 **Question 1:**
 
+
+
   Alice sends messages to Bob using only eight voiced consonants from this alphabet:
-  :math:`\{ B, D, G, J, N, R, V, Z \}`. Each consontant is encoded 
+  :math:`\{ \mathtt{B}, \mathtt{D}, \mathtt{G}, \mathtt{J}, \mathtt{N}, \mathtt{R}, \mathtt{V}, \mathtt{Z} \}`. Each consontant is encoded 
   as a sequence of bits (0s and 1s) using the binary tree shown below:
   
   .. figure:: figs/huffman-tree.png
@@ -61,9 +63,10 @@ Midterm Exam 2
 	 
      A Binary Tree used by Alice to encode 8 consonant letters.
   
-  For example, ``VZJ`` is encoded as ``1110.11111.11110`` 
-  (``V`` becomes ``1110``, ``Z``  becomes ``11111`` and
-  ``J`` becomes ``11110``). Each code is obtained by 
+  For example, :math:`\mathtt{VZJ}` is encoded as ``1110.11111.11110`` 
+  (:math:`\mathtt{V}` becomes :math:`\mathtt{1110}`, :math:`\mathtt{Z}`  
+  becomes :math:`\mathtt{11111}` and
+  :math:`\mathtt{J}` becomes :math:`\mathtt{11110}`). Each code is obtained by 
   following the edges from the root to the respective leaf in this tree.
   
   **(A)**
@@ -79,9 +82,55 @@ Midterm Exam 2
     32%    28%    14%    11%    9%     4%     1%     1%
     =====  =====  =====  =====  =====  =====  =====  =====	
 
-    Find the expected value of the total bits (0s and 1s) that she uses in order to send a random 10-letter word to Bob.
+    Find the expected value of the total number of bits (0s and 1s) that she uses in order to send a random 10-letter word to Bob.
     (The letters in a random word are chosen independently according to the probabilities given above).
 
+.. only:: Internal
+
+  **Answer:**
+    
+  **(A)**
+    :math:`\mathtt{BRBDNGNG}` becomes the following sequence of bits:
+	
+    .. math::
+	
+      \mathtt{110.00.110.100.01.101.01.101}
+	
+    The total length of this sequence is 21 bits (not counting the separating dots). 
+    It is indeed sufficient to send just this sequence: :math:`\mathtt{110001101000110101101}`
+    for Bob to be able to decode it.
+	
+    .. note::
+      Even without the separating dots this sequence can be deciphered: Every time we start 
+      at the root of the tree and see where it finishes. For example, the sequence 
+      :math:`110` ends with a leaf denoting letter "B" (it cannot be continued as 
+      the code :math:`110` is not a prefix for any other letter). 
+      Such codes are named *prefix codes* and the method to build an efficient 
+      prefix tree is called *Huffman coding*. 
+
+
+
+  **(B)** 
+    Each of the letters :math:`a` has a fixed-length code; let us denote it by :math:`\ell(a)`. 
+    Let :math:`X` be a random variable that shows the number of bits used to encode a *single* letter
+    from that alphabet of 8 letters. We can find :math:`E(X)` by adding code lengths multiplied 
+    by letter probabilities: 
+	
+    .. math::
+
+      \begin{array}{lcl}
+      E(X) & = & P(\mathtt{R}) \cdot \ell(\mathtt{R}) + P(\mathtt{N}) \cdot \ell(\mathtt{N}) + 
+      P(\mathtt{D}) \cdot \ell(\mathtt{D}) + P(\mathtt{G}) \cdot \ell(\mathtt{G}) + \\      
+      & + & P(\mathtt{B}) \cdot \ell(\mathtt{B}) + P(\mathtt{V}) \cdot \ell(\mathtt{V}) + 
+      P(\mathtt{J}) \cdot \ell(\mathtt{J}) + P(\mathtt{Z}) \cdot \ell(\mathtt{Z}) = \\
+      & = & 0.32 \cdot 2 + 0.28 \cdot 2 + 0.14 \cdot 3 + 0.11 \cdot 3 + 0.09 \cdot 3 + 0.04 \cdot 4 + 0.01 \cdot 5 + 0.01 \cdot 5 = \\
+      & = & 2.48 \\
+      \end{array}
+	  
+	
+    The expected value for encoding :math:`10` letters is ten times larger: :math:`24.8`. 	
+	
+  :math:`\square`
 
 
 
@@ -104,6 +153,47 @@ Midterm Exam 2
   **(C)** 
    What is the largest and the smallest value for :math:`h` -- the height of :math:`T`? 
    Explain your estimates.
+   
+
+.. only:: Internal
+
+  **Answer:**
+  
+  **(A)** 
+    The tree can be a full binary tree. Consider the following construction: first create 
+    the simplest full binary tree only containing one node (it is its root, 
+    but it is also a leaf). Every time some leaf gets two children, it becomes an internal node and there are two new
+    leaves -- in total the tree gains one internal node and one leaf node. So, the number of leaves is always 
+    larger than the number of internal nodes (by exactly one). So a tree with :math:`32` internal nodes
+    would have exactly :math:`33` leaves.
+	
+    No tree with :math:`32` internal nodes can be a perfect binary tree. In perfect trees the number 
+    of internal nodes can be :math:`0` or :math:`1`, or :math:`3`, or :math:`7`, and so on. 
+    In general, a perfect tree of height :math:`H` would have exactly :math:`2^H - 1` internal nodes
+    (and :math:`2^H` leaves). But :math:`32` cannot be represented as :math:`2^H-1` for any integer :math:`H`.
+	
+  **(B)** 
+    If a tree has :math:`i` internal nodes, then it can have up to :math:`i+1` leaves (it has exactly 
+    :math:`i+1` leaves, if it is a full tree -- see explanation in the above item). 
+    On the other hand, any tree with :math:`i` internal nodes should have at least one leaf -- the node
+    where parent-child relationships end. A tree can have exactly one leaf (if any internal node has exactly 
+    one child -- so all the nodes make a long chain with :math:`i` internal nodes and one leaf). 
+	
+    In case if :math:`i =32` we get the maximum number of nodes :math:`n = i + (i+1) = 32 + 33 = 65`. 
+    And the minimum number of nodes is :math:`i+1 = 33`. 
+	
+  **(C)**
+    Consider a perfect tree with all leaves at the depth :math:`5`. It would have :math:`2^5 = 32` leaves, 
+    but just :math:`31` internal nodes. To create one more internal node we must have at least two leaves at
+    the depth :math:`6`, so the smallest value of :math:`h` is :math:`h=6`. 
+
+    On the other hand, the very skinny tree -- just a chain of vertices with one leaf at the end -- would have
+    height :math:`h = 32`. (One cannot get a taller tree, since there must be at least one vertex at every 
+    depth; one cannot skip levels.) 	
+	
+	
+  :math:`\square`
+	
  
 
 .. 4.A. Use priority queue ADT to implement and analyze simple algorithms.
@@ -139,7 +229,40 @@ Midterm Exam 2
   **(B)**
     Express the time complexity of this algorithm in Big-:math:`\Theta` notation: Find a
     function :math:`g(n)` such that the time complexity of :math:`\text{\sc ProcessList}(L)` is
-    :math:`\Theta(g(n))`. 
+    :math:`\Theta(g(n))`.
+	
+
+.. only:: Internal
+
+  **Answer:** 
+  
+  **(A)** 
+    The algorithm keeps removing items until :math:`PQ.size()` ``==`` :math:`5`.
+    This means that only the five largest items remain in the priority queue.
+    After that we return the minimum of the remaining elements. 
+	
+    For this reason the function :math:`\text{\sc ProcessList}(L)` will return 
+    the 5th largest element of the list :math:`L`.
+	
+  **(B)**
+    For large values of :math:`n` there will be :math:`n-5` operations :math:`PQ.removeMin()`. 
+    Each operation takes :math:`O(\log_2 n)` time. 
+    Therefore the total time of this algorithm is :math:`O(n \log_2 n)`. Big-O notation is 
+    the upper estimate.
+	
+    Let us show that also the lower estimate (Big-Omega notation) is :math:`\Omega(n \log_2 n)`. 	
+    One could argue that as the queue becomes shorter the :math:`removeMin()` will gradually become 
+    faster. But this does not change the lower estimate of time complexity, as there will be 
+    at least one half of the :math:`removeMin()` calls -- namely, :math:`n/2` calls; 
+    and every one will operate on a heap of size at least :math:`n/2`, and
+    its logarithm is :math:`\log_2 (n/2) = 	\log_2 n - 1`. 
+    Product of :math:`n/2` and :math:`(\log_2 n - 1)` is :math:`\Omega(n \log_2 n)`.
+	
+    Since both estimates are the same, the complexity of algorithm is :math:`\Theta(n \log_2 n)`. 
+    
+
+  :math:`\square`
+
 	
 
 .. 5.B.Use and analyze Merge sort.
@@ -153,7 +276,7 @@ Midterm Exam 2
   | :math:`\text{\sc MergeSort}(A,p,r)`:
   | :math:`1\;\;` **if** :math:`p < r`
   | :math:`2\;\;\;\;\;\;\;\;` :math:`q = \left\lfloor (p+r)/2 \right\rfloor`
-  | :math:`3\;\;\;\;\;\;\;\;` :math:`\text{\sc MergeSort}(A,p,r)`
+  | :math:`3\;\;\;\;\;\;\;\;` :math:`\text{\sc MergeSort}(A,p,q)`
   | :math:`4\;\;\;\;\;\;\;\;` :math:`\text{\sc MergeSort}(A,q+1,r)`
   | :math:`5\;\;\;\;\;\;\;\;` :math:`\text{\sc Merge}(A,p,q,r)`
   
@@ -164,6 +287,30 @@ Midterm Exam 2
   What is the total number of calls to :math:`\text{\sc MergeSort}` for this array 
   (this includes the initial call as well as the 
   recursive calls on lines 3 and 4 of this pseudocode). 
+  
+  
+  
+.. only:: Internal
+
+  **Answer:**
+  
+  .. image:: figs/mergesort-calls.png
+     :width: 4in
+	 
+  The recursive calls of :math:`\text{\sc MergeSort}` are shown in the figure -- 
+  just the parameters :math:`p,r` for each call. 
+  For example, :math:`\text{\sc MergeSort}(A,1,11)` computes :math:`q = \lfloor (1+11)/2 \rfloor = 6`, 
+  and causes two more calls to :math:`\text{\sc MergeSort}(A,1,6)` and :math:`\text{\sc MergeSort}(A,7,11)`
+  respectively. On the other hand, if :math:`p = r`, then the recursive calls do not happen (one-element 
+  list is already sorted). So there are exactly :math:`11` external nodes (leaves) in the 
+  recursion tree. 
+  
+  Since the tree of calls is full, it also has :math:`10` internal nodes (shown pink in the picture).
+  The total number of these nodes is :math:`10 + 11 = 21`. 
+  
+  :math:`\square`
+  
+  
 
 .. 6.D. (C++ code) Use inheritance and virtual functions.
 
@@ -202,8 +349,18 @@ Midterm Exam 2
   Solutions that use "hard-coded" output that does not depend on the 
   values and structures defined in ``main()`` will not be considered valid.
   
-	
+.. only:: Internal
 
+  **Answer:**
+  
+  A possible solution to this task is shown in the code below:
 
+  .. literalinclude:: figs/virtual_functions_solved.cpp
+
+  Make sure that you declare ``toString()`` function in the superclass ``Node`` as 
+  virtual. Also -- it may be convenient to use ``stringstream`` class to 
+  accumulate output (and only at the very end convert it to a C++ ``string`` object). 
+  Another alternative would be -- concatenate many strings in the function ``Internal::toString()``.
+  
 
   
