@@ -1,4 +1,4 @@
-Handout 16: Suffix Trees
+Handout 15: Suffix Trees
 =========================
 
 **Objectives:**
@@ -139,7 +139,7 @@ We do not need to store empty string
 (just the dollar sign). 
 
 .. image:: figs-suffix-trees/suffix-tree-banana.png
-   :width: 3in
+   :width: 2in
 
 
 Search for "nan", "an" or even "ana"  (two overlapping

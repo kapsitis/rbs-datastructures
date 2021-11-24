@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Handout16'
+project = 'Handout15'
 copyright = '2021, RBS'
 author = 'RBS'
 
