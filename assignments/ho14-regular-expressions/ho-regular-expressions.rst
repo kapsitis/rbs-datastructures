@@ -263,7 +263,46 @@ to follow in case of ambiguities (multiple edges or epsilon edges).
   the same thing (our example is unusual in the sense 
   that the DFA recognizing divisibility by 3 is smaller). 
   
+
+
+NFA Automata to Languages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Consider the following five NFA automata; all of them 
+have the same input alphabet :math:`\Sigma = \{ \mathtt{0}, \mathtt{1} \}`. 
+For each of them write the language accepted by it as a 
+regular expression. Also describe the language using sentences in 
+English. 
+
+
+**(A)**
+
+  .. image:: figs-regular-expressions/automaton01.png
+     :width: 2in
   
+**(B)**
+
+  .. image:: figs-regular-expressions/automaton02.png
+     :width: 4in
+
+
+**(C)**
+
+  .. image:: figs-regular-expressions/automaton03.png
+     :width: 3in
+
+**(D)**
+
+  .. image:: figs-regular-expressions/automaton04.png
+     :width: 1in
+
+**(E)**
+
+  .. image:: figs-regular-expressions/automaton05.png
+     :width: 2in
+
+
+
 
 Equivalence of Regex and NFAs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -308,14 +347,123 @@ can define every regular expression, but there are some inconveniences:
   switch to non-alphanumeric characters (whitespace or special symbols)?
 
 
-Other Extended Syntax
-^^^^^^^^^^^^^^^^^^^^^^
+**Groups of Characters:**
 
-* Anchors for beginning and end of the input string. 
-* Word boundaries. 
-* Greedy vs. non-greedy matching. 
-* Matching groups and copying them literally. 
+===============================  ================================================================================================
+``.``                            Matches any character, except CR (carriage return) and LF (line feed)
+``\r``, ``\r``                   Matches newline characters CR and LF
+``\w``                           Any word character -- letter, digit or underscore (_)
+``\W``                           Any non-word character, e.g. whitespace or punctuation character
+``\s``                           Any whitespace character – space, tabulation or form feed (newline characters are not matched)
+``\S``                           Any character that is not a space
+``[a-z]``, ``[A-Z]``, ``[0-9]``  Lowercase, uppercase letters and digits
+``[0-9A-Fa-f]``                  Any hexadecimal digit
+===============================  ================================================================================================
 
+
+**Quantification operators:**
+
+=========================   ===============================================================================
+:math:`\mathtt{a?}`         Shorthand for :math:`\varepsilon\mathtt{|a}`
+:math:`\mathtt{a+}`         Shorthand for :math:`\mathtt{aa*}`
+:math:`\mathtt{a\{3\}}`     Shorthand for :math:`\mathtt{aaa}`
+:math:`\mathtt{a\{3,5\}}`   Shorthand for :math:`\mathtt{aaa|aaaa|aaaaa}`
+:math:`\mathtt{a\{,3\}}`    Shorthand for :math:`\varepsilon\mathtt{|a|aa|aaa}`
+:math:`\mathtt{a\{3,\}}`    Shorthand for :math:`\mathtt{(aaa)(a*)} = \mathtt{aaaa*}`
+=========================   ===============================================================================
+
+
+
+
+Regex in C++ Code and Python 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Regular expressions can be tested from interactive Python console. 
+See the official documentation of package ``re``: `<https://bit.ly/3D1Rzuw>`_. 
+
+
+**Verify, if the given regex is found in the string:**
+
+.. code-block:: python
+  
+  import re
+  # search for digits [0-9]+ at the beginning of the string
+  bool(re.match(r'[0-9]+', '2021, and 2022, and 2023'))
+  # check, if the string exactly matches the given expression
+  bool(re.fullmatch(r'[0-9]+', '2021, and 2022, and 2023'))
+
+**Find the match and the offset of a regular expression:**
+
+.. code-block:: python
+
+  import re
+  m = re.search(r'[0-9]+', '2021, and 2022, and 2023')
+  m.group()
+  m.start()
+  
+  m = re.search(r'<img\s.*?>', '<img src="a.png"/> and also <img src="b.png"/>')
+  m.group()
+  m.start()
+
+In the latter example, the question mark enforces non-greedy matching. 
+  
+
+**Find all instances:**
+
+.. code-block:: python
+
+  import re
+  re.findall(r'([0-9]{4})', '202121, and 2022, and 2023')
+  [x.group() for x in re.finditer(r'[0-9]{4}', '202121, and 2022, and 2023')]
+  
+**Code snippet to read file and print only matching lines:**
+
+.. code-block:: python
+
+  import re
+  for line in open("file.txt"):
+      for match in re.finditer(r'^\d{4}(-\d{4}){3}$', line):
+          print(line)
+
+
+**Code snippet for space-normalization:** 
+
+.. code-block:: python
+
+  import re
+  for line in open("file.txt"):
+      line = re.sub('^\s+', '', line)
+      line = re.sub('\s+$', '', line)
+      line = re.sub('\s+', ' ', line)
+      print(line)
+
+
+
+
+
+
+**Unicode Examples** 
+
+.. image:: figs-regular-expressions/haendel-regex.png
+   :width: 3.5in
+     
+
+``\b(H(ä|ae?)ndel|H(Ä|AE?)NDEL)\b`` -- this 
+regular expression matches various spellings of Haendel: 
+  
+.. code-block:: text
+  
+  Handel
+  Haendel
+  Händel
+  HANDEL
+  HAENDEL
+  HÄNDEL
+    
+The last name of the German composer Haendel has multiple spellings; 
+can be summarized with a regular expression. 
+Also -- inflected forms in various languages with more complex morphology
+(tens of verb forms in Latvian, 14 noun cases in Finnish, etc.) 
 
 
 
@@ -358,8 +506,8 @@ Problems
     Describe the language in English -- which words are contained there; 
     list the words in :math:`L` having length up to :math:`3` characters. 
 
-**Questions 2:**
-   Consider a Nondeterministic Finite Acceptor (NFA) defined as follows:
+**Question 2:**
+  Consider a Nondeterministic Finite Acceptor (NFA) defined as follows:
   
   * The set of all states: :math:`Q = \{ q_0, q_1, q_2 \}`. 
   * Input alphabet: :math:`\Sigma = \{ \mathtt{0}, \mathtt{1}, \mathtt{2} \}`. 
@@ -381,7 +529,7 @@ Problems
     list the words in :math:`L` having length up to :math:`3` characters. 
 
 
-**Quesiton 3:**
+**Question 3:**
   In the problems below, create deterministic or nondeterministic
   finite acceptors for the languages over the "binary alphabet" 
   :math:`\Sigma = \{ \mathtt{0}, \mathtt{1} \}`  given below: 

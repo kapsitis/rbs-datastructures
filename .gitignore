@@ -54,3 +54,4 @@ venv/*
 # LaTeX files
 *.aux
 *.log
+assignments/summary-assignments-all/*
