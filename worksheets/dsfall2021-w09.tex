@@ -1,0 +1,50 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath,amssymb,multicol,tikz,enumitem}
+\usepackage[margin=2cm]{geometry}
+\usetikzlibrary{calc,shapes}
+
+\pagestyle{empty}
+
+\newcommand\N{\mathbf{N}}
+\newcommand\Q{\mathbf{Q}}
+\newcommand\R{\mathbf{R}}
+\newcommand\Z{\mathbf{Z}}
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcommand\indd{${}$\hspace{20pt}}
+
+\begin{document}
+
+\begin{center}
+\parbox{3.5cm}{\textbf{Data Structures}} \hfill {\bf\Huge Worksheet 9} \hfill \parbox{3.5cm}{\flushright\textbf{BITL2}} \\[5pt]
+\rm\small 2 December 2021
+\end{center}
+
+\hrule\vspace{2pt}\hrule
+
+\begin{enumerate}
+
+\item \textbf{Warm up:} Answer the following questions.
+\begin{enumerate}
+\item Give a regular expression that matches the strings \texttt{bard} and \texttt{hard} and \texttt{beard} but not \texttt{heard}.
+\item If two strings of length $n$ only share a single common character (not necessarily in the same spot), what is the shortest and longest regular expression (in terms of characters) that matches both?
+\item True or false: the suffix tries for \texttt{aaaak} and \texttt{kaaaa} have the same number of edges.
+\item What sorts of strings have binary trees as suffix tries?
+\end{enumerate}
+
+\vspace{10pt}
+\item Consider the strings \texttt{referee} and \texttt{sleeveless}.
+\begin{enumerate}
+\item Construct the suffix trie, suffix tree, and suffix array for both strings. 
+\item In terms of the number of edges, how will the suffix trie of \texttt{referee} change if the third character \texttt{f} is changed to something else?
+\item Combine the suffix trees of the two strings together and indicate where the longest common substring is.
+\end{enumerate}
+
+\vspace{10pt}
+\item \textit{Tasks from Kalvis's Sample Assignment 15}
+
+\end{enumerate}
+
+\end{document}

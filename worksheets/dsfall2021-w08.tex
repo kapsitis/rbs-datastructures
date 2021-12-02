@@ -1,0 +1,73 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath,amssymb,multicol,tikz,enumitem}
+\usepackage[margin=2cm]{geometry}
+\usetikzlibrary{calc,shapes}
+
+\pagestyle{empty}
+
+\newcommand\N{\mathbf{N}}
+\newcommand\Q{\mathbf{Q}}
+\newcommand\R{\mathbf{R}}
+\newcommand\Z{\mathbf{Z}}
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcommand\indd{${}$\hspace{20pt}}
+
+\begin{document}
+
+\begin{center}
+\parbox{3.5cm}{\textbf{Data Structures}} \hfill {\bf\Huge Worksheet 8} \hfill \parbox{3.5cm}{\flushright\textbf{BITL2}} \\[5pt]
+\rm\small 25 November 2021
+\end{center}
+
+\hrule\vspace{2pt}\hrule
+
+\begin{enumerate}
+
+\item \textbf{Warm up:} Answer the following questions.
+\begin{enumerate}
+\item Why is hashing important?
+\item What is the difference between a map and a hashing function?
+\item In what cases is a rolling hash function the same as a regular hash function? 
+\end{enumerate}
+
+\vfill
+\item Draw what happens when the keys $5, 28, 19, 15, 20, 33, 12, 17, 10,$ are insterted into a hash table with hash function $h(k) = k\pmod 9$, with collisions resolved by chaining. 
+
+%\item rolling hash
+
+\vfill
+\item This question is about \textbf{string matching} algorithms.
+\begin{enumerate}
+\item Recall the naive string matching algorithm as you saw it in Discrete Structures. Consider the two strings
+\[
+s = \texttt{ambracadambrazampbra},
+\hspace{1cm}
+t = \texttt{amp}.
+\]
+How many characters will be compared when $t$ is searched for in $s$?
+\item How many of those comparisons for \texttt{a} are pointless, because you already know the character is not \texttt{a}?
+\item To fix the problem in part (b), for every string \texttt{s} we define the \textbf{prefix} function $\pi_{\texttt{s}}\colon \Z_{\geqslant 0} \to \Z_{\geqslant 0}$, given by
+\begin{align*}
+\pi_{\texttt{s}}(k) & = \max_{\ell<k} \left\{\texttt{s}[:\ell] = \texttt{s}[k-\ell:k]\right\} \\
+& = \max_\ell \left\{\texttt{s}[:k][:\ell] = \texttt{s}[:k][-\ell:]\right\}.
+\end{align*}
+Find the values of $\pi_{\texttt{s}}(k)$ for each $k=0,\dots,\textup{len}(\texttt{s})$ for the strings
+\begin{multicols}{4}
+\begin{enumerate}
+\item \texttt{grebulon}
+\item \texttt{aaaaaaaaba}
+\item \texttt{abaaaaaaaa}
+\item \texttt{catercatcat}
+\end{enumerate}
+\end{multicols}
+\item Suppose you are given a sequence of nonnegative integers $a_1,\dots,1_\ell$. Describe what conditions the sequence must meet to correspond to the values $\pi_{\texttt{s}}(1),\dots,\pi_{\texttt{s}}(\ell)$ of a string \texttt{s} of length $\ell$. How would you construct \texttt{s}?
+\end{enumerate}
+\end{enumerate}
+
+\vfill
+\vfill
+
+\end{document}
