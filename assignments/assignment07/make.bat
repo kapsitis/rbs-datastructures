@@ -25,8 +25,45 @@ if errorlevel 9009 (
 	exit /b 1
 )
 
-%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+
+IF "%language%" == "de" (
+    goto languageDE
+) ELSE (
+    IF "%language%" == "en" (
+        goto languageEN
+    ) ELSE (
+        echo Not found.
+    )
+)
+
+
+REM ./make latexpdf solutions
+REM ./make latexpdf questions
+REM ./make latexpdf
+if [%2] == [] (
+    %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+) else (
+    if [%2] == [solutions] (
+        echo.Building solutions
+        %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O% -t Internal
+        python replace.py
+	    cd _build\latex
+	    xelatex assignment07
+        ren assignment07.pdf assignment07-solutions.pdf
+        xcopy assignment07-solutions.pdf ..\.. /Y
+		cd ..\..
+    ) else (
+        echo.Building questions
+		%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+	    cd _build\latex
+        ren assignment07.pdf assignment07-questions.pdf
+        xcopy assignment07-questions.pdf ..\.. /Y
+		cd ..\..		
+	)
+)
 goto end
+
+
 
 :help
 %SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
