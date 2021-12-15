@@ -1,7 +1,7 @@
 Written Assignment 10
 ======================
 
-.. image:: figs-maximum-flow/flow-graph.png
+.. image:: figs-maximum-flow/graph-capacities.png
    :width: 3in
 
 **(A)**
@@ -32,3 +32,55 @@ Written Assignment 10
   Redraw the original graph with all the maximum flows (use the same two-number labels for edges ``f/c``). 
   Show the min-cut which prevents any further augmenting paths (either highlight with 
   another color, or simply list the partition of graph's vertices into two disjoint sets that describe the cut).
+  
+  
+.. only:: Internal
+
+  **Answer:** 
+  
+  **(A)**
+    Following Edmonds-Karp algorithm, we successfully select augmenting paths 
+    starting from the shortest ones (and lexicographically first -- if there are multiple
+    paths of the same length). 
+    
+    Phase 1: Push :math:`11` units of flow over the augmenting path :math:`S \rightarrow A \rightarrow B \rightarrow T` highlighted in orange.
+    
+    .. image:: figs-maximum-flow/ford-fulkerson-phases-1.png
+       :width: 4in
+    
+    Phase 2: Push :math:`1` unit of flow over the augmenting path :math:`S \rightarrow C \rightarrow B \rightarrow T`. 
+    
+    .. image:: figs-maximum-flow/ford-fulkerson-phases-2.png
+       :width: 4in
+       
+    Phase 3: Push :math:`7` units of flow over the augmenting path :math:`S \rightarrow C \rightarrow D \rightarrow T`.     
+
+    .. image:: figs-maximum-flow/ford-fulkerson-phases-3.png
+       :width: 4in
+       
+    Phase 4: Push :math:`2` units of flow over the augmenting path :math:`S \rightarrow C \rightarrow B \rightarrow D \rightarrow T`.            
+
+    .. image:: figs-maximum-flow/ford-fulkerson-phases-4.png
+       :width: 4in
+
+    The last residual graph does not contain any augmenting path from :math:`S` to 
+    :math:`T`, so the algorithm stops here.
+    Overall, we have pushed :math:`11 + 1 + 7 + 2 = 21` units of flow.
+
+    .. image:: figs-maximum-flow/ford-fulkerson-phases-5.png
+       :width: 2in
+    
+    
+  **(B)**
+    We redraw the flow graph (showing actual flows and capacities for each edge). 
+    The minimum cut is shown as red dashed line. 
+    It splits vertices into two disjoint groups: :math:`S,A,B,C` and :math:`D,T`; 
+    all the edges between them are saturated -- the flow reaches capacity. 
+    As we know the capacity of a minimum cut must equal the maximum flow. 
+    This maximum flow (equalling the min cut capacity) is :math:`7+2 + 12 = 21`. 
+
+    .. image:: figs-maximum-flow/ford-fulkerson-min-cut.png
+       :width: 2in
+
+      
+  :math:`\square`

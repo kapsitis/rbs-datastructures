@@ -74,25 +74,33 @@ Solution
 **(A)**
 
   **Phase 1:**
-    Augmenting path: :math:`p = \left\langle s,v_1,v_2,t \right\rangle`, residual flow is 
+    Augmenting path: :math:`p = \left\langle s,v_1,v_2,t \right\rangle`, the added flow is 
     :math:`f_p = \min(3,4,2) = 2`. 
   
     .. image:: figs-maximum-flow/edmonds-karp-solution-1.png
        :width: 4in
    
   **Phase 2:**
-    Augmenting path: :math:`p = \left\langle s,v_3,v_6,t \right\rangle`, residual flow is 
+    Augmenting path: :math:`p = \left\langle s,v_3,v_6,t \right\rangle`, the added flow is 
     :math:`f_p = \min(1,2,1) = 1`.
   
     .. image:: figs-maximum-flow/edmonds-karp-solution-2.png
        :width: 4in
   
   **Phase 3:**
-    Augmenting path: :math:`p = \left\langle s,v_5,v_4,t \right\rangle`, residual flow is 
+    Augmenting path: :math:`p = \left\langle s,v_5,v_4,t \right\rangle`, the added flow is 
     :math:`f_p = \min(3,2,3) = 2`.
   
     .. image:: figs-maximum-flow/edmonds-karp-solution-3.png
        :width: 4in
+
+  **Phase 4:**
+    Finally, the residual graph looks like shown below. There are no further 
+    augmenting paths going from :math:`s` to :math:`t` with some positive capacity.
+
+    .. image:: figs-maximum-flow/edmonds-karp-solution-4.png
+       :width: 2in
+
   
 **(B)**
   The flow obtained during the previous three phases is shown in the picture below. 
