@@ -56,4 +56,5 @@ venv/*
 *.aux
 *.log
 assignments/summary-assignments-all/*
+source-material/*
 sagatavosanas2018/*
