@@ -167,7 +167,7 @@ Problems
     For any :math:`g(n)`, is the set of functions :math:`\Theta(g(n))` the intersection of :math:`O(g(n))` and :math:`\Omega(g(n))`? 
 	
   **(B)**
-    Does every function :math:`f(n)` belong to the set :math:`Omega(1)`?
+    Does every function :math:`f(n)` belong to the set :math:`\Omega(1)`?
 	
   **(C)** 
     Let :math:`f(n), g(n)` be two functions from natural numbers to non-negative real numbers. 
@@ -178,24 +178,24 @@ Problems
 	
   **(E)** 
     Let :math:`f(n)` be a function from natural numbers to non-negative real numbers. 
-	Do we always have that :math:`f(n)` is in :math:`O(f(n))`, and :math:`f(n)` is in :math:`\Omega(f(n))` and :math:`f(n)` is in :math:`\Theta(f(n))`? 
-	(In other words, is being in Big-O, in Big-Omega and in Big-Theta a reflexive relation?)
+    Do we always have that :math:`f(n)` is in :math:`O(f(n))`, and :math:`f(n)` is in :math:`\Omega(f(n))` and :math:`f(n)` is in :math:`\Theta(f(n))`? 
+    (In other words, is being in Big-O, in Big-Omega and in Big-Theta a reflexive relation?)
 	
   **(F)** 
     Let :math:`f(n),g(n),h(n)` be functions from natural numbers to non-negative real numbers. 
-	It is known that :math:`f(n)` is in :math:`O(g(n))` and also :math:`g(n)` is in :math:`h(n)`. 
-	Can we always imply that :math:`f(n)` is in :math:`O(h(n))`. 
-	(In other words, is being in Big-O, in Big-Omega and in Big-Theta a transitive relation?)
+    It is known that :math:`f(n)` is in :math:`O(g(n))` and also :math:`g(n)` is in :math:`h(n)`. 
+    Can we always imply that :math:`f(n)` is in :math:`O(h(n))`. 
+    (In other words, is being in Big-O, in Big-Omega and in Big-Theta a transitive relation?)
 	
   **(H)** 
     Let :math:`f(n),g(n)` be functions from natural numbers to non-negative real numbers. 
-	It is known that :math:`f(n)` is in :math:`\Theta(g(n))`. 
-	Can we always imply that :math:`g(n)` is in :math:`\Theta(f(n))`? 
-	(In other words, is being in Big-Theta an equivalence relation?)
+    It is known that :math:`f(n)` is in :math:`\Theta(g(n))`. 
+    Can we always imply that :math:`g(n)` is in :math:`\Theta(f(n))`? 
+    (In other words, is being in Big-Theta an equivalence relation?)
 	
   **(I)**
     A function :math:`f(n)` is defined for natural arguments and takes natural values. 
-	It is known that :math:`f(n)` is in :math:`O(1)`. Is it true that :math:`f(n)` is a constant function: :math:`f(n) = C` for all :math:`n \in \mathbf{N}`.
+    It is known that :math:`f(n)` is in :math:`O(1)`. Is it true that :math:`f(n)` is a constant function: :math:`f(n) = C` for all :math:`n \in \mathbf{N}`.
 
 
 
