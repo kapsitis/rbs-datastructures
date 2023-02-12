@@ -22,7 +22,7 @@ Problems
 
   .. math::
 
-    a_i \geq a_{i-1}\;\;\text{\bf and}\;\; a_i \geq a_{i+1}
+    a_i \geq a_{i-1}\;\;\text{and}\;\; a_i \geq a_{i+1}
 
   (In case if :math:`i=0` or :math:`i = n-1`, one of these neighbors does not exist; and in such cases we
   only compare :math:`a_i` with neighbors that do exist.)

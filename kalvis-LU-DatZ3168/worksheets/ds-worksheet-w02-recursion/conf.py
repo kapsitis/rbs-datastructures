@@ -17,8 +17,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'ds-worksheet-asymptotic-bounds'
-copyright = '2022, LU'
+project = 'ds-worksheet-recursion'
+copyright = '2023, LU'
 author = 'LU'
 
 

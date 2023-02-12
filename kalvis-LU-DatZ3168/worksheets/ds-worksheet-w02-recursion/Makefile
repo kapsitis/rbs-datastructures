@@ -17,13 +17,13 @@ help:
 solutions:
 	@$(SPHINXBUILD) -M latexpdf "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -t Internal
 	python replace.py
-	cd _build/latex && pdflatex ds-worksheet-asymptotic-bounds
-	mv _build/latex/ds-worksheet-asymptotic-bounds.pdf ds-worksheet-asymptotic-bounds-solutions.pdf
+	cd _build/latex && pdflatex ds-worksheet-recursion
+	mv _build/latex/ds-worksheet-recursion.pdf ds-worksheet-recursion-solutions.pdf
 
 questions:
 	@$(SPHINXBUILD) -M latexpdf "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	cd _build/latex && pdflatex ds-worksheet-asymptotic-bounds
-	mv _build/latex/ds-worksheet-asymptotic-bounds.pdf .
+	cd _build/latex && pdflatex ds-worksheet-recursion
+	mv _build/latex/ds-worksheet-recursion.pdf .
 
 
 

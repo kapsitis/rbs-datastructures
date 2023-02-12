@@ -10,7 +10,7 @@ Welcome to week01a-notes's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   ds-worksheet-asymptotic-bounds
+   ds-worksheet-recursion
 
 
 .. Indices and tables
