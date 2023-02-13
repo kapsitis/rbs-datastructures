@@ -4,9 +4,88 @@ Worksheet Week 02: Recursion
 Introduction
 --------------
 
-There is an old proverb: *To understand recursion, you must first understand recursion*. In many cases complex problems can be 
-solved by breaking them down into subproblems multiple times. The only thing that is added is the 
-very structure of these recursive calls. 
+There is a proverb: *To understand recursion, you must first understand recursion*. In many cases complex problems can be 
+solved by breaking them down into subproblems multiple times. 
+
+Sequences defined by Recursion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Linear recursion example -- Fibonacci sequence: 
+
+.. math:: 
+
+  F(n) = \left\{ \begin{array}{ll}
+  0 & \mbox{if $n = 0$,}\\
+  1 & \mbox{if $n = 1$,}\\
+  F(n-1) + F(n - 2) & \mbox{if $n > 1$.}\\
+  \end{array} \right.
+
+
+It is known that the Fibonacci numbers (obtained by solving `Linear recurrence <https://brilliant.org/wiki/linear-recurrence-relations/>`_)
+can be computed by the following closed formula: 
+
+.. math:: 
+
+  F_m = \frac{1}{\sqrt{5}} \left( \left( \frac{1 + \sqrt{5}}{2} \right)^{\!m} - \left( \frac{1 + \sqrt{5}}{2} \right)^{\!m} \right).
+
+Essentially, Fibonacci numbers are the sum of two geometric series. 
+The common ratios in both geometric series are the roots of the *characteristic polynomial* :math:`x^2 = x + 1`. 
+
+.. math:: 
+
+  n! = \left\{ \begin{array}{ll}
+  1 & \mbox{if $n = 0$,}\\
+  n \cdot (n-1)! & \mbox{if $n > 0$.}\\
+  \end{array} \right.
+
+If you need to evaluate factorials for large :math:`n`, you can apply 
+`Stirling's approximation <https://en.wikipedia.org/wiki/Stirling%27s_approximation>`_: 
+
+.. math:: 
+
+  n! \approx \sqrt{2\pi n} \left( \frac{n}{e} \right)^n. 
+
+The ratio of both expressions has limit :math:`1` as :math:`n \rightarrow \infty`. 
+
+
+
+.. math:: 
+
+  S(n, x) = \left\{ \begin{array}{ll}
+  x & \mbox{if $n = 0$,}\\
+  S(n - 1, x) + \frac{(-1)^n \cdot x^{2n-1}}{(2n-1)!} & \mbox{if $n > 0$.}\\
+  \end{array} \right.
+
+For a constant :math:`x` build the sequence :math:`S(0,x), S(1,x), S(2,x), \ldots` recursively.
+It has the limit (Taylor series for :math:`y = \sin x`): 
+
+.. math:: 
+
+  \lim_{n \rightarrow \infty} S(x,n) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \ldots = \sin x. 
+
+Structural Recursion 
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Recursion in mathematics is not necessarily adding :math:`1` to a parameter :math:`n`. 
+It is possible to define valid mathematical expressions recursively using a grammar: 
+
+* Any number is a mathematical expression, 
+* Any variable :math:`x,y,\ldots` is a mathematical expression, 
+* If :math:`E` is a mathematical expression, then :math:`(E)` is also a mathematical expression, 
+* If :math:`E_1` and :math:`E_2` are mathematical expressions, then also :math:`E_1 + E_2`, 
+  :math:`E_1 - E_2`, :math:`E_1 \cdot E_2`, and :math:`E_1 / E_2` are mathematical expressions. 
+
+To compute mathematical expressions, one can proceed recursively: Find which is the "outermost"
+production to make the expression; break it down to one of the above cases, evaluate the subexpressions 
+and finally compute the answer. 
+
+Even fancier recursive expressions (language statements) can be obtained defining programming languages 
+with `Context-free grammars <https://en.wikipedia.org/wiki/Context-free_grammar>`_.
+*Parsers* are responsible for breaking down such recursively built expressions (or 
+programming language constructs) and converting them to some representation that can be executed. 
+
+
+
 
 Implementing the Recursion 
 ------------------------------
@@ -14,23 +93,43 @@ Implementing the Recursion
 Run-time stack
 ^^^^^^^^^^^^^^^^
 
+Every time one function calls another (in most imperative languages -- both compiled or interpreted), 
+a new activation record is created and pushed to the *run-time stack*. It consists of the following elements: 
+
+**Activation Record:** 
+
+  * Parameters and local variables (everything passed to the function call or defined therein), 
+  * Dynamic link (a pointer to the activation record of the caller), 
+  * Access link (used by the function to access non-local data), 
+  * Return value (will contain the value needed by the caller). 
+
+Activation records are quite large data structures, but programmer does not need to create them -- 
+they are maintained automatically as the functions call each other. 
+
+If a function is defined recursively, the run-time stack can contain multiple activation records of the
+same function (but with different parameters). 
 
 
 
 
-Are there any situations when using run-time stack to run recursive algorithms is disadvantageous 
-compared to managing stack explicitly as a user-defined data structure?
 
-Yes, there are some situations where using the runtime stack for running recursive algorithms can be disadvantageous 
-compared to explicitly managing the stack as a user-defined data structure. Here are a few:
+
+
+
+
+Situations when run-time stacks should be avoided?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sometimes user can choose to implement recursion without explicit function calls (user-defined data structures). 
+Here are some downsides to the run-time stacks:
 
 **Stack Overflow:** 
   The runtime stack has a limited amount of space, and if the recursion goes too deep, it can result in a stack overflow error. 
-  In such cases, using an explicit stack can be more efficient, as you can control the size of the stack and avoid the overflow error.
+  Explicit stack can be more efficient, as you can control the size of the stack and avoid the overflow error.
 
 **Performance:** 
   When using the runtime stack, there is overhead involved in pushing and popping function calls, as well as managing the stack pointers. 
-  If you're dealing with a large number of recursive calls, this overhead can be significant, and using an explicit stack can be faster.
+  For a large number of recursive calls, this overhead can be significant.
 
 **Memory:** 
   The runtime stack is typically stored in the memory with limited access time, so accessing it can be slow. 
@@ -38,10 +137,7 @@ compared to explicitly managing the stack as a user-defined data structure. Here
 
 **Debugging:** 
   When using the runtime stack, it can be difficult to debug the recursive algorithm, as you have limited visibility into the stack. 
-  With an explicit stack, you have more control over the data structure and can more easily debug the algorithm.
 
-In general, when working with recursive algorithms, it's good to consider the performance, memory usage, 
-and ease of debugging, and to choose the approach that best fits the requirements of the problem you're trying to solve.
 
 
 
@@ -289,14 +385,18 @@ There are some predefined data structures in Python (and STL data structures in 
 * Arrays, Lists, Sets, Dictionaries are used to store non-constant data. Each data structure 
   supports a set of operations. A collection of operations is called an *interface* (for well-known data structures 
   also ADT - *Abstract Data Type*). 
-* Example data Structure: Static Array -- fixed width slots, fixed length of the array itself. 
-  In pseudocode it could be written like this:
+* Example data structure: Static Array -- fixed width slots, fixed length of the array itself. 
+  Its functions supported in pseudocode:
 
   * :math:`A = \text{\sc Array}(n)`: allocate static array of size :math:`n` in :math:`\Theta(n)` time
   * :math:`\text{\sc Array}.get(i)`: return word stored at array index :math:`i`` in :math:`\Theta(1)` time
   * :math:`\text{\sc Array}.set(i,x)`: write value :math:`x` to array index :math:`i` in :math:`\Theta(1)` time
 
-  In many programming languages it is common to write "get" and "set" commmands in array notation :math:`A[i]`.
+  In many languages it is common to write "get" and "set" commmands with array notation :math:`A[i]`.
+
+* Example data structure: List -- same as above, but no longer fixed length. 
+  If it is implemented as a physical array, the operation times do not change. 
+  But occasionally need to reallocate memory, if the number of elements exceeds the size of the current array. 
 
 
 
@@ -346,15 +446,10 @@ Problems
   | 3. :math:`\;\;\;\;\;` **else**:
   | 4. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc EuclidGCD}(b, a\;\text{mod}\;b)`
 
-  * It is known that for a given input length :math:`n` the worst-case running time is to run the algorithm on 
-    subsequent Fibonacci numbers: :math:`F_m` and :math:`F_{m-1}`, where :math:`F_m` is the largest Fibonacci number of length 
-    not exceeding :math:`n`. 
-  * It is also known that the Fibonacci numbers (obtained by solving `Linear recurrence <https://brilliant.org/wiki/linear-recurrence-relations/>`_)
-    satisfy the following closed formula: 
-
-    .. math:: 
-
-      F_m = \frac{1}{\sqrt{5}} \left( \left( \frac{1 + \sqrt{5}}{2} \right)^{\!m} - \left( \frac{1 + \sqrt{5}}{2} \right)^{\!m} \right).
+  It is known that for a given input length :math:`n` the worst-case running time is to run the algorithm on 
+  subsequent Fibonacci numbers: :math:`F_m` and :math:`F_{m-1}`, where :math:`F_m` is the largest Fibonacci number of length 
+  not exceeding :math:`n`. 
+  
 
   Write a precise estimate (without using unknown constant factors as in Big-O notation) on how many calls of 
   :math:`\text{\sc EuclidGCD}(a,b)` are needed, if both inputs have length not exceeding :math:`n`. 
@@ -436,6 +531,5 @@ Problems
     def fibonacci_tail(n: int) -> int:
         return fibonacci_tail_recursive(n, 0, 1)
       
-
   :math:`\square`
 
