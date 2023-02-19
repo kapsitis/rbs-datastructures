@@ -133,7 +133,38 @@ only the "dominant parts" in the expression :math:`f(n)` matter.
 Properties of Big-O, Big-Omega, Big-Theta
 --------------------------------------------
 
-**Big-O and Limit of the Ratio:**
+Some commonly used properties of asymptotic growth rates 
+to find the complexity classes of functions easily without using the 
+definitions of the Big-O, Big-Omega, and Big-Theta concepts directly. 
+Using definitions is often tedious, typically we want to rely on our knowledge of 
+real analysis, limits, derivatives, integrals and so on. 
+
+
+
+**Dominant term:** 
+  If :math:`f(n) = f_1(n) + f_2(n)`, 
+  where :math:`f_2(n) < f_1(n)` for all sufficiently large :math:`n`, then :math:`O(f(n))` and :math:`O(f_1(n))` are the same.
+
+  Consequently, if :math:`f(n) = f_1(n) + f_2(n) + \ldots + f_k(n)` can be written as a finite sum of other functions, 
+  then the fastest growing one determines 
+  the asymptotic growth order of the entire sum :math:`f(n)`
+  
+**Additivity:** 
+  If :math:`f_1(n)` is in :math:`O(g_1(n))` and :math:`f_2(n)` is in :math:`g_2(n)`, then :math:`f_1(n) + f_2(n)` is in 
+  :math:`O(\max(g_1(n), g_2(n)))`. 
+  Typically, one of the :math:`g_1(n)` or :math:`g_2(n)` is asymptotically larger than the other (say, :math:`g_1(n)>g_2(n)` for 
+  all sufficiently large :math:`n`),  and instead of :math:`O(\max(g_1(n), g_2(n)))` we can simply take :math:`O(g_1(n))`. 
+
+**Multiplicativity:** 
+  If :math:`f(n)` is in :math:`O(g(n))` and :math:`c>0` is a positive constant, then :math:`c\cdot f(n)` is also in :math:`O(g(n))`.
+
+**Transitivity:** 
+  If :math:`f(n)` is in :math:`O(g(n))` and :math:`g(n)` is in :math:`O(h(n))`, then :math:`f(n)` is also in :math:`O(h(n))`.
+
+**Polynomial Dominance:** 
+  For any positive integer :math:`k`, :math:`n^k`` is dominated by :math:`cn^k` for all :math:`n \geq n0` and some constant :math:`c`.
+
+**Big-O and the Limit of the Ratio:**
   If the following limit exists and is finite:
 
   .. math::
@@ -143,22 +174,8 @@ Properties of Big-O, Big-Omega, Big-Theta
   then :math:`f(n)` is in :math:`O(g(n))`.
 
 
-**Big-O is transitive:**
-  If :math:`f(n) \in O(g(n))` and :math:`g(n) \in O(h(n))`, then :math:`f(n) \in O(h(n))`.
-
-**Sum of two functions:**
-  If :math:`f(n) \in O(h(n))` and :math:`g(n) \in O(h(n))`, then :math:`f(n) + g(n) = O(h(n))`.
-
-**Asymptotic Growth of Polynomials:**
-  Any :math:`k`-th degree polynomial :math:`P(n) = a_k n^k + a_{k-1} n^{k-1} + \ldots + a_1 n + a_0` is in :math:`O(n^k)`.
-
-
-**The Ordering of Polynomials:**
-  Let :math:`k,j` be real numbers, :math:`n` a natural number.  
-  The function :math:`n^k` is in :math:`O(n^{k+j})` for any positive :math:`j`. 
-
 **Logarithms of any base:**
-  If :math:`a,b > 1` are any real numbers, then :math:`\log_a n` is in :math:`O(log_b n)`. 
+  If :math:`a,b > 1` are real numbers, then :math:`\log_a n` is in :math:`\Theta(log_b n)`. 
 
   **Proof:**
     The last result directly follows from the formula to change the base of a logarithm: 
@@ -174,8 +191,7 @@ Properties of Big-O, Big-Omega, Big-Theta
     without specifying base at all. Formally speaking :math:`\log n` in our 
     course denotes :math:`\log_2 n`. 
     
-    In other contexts (outside Big-O notation, 
-    where constant factors matter)
+    In other contexts (where constant factors matter)
     the base of logarithm cannot be omitted. 
 
 
