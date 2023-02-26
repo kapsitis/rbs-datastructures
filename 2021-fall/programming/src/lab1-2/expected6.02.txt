@@ -1,2 +1,0 @@
-PeakLocation 1
-PeakValue (b,2)

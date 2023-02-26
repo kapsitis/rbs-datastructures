@@ -2,6 +2,74 @@ Worksheet, Week 06: Search Trees
 =================================
 
 
+
+Encode Tree as an Array
+--------------------------
+
+.. multiway trees encoded as binary trees
+.. traversal order
+..  https://www.geeksforgeeks.org/iterative-postorder-traversal-using-stack/
+
+**Introduction**
+  Binary trees are often represented as arrays
+  (where the array starts with the root node; followed
+  by all the other nodes, displayed layer by layer.
+  If any child of a node in this tree is missing, it is replaced by
+  :math:`\Lambda` (capital Lambda denoting an empty node)
+  in the array. Once we reach the last non-empty node in the tree, this is
+  the last element of the array.
+  For example, the binary tree shown in this picture:
+  
+
+  .. image:: figs-trees-and-heaps/example-binary-tree.png
+     :width: 2in
+      
+  It is represented by the following array:
+  
+  .. math::
+  
+    \mathtt{int\;a[\,]\;=\;\{1,2,3,7,\Lambda,5\}};
+    
+
+**Question 1.2.1:**
+  Assume that you have a binary tree that is represented by the following array:
+  
+  .. math::
+  
+    \mathtt{int\;a[\,]\;=\;\{1, 2, 4, a, \Lambda, \Lambda, 6, b, \Lambda, \Lambda, \Lambda, \Lambda, \Lambda, \Lambda, c\};}
+    
+  Values :math:`a`, :math:`b`, :math:`c` are the last three digits taken from your Student ID.
+  
+  **(A)**
+    Draw the binary tree represented by the above array in your answer.
+    The tree should look nice: Draw left children to the left (and right children to the right)
+    of their parents. Nodes on the same levels should be aligned.
+    
+  **(B)**
+    What is the number of internal nodes in this tree? The number of leaves in this tree?
+    
+  **(C)**
+    List the vertices of this tree in the post-order traversal order.
+    (Only show real nodes in the post-order sequence (all :math:`\Lambda` are
+    technical symbols indicating absence of nodes; they are not part of the tree).
+    
+  **(D)**
+    Write pseudo-code for an algorithm :math:`\text{\textsc{getParent}}(i)` that receives
+    the index :math:`i` of some node in this array, returns the index of the parent
+    of this node (or :math:`-1`, if the node has no parent).
+    All indices :math:`i` are zero-based (in an array of length :math:`10`, :math:`i \in \{0,\ldots,9\}`).
+    
+  **(E)**
+    Assume that there is a different array (representing another binary tree)
+    which does not contain any :math:`\Lambda` values; all values there represent some nodes.
+    Describe the property such trees must satisfy.
+    
+
+
+
+
+
+
 Trees and Binary Trees
 ------------------------
 

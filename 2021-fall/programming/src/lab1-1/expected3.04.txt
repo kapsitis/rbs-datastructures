@@ -1,4 +1,0 @@
-LS:DNS
-AL:KN:AK:
-AL:KS:LS
-
