@@ -223,11 +223,11 @@ The Makefile to compile such project is shown below:
     rm -f $(SRCDIR)/*.o $(EXEC1) $(EXEC2)
 
 
-.. figure:: figs-build-debug-on-linux/catch2-ouput.png
-    :width: 4in
-    :alt: Valgrind output
+.. figure:: figs-build-debug-on-linux/catch2-output.png
+   :width: 5in
+   :alt: Catch2 output
     
-    Sample Output from Catch2 testcases.
+   Sample Output from Catch2 testcases.
 
 
 
@@ -320,7 +320,7 @@ Valgrind
 	  valgrind --leak-check=yes --log-file=leak_report.txt ./myprogram
 
   .. figure:: figs-build-debug-on-linux/valgrind-output.png
-     :width: 4in
+     :width: 5in
      :alt: Valgrind output
     
      Sample Output from Valgrind for memory leak check.
