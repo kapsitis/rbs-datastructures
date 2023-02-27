@@ -131,7 +131,62 @@ executable you can run; another one builds the test harness
 Debugging with gdb
 --------------------
 
-TBD
+``gdb myprogram``: 
+  Start gdb and load the myprogram executable.
+  
+``run``: 
+  Start the program.
+
+``break <line_number>``: 
+  Set a breakpoint at the specified line number.
+
+``info break``: 
+  Show all defined breakpoints.
+
+``delete <breakpoint_number>``: 
+  Delete the specified breakpoint.
+
+``next``: 
+  Step over the current line.
+
+``step``: 
+  Step into the function called on the current line.
+
+``finish``: 
+  Continue execution until the current function returns.
+
+``backtrace``: 
+  Show the current call stack.
+
+``list``: 
+  Show the current source code around the current line.
+
+``print <variable_name>``: 
+  Print the value of the specified variable.
+  
+``display <variable_name>``: 
+  Display the value of the specified variable after each step.
+
+``watch <variable_name>``: 
+  Set a watchpoint on the specified variable.
+
+``info registers``: 
+  Show the current state of all CPU registers.
+
+``x/<length><format><address>``: 
+  Examine memory at the specified address, with the specified format and length.
+
+``layout src:`` 
+  Display the source code and assembly code in separate windows.
+
+``layout regs:`` 
+  Display the CPU registers and the source code in separate windows.
+
+``layout split:`` 
+  Display the source code and the program output in separate windows.
+
+``layout next:`` 
+  Switch to the next layout.
 
 
 
