@@ -5,6 +5,9 @@ Worksheet, Week 04: Build and Debug on Linux
 Building with Makefile
 ------------------------
 
+This is a minimalistic Makefile that builds ``myprogram`` from 
+a single source file ``myprogram.cpp``. 
+
 .. code-block:: makefile
 
 	CC=g++
@@ -31,29 +34,8 @@ In the above example
   there is a file `clean`. 
 
 
-**Multiple C++ Sources:**
-
-.. code-block:: makefile
-
-	CC=g++
-	CFLAGS=-std=c++11
-
-	SRCDIR=.
-	SRC=$(wildcard $(SRCDIR)/*.cpp)
-	OBJ=$(SRC:.cpp=.o)
-	EXEC=$(SRCDIR)/myprogram
-
-	all: $(EXEC)
-
-	$(EXEC): $(OBJ)
-		$(CC) $(CFLAGS) -o $@ $^
-	
-	%.o: %.cpp
-		$(CC) $(CFLAGS) -c -o $@ $<
-	
-	.PHONY: clean
-	clean:
-		rm -f $(SRCDIR)/*.o $(EXEC)
+A more complicated testfile using multiple sources (and even multiple executables -- 
+one for software itself, another for unit-tests) is shown in the Catch2 subsection (see below).
 	
 
 **Use Makefile to Run Testfiles:** 
@@ -77,9 +59,6 @@ In the above example
 	
 The snippet `|| true` prevents stopping the ``make`` task, 
 if some of the program execution returns non-zero return code or crashes.
-
-
-
 
 
 .. note:: 
@@ -124,7 +103,131 @@ two different build goals in `Makefile`. One of them is builds the
 executable you can run; another one builds the test harness
 (executable that can be used to run the unit tests). 
 
+The following things are commonly used with Catch2 tests: 
 
+* No dependencies on additional libraries; but tests should include header file 
+  ``catch.hpp`` containing various assert definitions and macros.
+* Testcases can check normal execution -- for example, ``REQUIRE(...)`` verifies that 
+  the expression is true. 
+* Testcases can check abnormal cases when the expected behaviour is throwing an exception. 
+  For example, ``REQUIRE_THROWS_AS(...)`` means that the expression throws an exception of the 
+  specified type. 
+* It is possible to have common initialization section in a testcase, which is then used 
+  by multiple "sections" (each section receives the same initial state, but does something different). 
+* Using Catch2 means that you produce one more executable (see the next subsection for an example 
+  of a Makefile to build two different executables in the same directory). 
+  
+
+
+.. code-block:: cpp
+
+  #define CATCH_CONFIG_MAIN
+
+  #include "catch.hpp"
+  #include "Stack.h"
+
+  TEST_CASE("Exceptions on empty stack", "[stack]") 
+  {
+    Stack stack(3);
+    REQUIRE_THROWS_AS(stack.top(), std::out_of_range);
+    REQUIRE_THROWS_AS(stack.pop(), std::out_of_range);
+    stack.push(17);
+    stack.pop();
+    REQUIRE_THROWS_AS(stack.top(), std::out_of_range);
+  }
+
+  TEST_CASE("Lifo order", "[stack]")
+  {
+    Stack stack(3);
+    stack.push(1);
+    stack.push(2);
+    REQUIRE(stack.top() == 2);
+    REQUIRE(stack.pop() == 2);
+    REQUIRE(stack.top() == 1);
+    REQUIRE(stack.pop() == 1);
+    REQUIRE_THROWS_AS(stack.top(), std::out_of_range);
+  }
+
+  TEST_CASE("3-element stack", "[stack]")
+  {
+    // common initialization part
+    Stack stack(3);
+    stack.push(11);
+    stack.push(12);
+    stack.push(13);
+  
+    SECTION("Stack is full") {
+      REQUIRE_THROWS_AS(stack.push(14), std::out_of_range);
+    };
+  
+    SECTION("Multiple top calls") {
+      REQUIRE(stack.top() == 13);
+      REQUIRE(stack.top() == 13);
+    };
+  }
+
+
+
+A Makefile to build Catch2 test executable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this example we assume that the unit-testing executable is built 
+from these sources: 
+
+``TestStack.cpp``:
+    Catch2 testcases; its source is shown above. 
+
+``catch.hpp``:
+  Catch2 header file, which you do not need to change.
+    
+``Stack.h``:
+  Stack ADT methods. 
+  
+``Stack.cpp``:
+  Stack implementation. 
+  
+
+Meanwhile, there is also the source file ``StackMain.cpp`` (a program doing something useful 
+and using our stack). In this case the main program can be built with ``make all``, but 
+the testcases can be built with ``make test``. 
+
+The Makefile to compile such project is shown below: 
+
+.. code-block:: 
+
+  CC=g++
+  CFLAGS=-std=c++17 -g
+  SRCDIR=.
+  OBJDIR=.
+  SRC=$(wildcard $(SCRCDIR)/*.cpp)
+  OBJ1=$(OBJDIR)/Stack.o $(OBJDIR)/StackMain.o
+  OBJ2=$(OBJDIR)/Stack.o $(OBJDIR)/TestStack.o
+  EXECMAIN=$(SRCDIR)/stack-main
+  EXECTEST=$(SRCDIR)/stack-test
+
+  all: $(EXECMAIN)
+  test: $(EXECTEST)
+
+  $(EXECMAIN): $(OBJ1)
+    $(CC) $(CFLAGS) -o $@ $^
+  
+  %.o: %.cpp
+    $(CC) $(CFLAGS) -c -o $@ $<
+  
+  $(EXECTEST): $(OBJ2)
+    $(CC) $(CFLAGS) -o $@ $^
+  
+
+  .PHONY: clean
+  clean:
+    rm -f $(SRCDIR)/*.o $(EXEC1) $(EXEC2)
+
+
+.. figure:: figs-build-debug-on-linux/catch2-ouput.png
+    :width: 4in
+    :alt: Valgrind output
+    
+    Sample Output from Catch2 testcases.
 
 
 
@@ -212,10 +315,17 @@ Valgrind
 
   .. code-block:: bash 
 	
-	valgrind --leak-check=yes ./myprogram
-	# (or write directly to a file)
-	valgrind --leak-check=yes --log-file=leak_report.txt ./myprogram
-	
+	  valgrind --leak-check=yes ./myprogram
+	  # (or write directly to a file)
+	  valgrind --leak-check=yes --log-file=leak_report.txt ./myprogram
+
+  .. figure:: figs-build-debug-on-linux/valgrind-output.png
+     :width: 4in
+     :alt: Valgrind output
+    
+     Sample Output from Valgrind for memory leak check.
+
+
 
 **Memory error detection:** 
   Valgrind can detect memory errors: accessing memory that has already been freed,
@@ -239,6 +349,7 @@ Valgrind
 	
 
 
+    
 
 
 
@@ -246,7 +357,11 @@ Valgrind
 Problems
 ---------
 
-1. Answer some questions about ``Makefile`` builds: 
+Some questions here are open-ended; they are interview-style questions for 
+C++ developers on Linux platforms.
+
+**Problem 1:** 
+  Answer some questions about ``Makefile`` builds: 
 
   **(A)**
     What is a dependency in a Makefile, and how is it specified?
@@ -261,10 +376,87 @@ Problems
 	What is a pattern rule in a Makefile, and how is it used?
 	
   **(E)**
-	What is the meaning of variables ``$@`` and ``$<``?
+	What is the meaning of variables ``$@`` and ``$<`` in a Makefile ?
 	
   **(F)**
 	How can you specify conditional dependencies in a Makefile, 
 	and why would you want to do this? (stuff like ``ifeq``, ``else``, ``endif``)
 
+**Problem 2:**
+  Answer some questions about ``gdb`` build. 
 
+  **(A)**
+    How would you compile a C++ program (source files ``A.cpp``, ``B.cpp``, ``B.h``). 
+    on Linux using the g++ compiler? What flags ensure that it is debuggable?
+  
+  **(B)**
+    Which command can be used to set a breakpoint in the program?
+    
+  **(C)** 
+    Which command can be used to see a value of a variable (or an expression?) 
+    in a C++ program while it's running?
+
+  **(D)** 
+    How can we use the core file generated by gdb? 
+    How would you use it debug a program that has crashed?
+  
+  **(E)** 
+    What is the purpose of the core file generated by gdb? 
+    How to use it to debug a program that has crashed?
+
+  **(F)**
+    Can you explain the difference between a stack overflow error 
+    and a segmentation fault error? How would you debug 
+    each of these types of errors using gdb?
+    
+  **(G)** 
+    Which command can examine the contents of memory at a particular address in a C++ program?
+    
+  **(H)**
+   Which command can show the call stack of a C++ program during debugging?
+    
+  **(I)** 
+    Can you explain what the watch command in gdb does? 
+    How to use it to monitor a variable in your C++ program?
+    
+  **(J)** 
+    How would you use ``gdb`` to examine the assembly code generated by the 
+    ``g++`` compiler?
+    
+**Problem 3:** 
+  Consider the following C++ code to store custom objects of type ``Pair`` in an STL 
+  ``vector`` data structure. 
+  Explain which constructors and destructors are invoked -- how many and at which locations 
+  of the code.
+  
+
+  .. code-block:: cpp
+  
+    #include <vector>
+    #include <iostream>
+  
+    using namespace std;
+  
+    class Pair { 
+      public:
+        int nX,nY;
+      private:
+    
+    };
+  
+    int main(int argc, char** argv) {
+  
+      vector<Pair> myVector;
+      for(int i=0 ; i<10 ; i++) { 
+        int x, y; 
+        cin >> x >> y; 
+        Pair p; 
+        p.nX = x; p.nY = y; 
+        myVector.push_back(p);
+      }
+      
+      for (auto it = myVector.begin(); it != myVector.end(); ++it) {
+        cout << "(" << (*it).nX << "," << (*it).nY << ")" << endl;
+      }
+      return 0; 
+    }
