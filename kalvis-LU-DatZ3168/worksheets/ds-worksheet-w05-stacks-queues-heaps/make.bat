@@ -48,7 +48,7 @@ if [%2] == [] (
 		python replace.py
 		cd _build\latex
 		xelatex ds-worksheet-stacks-queues-heaps
-		ren ds-worksheet-build-debug-on-linux.pdf ds-worksheet-stacks-queues-heaps-solutions.pdf
+		ren ds-worksheet-stacks-queues-heaps.pdf ds-worksheet-stacks-queues-heaps-solutions.pdf
 		xcopy ds-worksheet-stacks-queues-heaps-solutions.pdf ..\.. /Y
 		cd ..\..
 	) else (

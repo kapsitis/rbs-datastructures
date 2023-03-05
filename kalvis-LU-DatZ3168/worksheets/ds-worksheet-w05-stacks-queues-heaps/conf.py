@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'ds-worksheet-trees-and-heaps'
+project = 'ds-worksheet-stacks-queues-heaps'
 copyright = '2022, LU'
 author = 'LU'
 

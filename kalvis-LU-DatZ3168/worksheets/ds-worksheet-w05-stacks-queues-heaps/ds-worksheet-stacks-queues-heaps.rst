@@ -13,7 +13,7 @@ Problems
   Stack contains integer numbers; initially the array has
   the following content.
   
-  .. image:: figs-stacks-and-queues/stack-structure.png
+  .. image:: figs-stacks-queues-heaps/stack-structure.png
      :width: 2.2in
       
   Stack has the physical representation with :math:`\mathtt{length}=2`
@@ -51,7 +51,7 @@ Problems
   (the current number of elements in the queue). Current state is shown in the figure:
   
 
-  .. image:: figs-stacks-and-queues/queue-structure.png
+  .. image:: figs-stacks-queues-heaps/queue-structure.png
      :width: 2.3in
       
 
@@ -84,7 +84,7 @@ Problems
   
 
 
-**Problemm 3:**
+**Problem 3:**
   Denote :math:`a,b,c` to be the last :math:`3` digits of your Student ID, and compute the following numbers:
   
   * :math:`F = ((a+b+c)\;\operatorname{mod}\;3) + 2`
@@ -105,7 +105,7 @@ Problems
   
   And the content of the array is the following:
   
-  .. image:: figs-stacks-and-queues/midterm-queue-structure.png
+  .. image:: figs-stacks-queues-heaps/midterm-queue-structure.png
      :width: 2in
       
 
@@ -202,7 +202,7 @@ Problems
 **Problem 7 (Removing from Maximum Heap):**
   Here is an array for a Max-Heap:
 
-  .. image:: figs-trees-and-heaps/heap-problem.png
+  .. image:: figs-stacks-queues-heaps/heap-problem.png
      :width: 3in
 
   The image shows array used to store Maximum Heap
@@ -231,4 +231,49 @@ Problems
     Show the array for the binary tree you got in the previous step (C)
     (i.e. right after the :math:`\text{\sc DeleteMax}(H)` and :math:`\text{\sc Insert}(H,x)` commands
     have been executed).
-    
+
+
+
+**Problem 8:** 
+  A *multiset* (or a *bag*) is any collection of items similar to a *set*, which can contain 
+  multiple copies of the same item. For example, :math:`X = \{ 2,2,2,3,3,5 \}` is a multiset.
+  The 2-quantile (also known as the *median*) for a multiset :math:`X = \{ x_1,x_2,\ldots,x_k \}` is the number :math:`m` satisfying 
+  the following probability inequalities (where :math:`x_i` is a randomly picked element from the multiset :math:`X` -- each element is selected 
+  with the same probability):
+  
+  .. math:: 
+  
+    P(x_i < m) \leq \frac{1}{2},\;\;\text{and}\;\; P(x_i \leq m) \geq \frac{1}{2}. 
+	
+  Suggest an efficient data structure to store "median-maintained multisets" :math:`X` containing integer numbers that support 
+  the following operations: 
+  
+  **Insert:** 
+    Add a new element :math:`x` to the multiset :math:`X`. 
+
+  **ExtractMedian:**
+    Remove and return the median from the multiset :math:`X`, if it belongs to :math:`X`. 
+
+  **Median:** 
+    Return the median from the multiset without removing it.
+	
+  **Size:** 
+    Return the number of elements in the multiset.
+
+
+
+.. note:: 
+  In Python you can compute this flavor of median like this: 
+  
+  .. code-block:: python
+  
+    import pandas as pd
+	a = pd.Series([1,2,3,4])
+	a.quantile(0.5, 'lower')  # should return 2
+	# statistics.median([1,2,3,4]) would be 2.5
+	
+
+**Problem 9:** 
+  Run the Huffman algorithm to build prefix codes for a five-letter alphabet 
+  :math:`\{ A, B, C, D, E, F \}`, where the respective frequencies are :math:`\{ 45, 13, 12, 16, 9, 5 \}`.
+  
