@@ -3,222 +3,157 @@ Worksheet, Week 06: Search Trees
 
 
 
-Encode Tree as an Array
+Binary Trees as Arrays
 --------------------------
 
 .. multiway trees encoded as binary trees
 .. traversal order
 ..  https://www.geeksforgeeks.org/iterative-postorder-traversal-using-stack/
 
-**Introduction**
-  Binary trees are often represented as arrays
-  (where the array starts with the root node; followed
-  by all the other nodes, displayed layer by layer.
-  If any child of a node in this tree is missing, it is replaced by
-  :math:`\Lambda` (capital Lambda denoting an empty node)
-  in the array. Once we reach the last non-empty node in the tree, this is
-  the last element of the array.
-  For example, the binary tree shown in this picture:
-  
-
-  .. image:: figs-trees-and-heaps/example-binary-tree.png
-     :width: 2in
-      
-  It is represented by the following array:
-  
-  .. math::
-  
-    \mathtt{int\;a[\,]\;=\;\{1,2,3,7,\Lambda,5\}};
-    
-
-**Question 1.2.1:**
-  Assume that you have a binary tree that is represented by the following array:
-  
-  .. math::
-  
-    \mathtt{int\;a[\,]\;=\;\{1, 2, 4, a, \Lambda, \Lambda, 6, b, \Lambda, \Lambda, \Lambda, \Lambda, \Lambda, \Lambda, c\};}
-    
-  Values :math:`a`, :math:`b`, :math:`c` are the last three digits taken from your Student ID.
+**Problem 1:** 
+  Even binary trees that are not complete can be represented as arrays -- their nodes written out 
+  layer by layer just like a complete tree in a heap. If any node in the tree is missing, 
+  it is replaced by
+  :math:`\Lambda`. The last non-empty node in the tree is
+  the last element of the array.  
+  Draw the trees corresponding to the following arrays (here :math:`a,b,c` are variable letters stored in the nodes).
+  Distinguish the left and right children clearly.   
   
   **(A)**
-    Draw the binary tree represented by the above array in your answer.
-    The tree should look nice: Draw left children to the left (and right children to the right)
-    of their parents. Nodes on the same levels should be aligned.
-    
+    :math:`\mathtt{int\;a[\,]\;=\;\{1,2,3,7,\Lambda,5\}};`
+	
   **(B)**
-    What is the number of internal nodes in this tree? The number of leaves in this tree?
+    :math:`\mathtt{int\;a[\,]\;=\;\{1, 2, 4, a, \Lambda, \Lambda, 6, b, \Lambda, \Lambda, \Lambda, \Lambda, \Lambda, \Lambda, c\};}`
     
-  **(C)**
-    List the vertices of this tree in the post-order traversal order.
-    (Only show real nodes in the post-order sequence (all :math:`\Lambda` are
-    technical symbols indicating absence of nodes; they are not part of the tree).
-    
-  **(D)**
-    Write pseudo-code for an algorithm :math:`\text{\textsc{getParent}}(i)` that receives
-    the index :math:`i` of some node in this array, returns the index of the parent
-    of this node (or :math:`-1`, if the node has no parent).
-    All indices :math:`i` are zero-based (in an array of length :math:`10`, :math:`i \in \{0,\ldots,9\}`).
-    
+  **(C)** 
+    Write a  pseudocode to check, if the input array represents a binary tree (return True), or it is 
+    inconsistent (for example, there are non-empty children under some :math:`\Lambda`).
+
+  **(D)** 
+	Write a pseudocode to count the internal nodes and the leaves, if you receive an array as an input. 
+
   **(E)**
-    Assume that there is a different array (representing another binary tree)
-    which does not contain any :math:`\Lambda` values; all values there represent some nodes.
-    Describe the property such trees must satisfy.
-    
+  	Write a pseudocode to list the vertices of this tree in the post-order traversal order.
 
 
 
+.. only:: Internal 
 
-
-
-Trees and Binary Trees
-------------------------
-
-
-
-**Introduction:**
-  How to Encode General Tree to a Binary Tree
-
-  Sometimes non-binary (ordered) trees should be represented in
-  binary-tree data structures. See `<https://bit.ly/3khnC0p>`_ for details.
-  The two rules to encode are these:
-
-
-  * Every node :math:`v` in the general tree with
-    its *first child* :math:`w` maps to the same node :math:`v` in the binary tree,
-    where the corresponding :math:`w` is its *left child*.
-  * Every node :math:`v` in the general tree having :math:`w` as its *sibling to the right*
-    has the same :math:`w` in the binary tree as its *right child*.
-
-
-  One can also decode: given a binary tree (if its root only has the left child),
-  it is possible to restore the original general tree.
-
-  Consider an example general tree on Figure :ref:`general-tree-no-color`.
-
-  .. _general-tree-no-color:
-  .. figure:: figs-search-trees/general-tree-no-color.png
-     :width: 2in
-
-     Multiway Tree
-
-
-  **Encoding Step 1**
-    Redraw edges (only connect each node with its first child and also to
-    the sibling to the right). To see clearly which edges will be left-going, and
-    which are right-going, can color them differently. See
-    Figure :ref:`colored-binary-tree1-reordered`.
-
-
-  .. _colored-binary-tree1-reordered:
-  .. figure:: figs-search-trees/colored-binary-tree1-reordered.png
-     :width: 2in
-
-     Tree with Horizontal Edges
-
-
-
-  **Encoding Step 2**
-    Adjust the levels in the new binary tree so that it takes
-    a more conventional look (left children to the left, right children to the right).
-    See Figure :ref:`colored-binary-tree1`.
-
-
-  .. _colored-binary-tree1:
-  .. figure:: figs-search-trees/colored-binary-tree1.png
-     :width: 1.5in
-
-     Encoded Binary Tree
-
-
-
-**Question 6.1.1 (Decode Binary to a Multiway Tree):**
-
+  **Answer:** 
+  
   **(A)**
-    List all the nodes in Figure :ref:`binary-tree-problem`
-    using the in-order tree traversal.
 
-  **(B)**
-    Binary tree :math:`B` shown in :ref:`binary-tree-problem` has
-    been obtained by encoding some general (multiway) tree :math:`T` (The
-    tree :math:`T` is rooted
-    and ordered, but it is not necessarily binary.)
-    Restore the general tree :math:`T` by decoding the given binary tree.
-
-
-  .. _binary-tree-problem:
-  .. figure:: figs-search-trees/binary-tree-problem.png
-     :width: 1.5in
-
-     Binary tree for Question 6.1.1
-
-
-
-
-
-
-**Question 6.1.2 (Binary Trees):**
-
-  Define a new integer number :math:`N \in \{0,1,2,\ldots,9 \}` from the digits of your Student ID:
-
-  .. math::
-
-    N \;=\; (a + b) \;\text{mod}\; 10.
-
-
+    .. image:: figs-search-trees/example-binary-tree.png
+       :width: 2in
+      
+  :math:`\square`
+  
+  
+  
+**Problem 2:**   
+  Non-binary ordered trees  can be encoded as binary trees (using a bijective encoding function). 
+  See `<https://bit.ly/3khnC0p>`_ for details.
+  (If in a general tree the node :math:`w` is the first child of :math:`v`, 
+  then in the corresponding binary tree :math:`w` becomes the *left child* of :math:`v`. 
+  If :math:`w` is the sibling to the right of :math:`v`, then in the corresponding binary tree 
+  :math:`w` is the *right child* of :math:`v`.)
+  In this problem we use *bracket representations* for all trees (see `<https://bit.ly/425tzVa>`_).
+  
+  
   **(A)**
-    Redraw the binary tree in Figure;
-    replace letters :math:`a,b` with your values. We denote this tree by :math:`B`.
+    Consider the following general tree: :math:`\mathtt{A (B (E) (F) (G)) (C) (D (H) (I) (J))}`. 
+	
+	Draw this multiway/general tree. Encode it as the binary tree and draw it. 
+	
+  **(B)** 
+    :math:`\mathtt{A (B (E () (F (J () (K)) ())) (C () (D (G () (H (L (N) (M)) (I)) ()))) ()}`.
 
-  **(B)**
-    List all the nodes of :math:`B` in their in-order DFS traversal order.
+    Given the binary tree, restore the original general tree. 
+
 
   **(C)**
-    Draw a general tree (denoted by :math:`G`) that is obtained
-    by decoding the tree :math:`B`.
+    Consider the binary tree from (B); list its nodes in their in-order DFS traversal order.
+
+
+  **(D)**
+    What is the depth of the node :math:`N` (defined above) in the new (general) tree?
+
+
+
+  
+.. only:: Internal 
+  
+  **Answer:** 
+  
+  **(A)**
+    The general tree is given on Figure :ref:`general-tree-no-color`.
+
+    .. _general-tree-no-color:
+    .. figure:: figs-search-trees/general-tree-no-color.png
+       :width: 2in
+
+       Multiway Tree
+
+  
+    **Encoding Step 1**
+      Redraw edges (only connect each node with its first child and also to
+      the sibling to the right). To see clearly which edges will be left-going, and
+      which are right-going, can color them differently. See
+      Figure :ref:`colored-binary-tree1-reordered`.
+
+
+    .. _colored-binary-tree1-reordered:
+    .. figure:: figs-search-trees/colored-binary-tree1-reordered.png
+       :width: 2in
+
+       Tree with Horizontal Edges
+
+
+
+    **Encoding Step 2**
+      Adjust the levels in the new binary tree so that it takes
+      a more conventional look (left children to the left, right children to the right).
+      See Figure :ref:`colored-binary-tree1`.
+
+
+    .. _colored-binary-tree1:
+    .. figure:: figs-search-trees/colored-binary-tree1.png
+       :width: 1.5in
+
+       Encoded Binary Tree
+  
+  **(B)**
+    The binary tree looks like this: 
+
+
+    .. _binary-tree-problem:
+    .. figure:: figs-search-trees/binary-tree-problem.png
+       :width: 1.5in
+
+       Binary tree for Question 6.1.1
+  
+	Restored tree can be obtained, if one colors the edges and 
+	turns the left children into first children, and the right children 
+	to siblings.
+  
+  .. note::  
     See `Encoding general trees as binary trees <https://en.wikipedia.org/wiki/Binary_tree#Encoding_general_trees_as_binary_trees>`_
     or `<https://bit.ly/3kdyg8n>`_.
-
-  **(D)**
-    What is the depth of the node with number :math:`N` (defined above) in the new tree :math:`G`?
-
-
-  .. figure:: figs-search-trees/heptagonal-nodes.png
-     :width: 3in
-     :alt: Binary tree
-
-     Binary tree :math:`B` for inorder traversal and converting to a general tree :math:`G`
+  
+  
+  
+  :math:`\square`
+  
 
 
 
 
 
-BST Trees
------------
-
-
-**Definition:**
-  A tree is named *Binary Search Tree* (BST) if the nodes satisfy the *order invariant*:
-  Let :math:`x` be a node in a binary search tree. If :math:`y` is a node in the left subtree
-  of :math:`x`, then :math:`y.key \leq x.key`. If :math:`z` is a node in the right subtree of :math:`x`, then
-  :math:`z.key \geq z.key`.
 
 
 
-**Question 6.2.1 (Recurrences to count BSTs):**
-  Let :math:`B_n` denote how many different BSTs for :math:`n` different keys there exist (all the trees should have correct order invariant).
-  We have :math:`B_1 = 1` (one node only makes one tree). And :math:`B_2 = 2` (in the case of two
 
 
-**Question 6.2.2 (Search Random Keys in BST):**
-  Consider the binary tree shown below.
-
-  .. image:: figs-search-trees/bst-search.png
-     :width: 2in
-
-  Every key in this tree is being searched with the same probability.
-  Find the expected number of pointers that are followed as we search for a random key in this tree.
-  (For example, searching the key at the root means following :math:`1` pointer, searching the key that is a child
-  of the root means following :math:`2` pointers and so on.)
 
 
 
@@ -229,24 +164,7 @@ BST Trees
 Prefix Codes and Huffman Algorithm
 ------------------------------------
 
-Let :math:`C` be the collection of letters to be encoded; each letter
-has its frequency :math:`c.freq` (frequencies are numbers describing the probability
-of each letter).
-
-
-| :math:`\text{\sc Huffman}(C)`:
-| :math:`\;\;\;\;` :math:`n = |C|`
-| :math:`\;\;\;\;` :math:`Q = \text{\sc PriorityQueue}(C)` :math:`\;\;\;\;` (*Minimum heap by "c.freq"*)
-| :math:`\;\;\;\;` **for** :math:`i = 1` to :math:`n - 1` :math:`\;\;\;\;` (*Repeat n-1 times*)
-| :math:`\;\;\;\;\;\;\;\;` :math:`z = \text{\sc Node}()`
-| :math:`\;\;\;\;\;\;\;\;` :math:`z.left = x = \text{\sc ExtractMin(Q)}`
-| :math:`\;\;\;\;\;\;\;\;` :math:`z.right = y = \text{\sc ExtractMin(Q)}`
-| :math:`\;\;\;\;\;\;\;\;` :math:`z.freq = x.freq + y.freq`
-| :math:`\;\;\;\;\;\;\;\;` :math:`\text{\sc Insert}(Q,z)`
-| :math:`\;\;\;\;` **return** :math:`\text{\sc ExtractMin(Q)}`  :math:`\;\;\;\;` (*Return the root of the tree*)
-
-
-**Question 6.3.1 (Decrypt/Encrypt Prefix Code):**
+**Problem 3:**
   Consider the following Prefix Tree to encode letters in alphabet
   :math:`\mathcal{A} = \{ S, I, E, N, T, A \}`.
 
@@ -269,22 +187,40 @@ of each letter).
 
 
 
+**Huffman Algorithm:**
+  Let :math:`C` be the collection of letters to be encoded; each letter
+  has its frequency :math:`c.freq` (frequencies are numbers describing the probability
+  of each letter).
+
+  | :math:`\text{\sc Huffman}(C)`:
+  | :math:`\;\;\;\;` :math:`n = |C|`
+  | :math:`\;\;\;\;` :math:`Q = \text{\sc PriorityQueue}(C)` :math:`\;\;\;\;` (*Minimum heap by "c.freq"*)
+  | :math:`\;\;\;\;` **for** :math:`i = 1` to :math:`n - 1` :math:`\;\;\;\;` (*Repeat n-1 times*)
+  | :math:`\;\;\;\;\;\;\;\;` :math:`z = \text{\sc Node}()`
+  | :math:`\;\;\;\;\;\;\;\;` :math:`z.left = x = \text{\sc ExtractMin(Q)}`
+  | :math:`\;\;\;\;\;\;\;\;` :math:`z.right = y = \text{\sc ExtractMin(Q)}`
+  | :math:`\;\;\;\;\;\;\;\;` :math:`z.freq = x.freq + y.freq`
+  | :math:`\;\;\;\;\;\;\;\;` :math:`\text{\sc Insert}(Q,z)`
+  | :math:`\;\;\;\;` **return** :math:`\text{\sc ExtractMin(Q)}`  :math:`\;\;\;\;` (*Return the root of the tree*)
 
 
 
 
-**Question 6.3.2 (Huffman Code):**
-  Let the alphabet be :math:`\mathcal{A} = \{ A, B, C, D, E, F \}` and
-  their probabilities are shown in the table.
 
-  ====  ====  ====  ====  ====  ====
-  A     B     C     D     E     F
-  27%   9%    11%   15%   30%   8%
-  ====  ====  ====  ====  ====  ====
+**Problem 4:**
+  Let the alphabet have 6 characters :math:`\mathcal{A} = \{ A, B, C, D, E, F \}` and
+  their probabilities are shown in the table:
+
+  ============  ====  ====  ====  ====  ====  ====
+  :math:`c`     A     B     C     D     E     F
+  :math:`P(c)`  27%   9%    11%   15%   30%   8%
+  ============  ====  ====  ====  ====  ====  ====
+
+  Use the Huffman algorithm to create a Prefix Tree to encode these characters. 
 
 
 
-**Question 6.3.3 (Entropy and average code length):**
+**Problem 5:**
 
   **(A)**
     For the alphabet (and letter frequencies)
@@ -301,7 +237,7 @@ of each letter).
     by the Huffman code you created in the previous question.  (Assume that letters arrive with
     the probabilities shown in the table.)
 
-
+.. note::
   Theory (not in the scope of our course) tells that nobody can encode the alphabet
   :math:`\mathcal{A}` better than the Shannon's entropy.
   On the other hand, Huffman code is an optimal prefix code; the expected number of bits spent
@@ -311,30 +247,93 @@ of each letter).
 
 
 
-Inserting and Deleting from BSTs
+Binary Search Trees
 ---------------------------------
 
 
-**Question 6.4.1 (Insert new nodes):**
-  Generate a random sequence of :math:`10` different
-  integer numbers and build a BST tree out of these numbers.
-  What is the average depth of a node in this tree?
-
-
-**Question 6.4.2 (Delete nodes from BST):**
-  From the tree build in the previous question delete the following:
-
-  * Any leaf
-  * Any inner node with just one child (at best, pick an innder node that has another inner node as a child)
-  * Any inner node with two children.
+**Definition:**
+  A tree is named *Binary Search Tree* (BST) if the nodes satisfy the *order invariant*:
+  Let :math:`x` be a node in a binary search tree. If :math:`y` is a node in the left subtree
+  of :math:`x`, then :math:`y.key \leq x.key`. If :math:`z` is a node in the right subtree of :math:`x`, then
+  :math:`z.key \geq x.key`.
 
 
 
-Inserting and Deleting from an AVL Tree
+**Problem 6:**
+  Let :math:`B_n` denote how many different BSTs for :math:`n` different keys there exist (all the trees should have correct order invariant).
+  We have :math:`B_1 = 1` (one node only makes one tree). And :math:`B_2 = 2`.
+  
+  Draw all the binary search trees to store numbers :math:`\{1,2,3 \}`
+  and also the numbers :math:`\{ 1,2,3,4 \}`. 
+  
+  Find the values :math:`B_3` and :math:`B_4` (the number of binary search trees).
+
+
+**Problem 7:**
+  Consider the binary tree shown below.
+
+  .. image:: figs-search-trees/bst-search.png
+     :width: 2in
+
+  Every key in this tree is being searched with the same probability.
+  Find the expected number of pointers that are followed as we search for a random key in this tree.
+  (For example, searching the key at the root means following :math:`1` pointer, searching the key that is a child
+  of the root means following :math:`2` pointers and so on.)
+
+**Definition:** 
+  In a binary tree, the *inorder predecessor* of a node :math:`v` is a node :math:`u` 
+  iff :math:`v` directly follows :math:`u` in the inorder traversal of the nodes.   
+  Similarly, the *inorder successor* of a node :math:`v` is :math:`w` iff 
+  :math:`w` directly follows :math:`v` in the inorder traversal. 
+
+  To delete an internal node from a BST (having both left and right children), 
+  you can replace it either by the inorder predecessor or the inorder successor. 
+
+
+
+**Problem 8:**
+  Consider the following Binary Search Tree (BST). 
+  
+  .. image:: figs-search-trees/binary-search-tree.png
+     :width: 2in
+
+  Let :math:`a,b` be the first two digits of your Student ID. Compute the following numbers: 
+  
+  .. math:: 
+  
+    \begin{array}{l}
+    X = 2a, \\
+    Y = 20+b, \\
+    Z = 3b, \\
+    S = b, \\
+    T = 2(a+b) \;\text{mod}\; 40 \\
+    U = (a+b) \;\text{mod}\; 10\\
+	\end{array}
+	
+  Run the following commands on this BST (and draw the intermediate trees whenever there is the "show" command): 
+
+  | :math:`BST.\text{\sc insert}(X)`
+  | :math:`BST.\text{\sc insert}(Y)`
+  | :math:`BST.\text{\sc delete}(20)`
+  | :math:`BST.\text{\sc show}()`
+  | :math:`BST.\text{\sc insert}(Z)`
+  | :math:`BST.\text{\sc insert}(S)`
+  | :math:`BST.\text{\sc delete}(13)`
+  | :math:`BST.\text{\sc show}()`
+  | :math:`BST.\text{\sc insert}(T)`
+  | :math:`BST.\text{\sc insert}(U)`
+  | :math:`BST.\text{\sc delete}(X)`
+  | :math:`BST.\text{\sc show}()`
+  
+  Ignore a command, if it asks to insert a key that already exists or deletes 
+  a key that does not exist. 
+
+
+AVL Trees
 -----------------------------------------
 
 
-**Question 6.5.1 (AVL tree with min nodes):**
+**Question 9:**
   Let :math:`T_n` be an AVL tree of height :math:`n` with the
   smallest possible number of nodes. For example :math:`|T_0| = 1`
   (just one node is an AVL tree of height :math:`0`); :math:`|T_1| = 2`
@@ -349,7 +348,7 @@ Inserting and Deleting from an AVL Tree
     the previous numbers :math:`|T_k|` with :math:`k < n`).
 
 
-**Question 6.5.1 (AVL and Rotations):**
+**Problem 10:**
   Let :math:`T` be some (unknown) BST tree that also satisfied the AVL balancing requirement.
   After :math:`k` nodes were inserted (without any re-balancing actions) the tree :math:`T'` now looks as
   in the image below.
@@ -368,80 +367,3 @@ Inserting and Deleting from an AVL Tree
 
 
 
-
-(2,4) and Red-Black Trees
-----------------------------
-
-**Definition:**
-  A tree is named a *Red-Black Tree*, if it is a Binary Search Tree,
-  every node is either red or black (extra boolean flag stores this color) and
-  it satisfies these *red-black invariants*:
-
-  Root property
-    The root is black.
-
-  External property
-    Every leaf (a node with NULL key) is also black.
-
-  Internal property
-    If a node is red, then both its children are black.
-
-  Depth property
-    For each node, all simple paths from the node to descendant leaves contain the
-    same number of black nodes.
-
-
-  .. note::
-    See Figure :ref:`red-black-tree`; leaves with NIL keys have
-    black-height equal to :math:`0`. As we move to the root, we increment
-    the black-height :math:`h_\text{black}` whenever the path crosses some black node.
-    The Depth property guarantees that each internal node gets the same black-height, no matter
-    which path from a leaf to a root we choose.
-
-
-
-**Question 6.6.1 (Insert Nodes in a Red-Black Tree):**
-
-  .. _red-black-tree:
-  .. figure:: figs-search-trees/red-black-tree.png
-     :width: 5in
-
-     Sample Red-Black Tree
-
-
-  **(A)**
-    Compute the following three key values (:math:`u`, :math:`v`, and :math:`w`):
-
-    .. math::
-
-      \left\{ \begin{array}{l}
-      u = 3(a+b)+2\\
-      v = 3(b+c)+1\\
-      w = 3(c+a)\\
-      \end{array} \right.
-
-    Here :math:`a,b,c` are the last :math:`3` digits of your Student ID.
-
-    Verify the "black height" of every node in the graph -- all NULL leaves have black height equal to zero.
-    Any other node has black height equal to the number of black nodes that are on some descendant path.
-    (According to the depth property -- the black height of any node should not depend on the path to the leaf
-    we chose.)
-
-
-  **(B)**
-    Show how the tree looks after the nodes :math:`u`, :math:`v` and :math:`w` (in this order)
-    are inserted in the Red-Black Tree shown in Figure :ref:`red-black-tree`.
-
-    If any of the values :math:`u,v,w` coincide with existing nodes, they
-    should not be inserted. (Red-Black trees and BSTs in general can handle duplicates; but here
-    we assume that it stores a map/set with unique keys.)
-
-    Show the intermediate steps -- the tree after each successive inserted node.
-    Clearly show, which are the red/black vertices in the submitted answers.
-
-
-  .. note::
-
-    Check that your inserts preserve the BST order invariant (along with all the Red-Black
-    tree invariants). Secondly, try to follow the standard algorithm when inserting new nodes
-    (still, preserving the invariants is more important).
