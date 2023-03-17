@@ -1,6 +1,58 @@
 Worksheet Week 05: Stacks, Queues, Priority Queues
 ======================================================
 
+Introduction
+--------------
+
+Abstract data types (supported API methods to interact with a data structure) should be distinguished
+from the implementation of the data structure (using C++ constructs like arrays, pointers,
+custom objects etc.). Implemented data structures can support the 
+API methods while preserving *representation invariant*. 
+Representation invariant is some property or several properties that are preserved 
+in a data structure -- as it performs the methods from the datastructure. 
+
+For example, an array-based stack, if ``stack.length = 5``, 
+then we should have :math:`0 \leq \text{size} \leq 5` at all times. 
+Or a singly linked list should not have any loops and should end with a null pointer
+and connect all the elements. 
+
+Violating the representation invariant makes the data structure inconsistent and unusable. 
+If an API method is run on an inconsistent data structure, there are no expectations
+(program can crash, loop forever or produce any result). On the other hand, if an API 
+method is called on a consistent state
+
+
+Priority Queues
+----------------
+
+API methods: 
+
+| :math:`\text{\sc PriorityQueue}()` -- create empty priority queue. 
+| :math:`Q.\text{\sc insert}(item)` -- insert an item (with any key).
+| :math:`Q.\text{\sc extractMin}()` -- remove and return the element with the minimum key.
+
+Priority queues can be implemented in various ways: 
+
+* Maintain an ordered list. 
+* Maintain an unordered list (add elements in any order)
+* Maintain a heap. 
+
+Heap Implementation
+^^^^^^^^^^^^^^^^^^^^
+
+**Definition:** 
+  A binary tree is called a *complete tree* if it has all layers filled in 
+  (node counts in the layers :math:`1,2,4,8,\ldots`), except, perhaps, the last layer, 
+  which is filled in from the left to the right. 
+
+Complete trees are convenient to be stored as linear arrays. 
+
+**Heaps:** 
+  A binary tree storing nodes with numeric key values is called a *minimum heap*, if it satisfies 
+  the following representation invariant: 
+
+  * The binary tree is a complete binary tree. 
+  * Each parent node in the tree has key that cannot be larger than the 
 
 
 
