@@ -1,10 +1,55 @@
-Worksheet, Week 06: Search Trees
+Worksheet, Week 07: Balanced Trees
 =================================
 
 
+AVL Trees
+-----------------------------------------
 
-(2,4) and Red-Black Trees
+**Question 1:**
+  Let :math:`T_n` be an AVL tree of height :math:`n` with the
+  smallest possible number of nodes. For example :math:`|T_0| = 1`
+  (just one node is an AVL tree of height :math:`0`); :math:`|T_1| = 2`
+  (a root with one child only is an AVL tree of height :math:`1`) and so on.
+
+  **(A)**
+    Draw AVL trees :math:`T_2`, :math:`T_3`, :math:`T_4` and :math:`T_5`.
+
+  **(B)**
+    Write a recurrence to find the number of nodes :math:`|T_n|`
+    (recurrent formula expresses the number :math:`|T_n|` using
+    the previous numbers :math:`|T_k|` with :math:`k < n`).
+
+
+**Problem 2:**
+  Let :math:`T` be some (unknown) BST tree that also satisfied the AVL balancing requirement.
+  After :math:`k` nodes were inserted (without any re-balancing actions) the tree :math:`T'` now looks as
+  in the image below.
+
+  .. image:: figs-search-trees/tree-for-rotations.png
+     :width: 3in
+
+  **(A)**
+    Find the smallest value of :math:`k` -- the nodes that were inserted into the original :math:`T`
+    to get :math:`T'`.
+
+  **(B)**
+    Show the tree after :math:`\text{\sc LeftRotate}(T',x)` -- the left rotation around the node :math:`x`.
+    Is the resulting tree an AVL tree now?
+
+
+
+
+(2,4) Trees
 ----------------------------
+
+
+
+
+
+
+
+Red-Black Trees
+-----------------------------
 
 **Definition:**
   A tree is named a *Red-Black Tree*, if it is a Binary Search Tree,
@@ -117,5 +162,7 @@ Worksheet, Week 06: Search Trees
      :alt: Binary tree
 
      Binary tree :math:`B` for inorder traversal and converting to a general tree :math:`G`
+
+
 
 
