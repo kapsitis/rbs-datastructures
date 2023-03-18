@@ -5,38 +5,51 @@ Worksheet, Week 07: Balanced Trees
 AVL Trees
 -----------------------------------------
 
-**Question 1:**
+Define a height of a node in a tree by induction: 
+
+* Null trees (empty trees) have height :math:`-1`
+* Leaves (single node trees) have height :math:`0`
+* Any node :math:`v` has height :math:`h(v) = \max(h(v_{\text{left} + h(v_{\text{right})))+1`
+
+AVL tree is such that each node :math:`v` 
+is balanced: :math:`|h(v_{\text{left}) - h(v_{\text{right})| \leq 1` - the heights of its subtrees
+do not differ by more than :math:`1`. 
+
+
+**Problem 1:**
   Let :math:`T_n` be an AVL tree of height :math:`n` with the
   smallest possible number of nodes. For example :math:`|T_0| = 1`
   (just one node is an AVL tree of height :math:`0`); :math:`|T_1| = 2`
-  (a root with one child only is an AVL tree of height :math:`1`) and so on.
+  (a root with one child only is an AVL tree of height :math:`1` of the smallest size) and so on.
 
   **(A)**
-    Draw AVL trees :math:`T_2`, :math:`T_3`, :math:`T_4` and :math:`T_5`.
+    Draw example AVL trees :math:`T_2`, :math:`T_3`, :math:`T_4`.
 
   **(B)**
-    Write a recurrence to find the number of nodes :math:`|T_n|`
+    Denote the smallest 
+    Suggest a method how to  :math:`|T_n|`
     (recurrent formula expresses the number :math:`|T_n|` using
     the previous numbers :math:`|T_k|` with :math:`k < n`).
 
 
-**Problem 2:**
-  Let :math:`T` be some (unknown) BST tree that also satisfied the AVL balancing requirement.
-  After :math:`k` nodes were inserted (without any re-balancing actions) the tree :math:`T'` now looks as
-  in the image below.
 
-  .. image:: figs-search-trees/tree-for-rotations.png
-     :width: 3in
+
+.. many rotations: https://cs.stackexchange.com/questions/97975/how-many-rotations-after-avl-insertion-and-deletion
+.. https://stackoverflow.com/questions/13367981/what-is-the-minimum-sized-avl-tree-where-a-deletion-causes-2-rotations
+
+
+**Problem 2:**
+  Assume that a Binary Search Tree :math:`T` is created by inserting the following keys into an empty tree: 
+  :math:`[39, 20, 65, 11, 29, 50, 26]`. 
 
   **(A)**
-    Find the smallest value of :math:`k` -- the nodes that were inserted into the original :math:`T`
-    to get :math:`T'`.
+    Do the following actions on this tree one after another: 
+    :math:`T.insert(22)`, :math:`T.insert(60)`, :math:`T.delete(11)`. 
 
   **(B)**
-    Show the tree after :math:`\text{\sc LeftRotate}(T',x)` -- the left rotation around the node :math:`x`.
-    Is the resulting tree an AVL tree now?
-
-
+    Suggest a sequence of inserts/deletes for the original tree :math;`T` (with :math:`7` nodes) so that 
+    the last delete operation in that sequence causes two rotations. 
+  
 
 
 (2,4) Trees
@@ -79,7 +92,7 @@ Red-Black Trees
 
 
 
-**Question 6.6.1 (Insert Nodes in a Red-Black Tree):**
+**Problem 5:**
 
   .. _red-black-tree:
   .. figure:: figs-search-trees/red-black-tree.png
@@ -130,38 +143,6 @@ Red-Black Trees
 
 
 
-
-**Question 6.1.2 (Binary Trees):**
-
-  Define a new integer number :math:`N \in \{0,1,2,\ldots,9 \}` from the digits of your Student ID:
-
-  .. math::
-
-    N \;=\; (a + b) \;\text{mod}\; 10.
-
-
-  **(A)**
-    Redraw the binary tree in Figure;
-    replace letters :math:`a,b` with your values. We denote this tree by :math:`B`.
-
-  **(B)**
-    List all the nodes of :math:`B` in their in-order DFS traversal order.
-
-  **(C)**
-    Draw a general tree (denoted by :math:`G`) that is obtained
-    by decoding the tree :math:`B`.
-    See `Encoding general trees as binary trees <https://en.wikipedia.org/wiki/Binary_tree#Encoding_general_trees_as_binary_trees>`_
-    or `<https://bit.ly/3kdyg8n>`_.
-
-  **(D)**
-    What is the depth of the node with number :math:`N` (defined above) in the new tree :math:`G`?
-
-
-  .. figure:: figs-search-trees/heptagonal-nodes.png
-     :width: 3in
-     :alt: Binary tree
-
-     Binary tree :math:`B` for inorder traversal and converting to a general tree :math:`G`
 
 
 
