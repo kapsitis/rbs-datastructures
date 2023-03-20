@@ -10,7 +10,7 @@ Welcome to ds-worksheet-week05's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   ds-worksheet-search-trees
+   ds-worksheet-balanced-trees
 
 
 
