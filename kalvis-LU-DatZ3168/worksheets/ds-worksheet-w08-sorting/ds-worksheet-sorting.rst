@@ -7,32 +7,27 @@ Problems
 -----------
 
 
-**QuickSort Algorithm:**
-  This variant of Quicksort uses the leftmost element of the input area as a pivot.
-  It is taken from the lecture slides. There are other Quicksort flavors (randomized or choosing a pivot differently).
+**Problem 1:** 
 
-  .. math::
+  **(A)** 
+    Find the :math:`O(g(n))` for the following function: :math:`\log_2 n!``. 
+	
+  **(B)** 
+    Some algorithm receives :math:`n` items as its input and then calls
+    function :math:`f(x_1,x_2,x_3,x_4)`
+    for any ordered quadruplet :math:`x_1, x_2, x_3, x_4` received in the input. 
+    Assume that :math:`f(\ldots)` runs in constant time. Find the time complexity of the whole algorithm. 
+	
+  **(C)** 
+    Some algorithm receives :math:`n` items as its input and then calls a function 
+    :math:`f` on all subsets of 
+    the received items having size :math:`\lfloor n/4 \rfloor`. 
+    Assume that :math:`f(\ldots)` runs in constant time. Find the time complexity of the whole algorithm. 
 
-    \begin{array}{rl}
-     & \text{\textsc{Quicksort}}(A[\ell\;\ldots\;r]):\\
-    1 & \text{\textbf{if\ }} l<r:\\
-    2 & \hspace{.5cm} i = \ell \;\;\;\;\;\;\;\;\; \textcolor{teal}{\text{\em ($i$ increases from the left and searches elements $\geq$ than pivot)}}\\
-    3 & \hspace{.5cm} j = r+1	\;\; \textcolor{teal}{\text{\em ($j$ decreases from the right and searches elements $\leq$ than pivot.)}}\\
-    4 & \hspace{.5cm} v = A[\ell] \;\;\;\; \textcolor{teal}{\text{\em ($v$ is the pivot.)}}\\
-    5 & \hspace{.5cm} \text{\textbf{while\ }} i<j:\\
-    6 & \hspace{1.0cm} i = i+1\\
-    7 & \hspace{1.0cm} \text{\textbf{while\ }} i<r \text{\textbf{\ and\ }} A[i]<v:\\
-    8 & \hspace{1.5cm} i = i+1\\
-    9 & \hspace{1.0cm} j = j-1\\
-    10 & \hspace{1.0cm} \text{\textbf{while\ }} j>\ell \text{\textbf{\ and\ }} A[j]>v:\\
-    11 & \hspace{1.5cm} j = j-1\\
-    12 & \hspace{1.0cm} A[i] \leftrightarrow A[j] \;\; \textcolor{teal}{\text{\em (Undo the extra swap at the end)}}\\
-    13 & \hspace{0.5cm} A[i] \leftrightarrow A[j] \;\; \textcolor{teal}{\text{\em (Undo the extra swap at the end)}}\\
-    14 & \hspace{0.5cm} A[j] \leftrightarrow A[\ell] \;\; \textcolor{teal}{\text{\em (Move pivot to its proper place)}}\\
-    15 & \hspace{0.5cm} \text{\textsc{Quicksort}}(A[\ell\;\ldots\;j-1])\\
-    16 & \hspace{0.5cm} \text{\textsc{Quicksort}}(A[j+1\;\ldots\;r])\\
-    \end{array}
-
+  **(D)** 
+    What is the lower bound of comparisons needed to sort an array of :math:`5` 
+    elements (assume they are all different)? 
+	
 
 
 
@@ -98,7 +93,39 @@ Problems
     In general, this time should grow as :math:`O(n)`, where :math:`n` is the number of items in the heap being built.
       	
   :math:`\square`
-	 
+  
+  
+  
+
+**QuickSort Algorithm:**
+  This variant of Quicksort uses the leftmost element of the input area as a pivot.
+  It is taken from the lecture slides. There are other Quicksort flavors (randomized or choosing a pivot differently).
+
+  .. math::
+
+    \begin{array}{rl}
+     & \text{\textsc{Quicksort}}(A[\ell\;\ldots\;r]):\\
+    1 & \text{\textbf{if\ }} l<r:\\
+    2 & \hspace{.5cm} i = \ell \;\;\;\;\;\;\;\;\; \textcolor{teal}{\text{\em ($i$ increases from the left and searches elements $\geq$ than pivot)}}\\
+    3 & \hspace{.5cm} j = r+1	\;\; \textcolor{teal}{\text{\em ($j$ decreases from the right and searches elements $\leq$ than pivot.)}}\\
+    4 & \hspace{.5cm} v = A[\ell] \;\;\;\; \textcolor{teal}{\text{\em ($v$ is the pivot.)}}\\
+    5 & \hspace{.5cm} \text{\textbf{while\ }} i<j:\\
+    6 & \hspace{1.0cm} i = i+1\\
+    7 & \hspace{1.0cm} \text{\textbf{while\ }} i<r \text{\textbf{\ and\ }} A[i]<v:\\
+    8 & \hspace{1.5cm} i = i+1\\
+    9 & \hspace{1.0cm} j = j-1\\
+    10 & \hspace{1.0cm} \text{\textbf{while\ }} j>\ell \text{\textbf{\ and\ }} A[j]>v:\\
+    11 & \hspace{1.5cm} j = j-1\\
+    12 & \hspace{1.0cm} A[i] \leftrightarrow A[j] \;\; \textcolor{teal}{\text{\em (Undo the extra swap at the end)}}\\
+    13 & \hspace{0.5cm} A[i] \leftrightarrow A[j] \;\; \textcolor{teal}{\text{\em (Undo the extra swap at the end)}}\\
+    14 & \hspace{0.5cm} A[j] \leftrightarrow A[\ell] \;\; \textcolor{teal}{\text{\em (Move pivot to its proper place)}}\\
+    15 & \hspace{0.5cm} \text{\textsc{Quicksort}}(A[\ell\;\ldots\;j-1])\\
+    16 & \hspace{0.5cm} \text{\textsc{Quicksort}}(A[j+1\;\ldots\;r])\\
+    \end{array}
+
+
+
+
 
 **Problem 3:**
 
@@ -277,12 +304,12 @@ Problems
     recursive calls on lines 3 and 4 of this pseudocode). 
 	
   **(B)**
-    How many comparisons are needed (in the worst case) to sort an array of :math:`11` items 
-	by the MergeSort algorithm? 
+    How many comparisons are needed (in the worst case) to sort an array of 
+    :math:`11` items by the MergeSort algorithm? 
 	
   **(C)** 
     Evaluate :math:`\log_2 11!` using Stirling's formula or a direct computation. 
-	What is the theoretical lower bound on the number of comparisons to sort :math:`11` items?
+    What is the theoretical lower bound on the number of comparisons to sort :math:`11` items?
   
   
   
