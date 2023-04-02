@@ -17,8 +17,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'ds-worksheet-stacks-queues-heaps'
-copyright = '2022, LU'
+project = 'ds-worksheet-priority-queues'
+copyright = '2023, LU'
 author = 'LU'
 
 

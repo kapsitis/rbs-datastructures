@@ -1,4 +1,4 @@
-Worksheet, Week 04: Build and Debug on Linux
+Worksheet 04: Build and Debug on Linux
 =============================================
 
 

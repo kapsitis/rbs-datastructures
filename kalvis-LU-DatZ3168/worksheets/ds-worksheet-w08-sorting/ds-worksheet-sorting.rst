@@ -1,4 +1,4 @@
-Worksheet, Week 08: Sorting
+Worksheet 08: Sorting
 =============================
 
 Various sorting algorithms are introduced here, because they 
@@ -104,6 +104,8 @@ Problems
 -----------
 
 
+.. _sorting-P1:
+
 **Problem 1:** 
 
   **(A)** 
@@ -127,9 +129,9 @@ Problems
 	
 
 
-
-
 ..   (*4.D. Use and analyze Heapsort.*)
+
+.. _sorting-P2:
 
 **Problem 2:** 
   An array of :math:`10` elements is used to initialize a minimum heap (as the first stage of 
@@ -193,9 +195,7 @@ Problems
   
   
 
-
-
-
+.. _sorting-P3:
 
 **Problem 3:**
 
@@ -269,6 +269,7 @@ Problems
 
 ..  (*5.A. Use and analyze Selection sort, Insertion sort, Bubble sort algorithms.*)
 
+.. _sorting-P4:
 
 **Problem 4:**
 
@@ -349,6 +350,7 @@ Problems
   :math:`\square`
 
 
+.. _sorting-P5:
 
 **Problem 5:**
   

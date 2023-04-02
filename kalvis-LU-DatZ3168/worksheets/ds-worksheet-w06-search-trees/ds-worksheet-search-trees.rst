@@ -1,14 +1,59 @@
-Worksheet, Week 06: Search Trees
+Worksheet 06: Search Trees
 =================================
 
 
+Concepts and Facts
+-----------------------
 
-Binary Trees as Arrays
---------------------------
+**Definition:**
+  A tree is named *Binary Search Tree* (BST) if the nodes satisfy the *order invariant*:
+  Let :math:`x` be a node in a binary search tree. If :math:`y` is a node in the left subtree
+  of :math:`x`, then :math:`y.key \leq x.key`. If :math:`z` is a node in the right subtree of :math:`x`, then
+  :math:`z.key \geq x.key`.
+
+**Definition:** 
+  In a binary tree, the *inorder predecessor* of a node :math:`v` is a node :math:`u` 
+  iff :math:`v` directly follows :math:`u` in the inorder traversal of the nodes.   
+  Similarly, the *inorder successor* of a node :math:`v` is :math:`w` iff 
+  :math:`w` directly follows :math:`v` in the inorder traversal. 
+
+To delete an internal node from a BST (having both left and right children), 
+you can replace it either by the inorder predecessor or the inorder successor. 
+
+
+**Definition:** 
+  The *height* of a node in a tree is defined by induction: 
+
+  * Null trees (empty trees) have height :math:`-1`
+  * Leaves (single node trees) have height :math:`0`
+  * Any node :math:`v` has height :math:`h(v) = \max(h(v_{\text{left}}), h(v_{\text{right}}))+1`
+  
+**Definition:** 
+  A binary search tree is called  an *AVL tree* iff each node :math:`v` is balanced. Namely, 
+  the heights of both its subtrees do not differ by more than :math:`1`. 
+
+  .. math:: 
+  
+    |h(v_{\text{left}}) - h(v_{\text{right}})| \leq 1
+
+To see, if a tree is an AVL tree (the representation invariant must be preserved even 
+after we insert or delete something!) we need to store the balance inside the tree node. 
+Such additional information is called graph/tree node augmentation. 
+(Augmentations are used by many algorithms and data structures. 
+AVL trees needing the height is just one example.)
+
+
+
+
+Problems 
+---------
 
 .. multiway trees encoded as binary trees
 .. traversal order
 ..  https://www.geeksforgeeks.org/iterative-postorder-traversal-using-stack/
+
+
+.. _search-trees-P1:
 
 **Problem 1:** 
   Even binary trees that are not complete can be represented as arrays -- their nodes written out 
@@ -48,7 +93,8 @@ Binary Trees as Arrays
       
   :math:`\square`
   
-  
+
+.. _search-trees-P2: 
   
 **Problem 2:**   
   Non-binary ordered trees  can be encoded as binary trees (using a bijective encoding function). 
@@ -147,119 +193,9 @@ Binary Trees as Arrays
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Prefix Codes and Huffman Algorithm
-------------------------------------
+.. _search-trees-P3:
 
 **Problem 3:**
-  Consider the following Prefix Tree to encode letters in alphabet
-  :math:`\mathcal{A} = \{ S, I, E, N, T, A \}`.
-
-  .. image:: figs-search-trees/prefix-tree.png
-     :width: 2in
-
-  Every letter is encoded as a sequence of 0s and 1s (the path from the root to the respective letter).
-
-  **(A)**
-    Decode the following sequences:
-
-    * ``11100110100``
-    * ``0001100101111``
-
-  **(B)**
-    Explain, if there are sequences of bits that are *ambiguous* (can be decoded in more than one way).
-
-  **(C)**
-    Explain, if there are sequences of bits that are *impossible* (do not represent any word in the alphabet :math:`\mathcal{A}`).
-
-
-
-**Huffman Algorithm:**
-  Let :math:`C` be the collection of letters to be encoded; each letter
-  has its frequency :math:`c.freq` (frequencies are numbers describing the probability
-  of each letter).
-
-  | :math:`\text{\sc Huffman}(C)`:
-  | :math:`\;\;\;\;` :math:`n = |C|`
-  | :math:`\;\;\;\;` :math:`Q = \text{\sc PriorityQueue}(C)` :math:`\;\;\;\;` (*Minimum heap by "c.freq"*)
-  | :math:`\;\;\;\;` **for** :math:`i = 1` to :math:`n - 1` :math:`\;\;\;\;` (*Repeat n-1 times*)
-  | :math:`\;\;\;\;\;\;\;\;` :math:`z = \text{\sc Node}()`
-  | :math:`\;\;\;\;\;\;\;\;` :math:`z.left = x = \text{\sc ExtractMin(Q)}`
-  | :math:`\;\;\;\;\;\;\;\;` :math:`z.right = y = \text{\sc ExtractMin(Q)}`
-  | :math:`\;\;\;\;\;\;\;\;` :math:`z.freq = x.freq + y.freq`
-  | :math:`\;\;\;\;\;\;\;\;` :math:`\text{\sc Insert}(Q,z)`
-  | :math:`\;\;\;\;` **return** :math:`\text{\sc ExtractMin(Q)}`  :math:`\;\;\;\;` (*Return the root of the tree*)
-
-
-
-
-
-**Problem 4:**
-  Let the alphabet have 6 characters :math:`\mathcal{A} = \{ A, B, C, D, E, F \}` and
-  their probabilities are shown in the table:
-
-  ============  ====  ====  ====  ====  ====  ====
-  :math:`c`     A     B     C     D     E     F
-  :math:`P(c)`  27%   9%    11%   15%   30%   8%
-  ============  ====  ====  ====  ====  ====  ====
-
-  Use the Huffman algorithm to create a Prefix Tree to encode these characters. 
-
-
-
-**Problem 5:**
-
-  **(A)**
-    For the alphabet (and letter frequencies)
-    taken from the previous question compute the Shannon entropy:
-
-    .. math::
-
-      H(\mathcal{A}) = \sum\limits_{c \in \mathcal{A}} (- \log_2 P(c)) \cdot P(c),
-
-    where :math:`P(c)` denotes the probability of the character :math:`c` in the alphabet.
-
-  **(B)**
-    Also compute the expected number of bits needed to encode one random letter
-    by the Huffman code you created in the previous question.  (Assume that letters arrive with
-    the probabilities shown in the table.)
-
-.. note::
-  Theory (not in the scope of our course) tells that nobody can encode the alphabet
-  :math:`\mathcal{A}` better than the Shannon's entropy.
-  On the other hand, Huffman code is an optimal prefix code; the expected number of bits spent
-  per one letter does not exceed :math:`H(\mathcal{A}) + 1`.
-
-
-
-
-
-Binary Search Trees
----------------------------------
-
-
-**Definition:**
-  A tree is named *Binary Search Tree* (BST) if the nodes satisfy the *order invariant*:
-  Let :math:`x` be a node in a binary search tree. If :math:`y` is a node in the left subtree
-  of :math:`x`, then :math:`y.key \leq x.key`. If :math:`z` is a node in the right subtree of :math:`x`, then
-  :math:`z.key \geq x.key`.
-
-
-
-**Problem 6:**
   Let :math:`B_n` denote how many different BSTs for :math:`n` different keys there exist (all the trees should have correct order invariant).
   We have :math:`B_1 = 1` (one node only makes one tree). And :math:`B_2 = 2`.
   
@@ -280,18 +216,10 @@ Binary Search Trees
   (For example, searching the key at the root means following :math:`1` pointer, searching the key that is a child
   of the root means following :math:`2` pointers and so on.)
 
-**Definition:** 
-  In a binary tree, the *inorder predecessor* of a node :math:`v` is a node :math:`u` 
-  iff :math:`v` directly follows :math:`u` in the inorder traversal of the nodes.   
-  Similarly, the *inorder successor* of a node :math:`v` is :math:`w` iff 
-  :math:`w` directly follows :math:`v` in the inorder traversal. 
 
-  To delete an internal node from a BST (having both left and right children), 
-  you can replace it either by the inorder predecessor or the inorder successor. 
+.. _search-trees-P4:
 
-
-
-**Problem 8:**
+**Problem 4:**
   Consider the following Binary Search Tree (BST). 
   
   .. image:: figs-search-trees/binary-search-tree.png
@@ -329,11 +257,9 @@ Binary Search Trees
   a key that does not exist. 
 
 
-AVL Trees
------------------------------------------
+.. _search-trees-P5:
 
-
-**Question 9:**
+**Question 5:**
   Let :math:`T_n` be an AVL tree of height :math:`n` with the
   smallest possible number of nodes. For example :math:`|T_0| = 1`
   (just one node is an AVL tree of height :math:`0`); :math:`|T_1| = 2`
@@ -346,9 +272,12 @@ AVL Trees
     Write a recurrence to find the number of nodes :math:`|T_n|`
     (recurrent formula expresses the number :math:`|T_n|` using
     the previous numbers :math:`|T_k|` with :math:`k < n`).
+    
 
 
-**Problem 10:**
+.. _search-trees-P6:
+
+**Problem 6:**
   Let :math:`T` be some (unknown) BST tree that also satisfied the AVL balancing requirement.
   After :math:`k` nodes were inserted (without any re-balancing actions) the tree :math:`T'` now looks as
   in the image below.
@@ -367,3 +296,21 @@ AVL Trees
 
 
 
+.. many rotations: https://cs.stackexchange.com/questions/97975/how-many-rotations-after-avl-insertion-and-deletion
+.. https://stackoverflow.com/questions/13367981/what-is-the-minimum-sized-avl-tree-where-a-deletion-causes-2-rotations
+
+
+
+.. _search-trees-P7:
+
+**Problem 7:**
+  Assume that a Binary Search Tree :math:`T` is created by inserting the following keys into an empty tree: 
+  :math:`[39, 20, 65, 11, 29, 50, 26]` (in the given order). 
+
+  **(A)**
+    Do the following actions on this tree one after another: 
+    :math:`T.\text{\sc insert}(22)`, :math:`T.\text{\sc insert}(60)`, :math:`T.\text{\sc delete}(11)`. 
+
+  **(B)**
+    Suggest a sequence of inserts/deletes for the original tree :math;`T` (with :math:`7` nodes) so that 
+    the last delete operation in that sequence causes two rotations. 

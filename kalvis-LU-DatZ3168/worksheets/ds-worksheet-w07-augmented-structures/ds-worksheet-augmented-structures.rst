@@ -1,59 +1,18 @@
-Worksheet, Week 07: Balanced Trees
-====================================
+Worksheet 07: Augmented Structures
+==========================================
+
+"Vanilla" binary search trees are easy to reason about, 
+but in practice one may need to make variations for trees and other classical data structures. 
+Common variation is to augment tree nodes with parameters (such as height used for AVL trees), 
+node "colors", successor counts and similar parameters. 
+Another common way to generalize binary search trees is *multiway search trees*, 
+where nodes can have more than two children. 
+They may help with processing speed, if nodes match the size of memory pages 
+loaded from the disk. 
 
 
-AVL Trees
------------------------------------------
-
-Define a height of a node in a tree by induction: 
-
-* Null trees (empty trees) have height :math:`-1`
-* Leaves (single node trees) have height :math:`0`
-* Any node :math:`v` has height :math:`h(v) = \max(h(v_{\text{left}}), h(v_{\text{right}}))+1`
-
-AVL tree is such that each node :math:`v` 
-is balanced: :math:`|h(v_{\text{left}}) - h(v_{\text{right}})| \leq 1` - the heights of its subtrees
-do not differ by more than :math:`1`. 
-
-
-**Problem 1:**
-  Let :math:`T_n` be an AVL tree of height :math:`n` with the
-  smallest possible number of nodes. For example :math:`|T_0| = 1`
-  (just one node is an AVL tree of height :math:`0`); :math:`|T_1| = 2`
-  (a root with one child only is an AVL tree of height :math:`1` of the smallest size) and so on.
-
-  **(A)**
-    Draw example AVL trees :math:`T_2`, :math:`T_3`, :math:`T_4`.
-
-  **(B)**
-    Denote the smallest 
-    Suggest a method how to  :math:`|T_n|`
-    (recurrent formula expresses the number :math:`|T_n|` using
-    the previous numbers :math:`|T_k|` with :math:`k < n`).
-
-
-
-
-.. many rotations: https://cs.stackexchange.com/questions/97975/how-many-rotations-after-avl-insertion-and-deletion
-.. https://stackoverflow.com/questions/13367981/what-is-the-minimum-sized-avl-tree-where-a-deletion-causes-2-rotations
-
-
-**Problem 2:**
-  Assume that a Binary Search Tree :math:`T` is created by inserting the following keys into an empty tree: 
-  :math:`[39, 20, 65, 11, 29, 50, 26]` (in the given order). 
-
-  **(A)**
-    Do the following actions on this tree one after another: 
-    :math:`T.\text{\sc insert}(22)`, :math:`T.\text{\sc insert}(60)`, :math:`T.\text{\sc delete}(11)`. 
-
-  **(B)**
-    Suggest a sequence of inserts/deletes for the original tree :math;`T` (with :math:`7` nodes) so that 
-    the last delete operation in that sequence causes two rotations. 
-  
-
-
-(2,4) Trees
----------------
+Concepts and Facts 
+--------------------
 
 **Definition:** 
   :math:`(2,4)`-trees are search trees where each node stores one/two/three keys and each non-leaf node 
@@ -77,22 +36,6 @@ do not differ by more than :math:`1`.
   * Otherwise proceed as in `2-3-4 Tree Deletion <https://en.wikipedia.org/wiki/2%E2%80%933%E2%80%934_tree#Deletion>`_.
 
 
-**Problem 3:** 
-  Show how to insert a new node :math:`31` into this :math:`(2,4)`-trees: 
-  
-  .. figure:: figs-balanced-trees/2-4-tree.png
-     :width: 2.5in
-	 
-	 
-**Problem 4:** 
-  Build an example of (2,4)-tree, where the root has height equal to :math:`3` and where deleting some key would cause 
-  the height to decrease. 
-
-
-
-
-Red-Black Trees
------------------------------
 
 **Definition:**
   A tree is named a *Red-Black Tree*, if it is a Binary Search Tree,
@@ -117,10 +60,48 @@ Red-Black Trees
     for any other node :math:`v`, it is the maximum of all :math:`h_{\text{black}}(v_i)` of its descendants :math:`v_i` plus one.)
 
 
-**Problem 5:**
+**Statement:** 
+  Each red-black tree can be uniquely represented as a (2,4)-tree. 
+  They are just differently drawn representations of the same concept. 
+  
+**Example:** 
+  The picture below shows how a red-black tree can be converted into a (2,4) tree. 
+  Every black node (and optionally one or two of its red children) become keys in the 
+  new (2,4)-tree. The representation invariants of red-black trees ensures that 
+  the properties of (2,4)-tree are also satisfied. 
+
+
+  .. figure:: figs-augmented-structures/2-4-and-red-black-trees.png
+     :width: 4.5in
+  
+
+
+Problems
+---------------
+
+.. _augmented-structures-P1: 
+
+**Problem 1:** 
+  Show how to insert a new node :math:`31` into this :math:`(2,4)`-trees: 
+  
+  .. figure:: figs-augmented-structures/2-4-tree.png
+     :width: 2.5in
+
+
+.. _augmented-structures-P2: 
+	 
+**Problem 2:** 
+  Build an example of (2,4)-tree, where the root has height equal to :math:`3` and where deleting some key would cause 
+  the height to decrease. 
+
+
+
+.. _augmented-structures-P3: 
+
+**Problem 3:**
 
   .. _red-black-tree:
-  .. figure:: figs-balanced-trees/red-black-tree.png
+  .. figure:: figs-augmented-structures/red-black-tree.png
      :width: 5in
 
      Sample Red-Black Tree
@@ -164,35 +145,33 @@ Red-Black Trees
     (still, preserving the invariants is more important).
 
 
+.. _augmented-structures-P4: 
 
-
-Augmented trees
------------------------
-
-**Problem 6:**
+**Problem 4:**
   Compare the following two implementations: (1) heaps, (2) AVL trees to implement the
   following ADTs. For each method find the worst-case (or amortized) time complexity :math:`\Theta(g(n))`. 
 
-**(A)**
-  Priority Queue ADT: 
+  **(A)**
+    Priority Queue ADT: 
 
-  | :math:`Q = \text{newEmptyQueue}()`
-  | :math:`Q.\text{\sc insert}(x)`
-  | :math:`x = Q.\text{\sc deleteMin}()`
-  | :math:`x = Q.\text{\sc findMin}()`
+    | :math:`Q = \text{newEmptyQueue}()`
+    | :math:`Q.\text{\sc insert}(x)`
+    | :math:`x = Q.\text{\sc deleteMin}()`
+    | :math:`x = Q.\text{\sc findMin}()`
 
-**(B)**
-  Predecessor/Successor ADT: 
+  **(B)**
+    Predecessor/Successor ADT: 
   
-  | :math:`S = \text{\sc newEmptyContainer}()`
-  | :math:`S.\text{\sc insert}(x)`
-  | :math:`S.\text{\sc delete}(x)`
-  | :math:`y = S.\text{\sc predecessor}(x)` -- return the reference to the next-smaller than :math:`x`
-  | :math:`y = S.\text{\sc successor}(x)` -- return the reference to the next-larger than :math:`x`
+    | :math:`S = \text{\sc newEmptyContainer}()`
+    | :math:`S.\text{\sc insert}(x)`
+    | :math:`S.\text{\sc delete}(x)`
+    | :math:`y = S.\text{\sc predecessor}(x)` -- return the reference to the next-smaller than :math:`x`
+    | :math:`y = S.\text{\sc successor}(x)` -- return the reference to the next-larger than :math:`x`
 
 
+.. _augmented-structures-P5: 
 
-**Problem 7:** 
+**Problem 5:** 
   Assume that you need to build a *range index* data structure :math:`R` -- this data structure is a database-like 
   container where we can insert items :math:`x_i` (such as page requests for Google Analytics). 
   Each item :math:`x` has some numeric key :math:`x.k` (the timestamp of the request or, perhaps, the milliseconds it took to compute the 

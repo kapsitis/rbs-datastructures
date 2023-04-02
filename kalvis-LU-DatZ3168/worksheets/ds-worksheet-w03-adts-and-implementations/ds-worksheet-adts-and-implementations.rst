@@ -1,324 +1,148 @@
-Worksheet Week 03: ADTs and Implementations
+Worksheet 03: ADTs and Implementations
 =============================================
 
-Introduction
----------------
-
-Some stuff from Python: 
-
-.. code-block:: python
-
-  L = ["Cacophony", "Imbibe", "Writhe", "Ubiquitous", "Paradox"]
-  S = {"Cacophony", "Imbibe", "Writhe", "Ubiquitous", "Paradox"}
-  for item in sorted(S):
-      print(i)
-
-
-
-
-
-
-**Questions**
-
-1. Is a list in Python ordered? (I.e. can we visit its elements in a predictable order?)
-   Is a set in Python ordered?
-2. Assume that you want to store a large alphabetically sorted dictionary in Python to enable 
-   binary search (it has :math:`O(\log n)` runtime).
-   Is it a set of words or a list of words?
-3. Occasionally we need to insert new words in that Python data structure. Assume that some 
-   item is inserted in a wrong order. What will be the consequences for subsequent operations? 
-
-
-Introducing concepts: 
-
-* *Extrinsic order:* (imposed by they way data structure is built) vs. *intrinsic order* (wholly depends 
-  on the properties of the items themselves). List by definition is ordered (as a sequence of 
-  items :math:`a_0,a_1,\ldots,a_{n-1}`); it can also be sorted. 
-* Mathematical sets do not have any order by themselves (but numbers in a set may be ordered using *order relations* 
-  :math:`a \leq b` or :math:`a < b`). 
-  In many programming languages sets may be ordered or unordered 
-  (e.g. Java interface `java.util.SortedSet <https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html>`_),
-  but there are no *extrinsic* enumerations to access its elements.
-* *Representation invariant:* Physical representation of a data structure may use some assumptions to function normally. 
-  All operations can assume that the assumptions are true (and should not break these assumptions themselves). 
-* *Mutable data structure:*
-  Immutable objects are easier to pass as arguments to functions (passing a reference is always fine). 
-  They make functions more *mathematical* and easier to debug. 
-* *Sorting in place* vs. *returning a sorted copy*. 
-
-
-.. code-block:: python
-
-  elevation = dict()
-  elevation[(0,0)] = 3
-  elevation[(0,1)] = 4
-
-  other_dict = { [0,0]: 3, [0,1]: 4} 
-  # What is "unhashable type"?
-
-  a = [0, 1]
-  a.insert(1,a)
-  a[1][1][0]
-  a[1][1][1]
-
-
-In Java you can easily create a set :math:`S` of sets :math:`s_0,s_1,\ldots,s_{k-1}` (and then modify one of the :math:`s_i`). 
-The larger set :math:`S` behaves in a funny way -- you can still check that the size of :math:`S` equals to :math:`k`, but 
-you cannot find the modified (or the original) set :math:`s_i` anymore. If you check, if :math:`s_i \in S`, Java returns false.
-
-
-
-
-
-Lists -- Redundant, but Convenient ADTs
--------------------------------------------
-
-| # *(Constructor: Create an empty list)*
-| :math:`\text{\sc List}<T> L()` 
-| # *(Initializer list: Create a list with some elements in it)* 
-| :math:`\text{\sc List}<T> L (\{ item1:T, item2:T, \ldots \})`
-| # *(Insertion: Inserts an element at a specified position in the list)*
-| :math:`L.\text{\sc insert}(\text{index}:int, \text{item}:T)`
-| # *(Deletion: Deletes the element at a specified position in the list.)*
-| :math:`L.\text{\sc delete}(\text{index}:int)`
-| # *(Access the item at a specified position)*
-| :math:`L.\text{\sc get}(index:int): T`
-| # *(Traversal: Accesses each element in the list List<T> in its order)*
-| **for** :math:`\text{item}` **in** :math:`L` { do something with :math:`\text{item}` }
-| # *(Search: Finds the position of the first entry of item (>= initialPosition))*
-| :math:`L.\text{\sc find}(\text{item}:T): int`
-| :math:`L.\text{\sc find}(\text{item}:T, startFrom:int): int`
-| # *(Concatenation: Combines two lists into a single list)*
-| :math:`L.\text{\sc concatenate}(L1:\text{\sc List}<T>, L2:\text{\sc List}<T>): \text{\sc List}<T>`
-| # *(Sorting: Rearranges the list in sorted order)*
-| :math:`L.\text{\sc sort}(): void`
-| # *(Getting a sorted copy: Return a sorted copy of the list, but do not change the list)*
-| :math:`L.\text{\sc sortedCopy}(): \text{\sc List}<T>`
-| # *(Slicing: Extract a fragment of the list from startPos (inclusive) to endPos (exclusive))*
-| :math:`L.\text{\sc slice}(startPos:int, endPos:int)`
-| # *(Size: Returns the number of elements in the list.)*
-| :math:`L.\text{\sc size}(): int`
-
-
-.. subchapter ... 
-.. Examples in Python and C++ STD
-
-
-
-
-Mutable vs. Immutable Lists
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Mutable lists support insertion, deletion, appending elements, sorting (in place). 
-Both mutable and immutable lists support all the other operations. 
-From functional programming there are two more operations: 
-
-**Filtering:** 
-  Creating a new list that contains only the elements that satisfy a certain condition
-
-**Mapping:** 
-  Creating a new list that contains the results of applying a 
-  function to each element of the original list.
-
-
-
-Sequence ADT
-^^^^^^^^^^^^^^
-
-
-**Container operations:** (initializing sequence)
-
-| # given an iterable X, build sequence from items in iterator X
-| :math:`S = \text{\sc build}(X)`
-| # return the number of stored items
-| :math:`S.\text{\sc size}()`
-
-**Static operations:** (operations not affecting sequence size)
-
-| # return the stored items one-by-one in sequence order
-| :math:`S.\text{\sc iterSeq}()``
-| # return the ith item
-| :math:`S.\text{\sc get}(i)`
-| # replace the ith item with x
-| :math:`S.\text{\sc set}(i, x)`
-
-**Dynamic operations:** (operations affecting sequence size)
-
-| # add x as the ith item
-| :math:`S.\text{\sc insertAt}(i, x)`
-| # remove and return the ith item
-| :math:`S.\text{\sc deleteAt}(i)`
-| # add x as the first item
-| :math:`S.\text{\sc insertFirst}(x)`
-| # remove and return the first item
-| :math:`S.\text{\sc deleteFirst}()`
-| # add x as the last item
-| :math:`S.\text{\sc insertLast}(x)`
-| # remove and return the last item 
-| :math:`S.\text{\sc deleteLast}()`
-
-
-
-
-
-
-
-
-
-
-Stack ADT
-^^^^^^^^^^
-
-| :math:`S = \text{\sc emptyStack}()` -- create an empty stack
-| :math:`S.\text{\sc push}(item)` -- add one element to the top of the stack
-| :math:`S.\text{\sc pop}()` -- remove and return one element from the top of the stack
-| :math:`S.\text{\sc top}()` -- return, but do not remove the top element. 
-| :math:`S.\text{\sc isEmpty}()` -- return true, iff the stack is empty. 
-
-Optionally stacks can support some other functions:
-
-| :math:`S.\text{\sc clear}()` -- Remove everything from the stack
-| :math:`S.\text{\sc size}()` -- Return the number of elements in the stack
-
-
-
-
-Iterator ADT
-^^^^^^^^^^^^^^
-
-In an iterator with :math:`n` items, the cursor typically has :math:`n+1` valid states (it can be 
-right before any of the elements, or it can be at the very end). Iterators are convenient 
-to write iterative **for** loops or otherwise process items one by one (as in bulk insert operations, 
-reading items from an input buffer, etc.). 
-
-
-| # Traversal: Accesses the next element in the iterator and moves 1 step ahead
-| :math:`it.\text{\sc next}()`
-| # Checking for more elements: Checks if there are more elements without moving 1 step ahead
-| :math:`it.\text{\sc hasNext}()`
-| # Removing the current element: Removes the current element from the data structure, point to the next one
-| :math:`it.\text{\sc remove}()`
-| # Peeking the current element: Returns the current element without moving the iterator 1 step ahead
-| :math:`it.\text{\sc peek}()`
-| # Rewinding: Resets the iterator to the beginning of the data structure (right before the 1st element)
-| :math:`it.\text{\sc rewind}()`
-| # Skipping: Skips a specified number of elements in the data structure.
-| :math:`it.\text{\sc skip}(n:int)`
-| # Filtering: Filters elements in the data structure based on a given predicate.
-| :math:`it.\text{\sc filter}(predicate:{item:T => isValid:Boolean})`
-| # Mapping: (Lazy) apply of a given function to each element, returns another iterator. 
-| :math:`it.\text{\sc map}(\text{\sc mapFunction}:{item:T => value:U})`
-
-
-
-
-
-Case Study: Matching Parentheses
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: text 
+An abstract data type (ADTs) provide standard names for 
+operations to interact with a certain data structure. 
+ADTs should be distinguished
+from the implementation of the data structure -- the same 
+ADT operations can be supported in multiple ways with 
+programming constructs like arrays, pointers, custom objects etc.
+Abstract Data Types (just as any other API interfaces) let us ignore 
+implementation details when using them in other algorithms. 
+
+
+
+Concepts and Facts
+----------------------
+
+**Definition:** 
+  A data container :math:`C` that stores items imposes *extrinsic order* iff this 
+  container ensures predictable order of how they can be visited or retrieved. 
+  Namely, for any two elements :math:`a,b \in C`, either that :math:`a` *preceeds* :math:`b`
+  or :math:`a` *succeeds* :math:`b` in this container. 
+
+
+**Example:** 
+  Items stored in a linked list or in an array can be visited in a predictable order 
+  such as :math:`A[0], A[1], \ldots`. 
+  This extrinsic order does not need to be related with possible ordering of items themselves
+  (items in an array are not always stored in increasing or decreasing order). 
+
+**Definition:** 
+  Items :math:`a,b` stored in a data container have *intrinsic order* iff they can be compared 
+  by themselves. Such as :math:`a = b`, :math:`a < b`, or :math:`a > b`. 
+  (Some data structures such as Binary Search Trees (BSTs) store keys according to their intrinsic order). 
+
+
+There may be data structures (such as sets stored in a hashtable) that do not use either intrinsic or extrinsic order. 
+We can iterate over such containers, but will get the elements in some unpredictable order. 
+
+**Definition:** 
+  A data structure is *immutable*, if it cannot change its state after its creation   
+  Other data structures that can be changed are called *mutable*. 
+
+**Example:**
+  A ``string`` data structure is immutable in many programming languages -- a string object stays 
+  unchanged throughout its lifetime. Appending new characters or modifying the string is 
+  possible, but the result is always a new string object. 
+
+Immutable data structures 
+can be easily passed as parameters to functions (just by copying its address or 
+reference, but without cloning the data). Immutable data structures also can serve as keys
+in larger data structures.
+ 
+**Definition:** 
+  Some property for a mutable data structure is a *representation invariant*, if it is necessary for 
+  any consistent state of this data structure and it is preserved during the ADT operations. 
+  Namely, if the property was true before the operation (insertion, deletion etc.), then it must be also true 
+  after that operation. It is thus *unchangeable* or *invariant*. 
   
-  correct: ( ) ( ( ) ) { ( [ ( ) ] ) }	
-  correct: ( ( ( ) ( ( ) ) { ( [ ( ) ] ) }	
-  incorrect: ) ( ( ) ) { ( [ ( ) ] ) }	
-  incorrect: ( { [ ] ) }	
-  incorrect: (
+Violating the representation invariant makes the data structure inconsistent and unusable. 
+If an API method is run on an inconsistent data structure, there are no expectations
+(program can crash, loop forever or produce any result).
+
+**Example:** 
+  Some mutable data structures (such as ``java.util.HashSet``) allow to insert other 
+  mutable objects such as ``ArrayList`` objects  into the hashtable.
+  If some object is modified after being inserted, it is not rehashed and its location becomes invalid. 
+  At that time the representation invariant of the hashtable is broken -- the object cannot
+  be located in its appropriate hashing bucket anymore. 
 
 
-**Input:** 
-  An array :math:`X` of :math:`n` tokens, each of which is either a grouping symbol, a
-  variable, an arithmetic operator, or a number. 
+**Definition**
+  A *stack* is a data structure with extrinsic order -- it allows to access (to read or to delete) the element which was 
+  the latest to be inserted (LIFO policy). A stack supports the following operations:
 
-**Output:** 
-  True if and only if all the grouping symbols in :math:`X` match
+  | :math:`S.\text{\sc initialize}()`  :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (create a new empty stack or clear existing contents)}}`
+  | :math:`S.\text{\sc push}(x)`  :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (add item $x$ to the top of the stack)}}`
+  | :math:`S.\text{\sc pop}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (remove and return an item from the top of the stack)}}`
+  | :math:`S.\text{\sc isEmpty}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (true iff the stack is empty)}}`  
 
+  Optionally stacks can support some non-essential operations (can be expressed with the above operations considered essential): 
 
+  | :math:`S.\text{\sc top}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return, but do not remove the top element)}}` 
+  | :math:`S.\text{\sc size}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return the number of elements in the stack)}}`
 
-| :math:`\text{\sc ParenMatch}(X[0..n-1])`:
-| :math:`\;\;\;\;\;` :math:`S = \text{\sc emptyStack}()`
-| :math:`\;\;\;\;\;` **for** :math:`i` **in** range(:math:`n`):
-| :math:`\;\;\;\;\;\;\;\;\;\;` **if** :math:`X[i]` is an opening parenthesis:
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`S.\text{\sc push}(X[i])`
-| :math:`\;\;\;\;\;\;\;\;\;\;` **else** **if** :math:`X[i]` is a closing parenthesis:
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **if** :math:`S.\text{\sc empty}()`:
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc false}` *(nothing to match with)*
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **if** :math:`S.pop()` does not match the type of :math:`X[i]`:
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc false}` *(wrong type of parenthesis)* 
-| :math:`\;\;\;\;\;` **if** :math:`S.\text{\sc empty}()`:
-| :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc true}` *(every symbol matched)* 
-| :math:`\;\;\;\;\;` **else** 
-| :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc false}` *(some symbols were never matched)*
+  In practice stacks may also need :math:`S.\text{\sc isFull}()` operation to find, if the container has place for one more item. 
+  Abstract stacks may assume that the stack is never full. 
 
+**Definition**
+  A *queue* is a data structure with extrinsic order -- it allows to access (seeing or deleting) the single element which was 
+  the first to be inserted (FIFO policy). A queue supports the following operations:
 
-
-
-
-
-Case Study: Evaluation of Postfix Notation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: text
+  | :math:`Q.\text{\sc initialize}()`  :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (create a new empty queue or clear existing contents)}}`
+  | :math:`Q.\text{\sc enqueue}(x)`  :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (add item $x$ to the end of the queue)}}`
+  | :math:`Q.\text{\sc dequeue}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (remove and return an item from the front of the queue)}}`
+  | :math:`Q.\text{\sc isEmpty}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (true iff the queue is empty)}}`  
   
-  # infix notation
-  2 * (17 - 1) + 3 * 4
-  # postfix notation
-  2  17  1  -  *  3  4  *  +
+
+  Optionally queues can support other operations, but many queue applications do not need them:
+  
+  | :math:`Q.\text{\sc front}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return the front element in the queue without dequeuing)}}`
+  | :math:`S.\text{\sc size}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return the number of elements in the queue)}}`
+  
+  
+**Definition:** 
+  A *double-ended queue* or a *deque* is a data structure with extrinsic order allowing elements to 
+  be added to the front (as in a stack) and also to the back (as in a queue). It supports the following operations: 
+  
+  | :math:`D.\text{\sc initialize}()`  :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (create a new empty deque or clear existing contents)}}`
+  | :math:`D.\text{\sc pushFront}(x)`  :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (add item $x$ to the front of the deque)}}`
+  | :math:`D.\text{\sc popFront}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (remove and return an item from the front of the deque)}}`
+  | :math:`D.\text{\sc pushBack}(x)`  :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (add item $x$ to the back of the deque)}}`
+  | :math:`D.\text{\sc popBack}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (remove and return an item from the back of the deque)}}`
+  | :math:`D.\text{\sc front}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return the front element in the deque without removing it)}}`
+  | :math:`D.\text{\sc back}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return the back element in the deque without removing it)}}`  
+  | :math:`D.\text{\sc isEmpty}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (true iff the deque is empty)}}`  
+  | :math:`D.\text{\sc size}()` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return the number of elements in the deque)}}`
+
+  Optionally, a deque can be used to search for an item :math:`x` with a given key :math:`x.k` or to find the predecessor or 
+  successor of an item :math:`x` by its pointer/reference. 
+
+  | :math:`D.\text{\sc search}(k)` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return an item $x$ with key $k$ or "nil")}}`
+  | :math:`D.\text{\sc predecessor}(x)` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return the predecessor of $x$)}}`
+  | :math:`D.\text{\sc successor}(x)` :math:`\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em (return the successor of $x$)}}`
+  
+
+Deques are often implemented as doubly linked lists with front and back pointers 
+(and the current size maintained in a separate variable). In this case pushing and popping items happens in constant time, 
+searching requires scanning through the list in :math:`O(n)` time. And predecessors/successors can be found by following the 
+``next`` and ``prev`` pointers.   
+  
+STL class ``vector`` in C++ supports the deque operations, but 
+also allows random access just as in array (returning an element by its index). Similar things are supported by Python lists
+or by :math:``java.util.List`` interface. Such data structures are more powerful than either stacks, queues or deques -- 
+they behave like arrays (without strict limit on size). 
 
 
 
-| :math:`\text{\sc PostorderEvaluate}(E: array[0..n-1])`: Int
-| :math:`\;\;\;\;\;` :math:`stack = emptyStack()`
-| :math:`\;\;\;\;\;` **for** :math:`i` **from** :math:`1` **to** :math:`n`:
-| :math:`\;\;\;\;\;\;\;\;\;\;` **if** :math:`\text{\sc isNumber}(E[i])`:
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`stack.\text{\sc push}(E[i])`
-| :math:`\;\;\;\;\;\;\;\;\;\;` **else:**
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`x1 = stack.\text{\sc pop}()`
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`x2 = stack.\text{\sc pop}()`
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`res = \text{\sc ApplyOp}(E[i], x1, x2)`
-| :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`stack.\text{\sc push}(res)`
-
-**Question:** 
-  Given the pseudocode for `\text{\sc PostorderEvaluate}(E)`, 
-  write the current state of the stack right after the :math:`E[6]`, 
-  i.e. the number :math:`4` is insered.
-
-
-Case Study: Backtracker Object as ADT
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Here is an object-oriented way to solve Sudoku, 
-N-Queens problem, and many more combinatorial tasks. 
-
-
-In this example a backtracker object is a sort of iterator 
-designed to visited all nodes of a rooted tree in the DFS order 
-and display the first valid solution (or all valid solutions).  
-Backtracker is usually inefficient (exponential time algorithm), 
-but it can become more efficient, if it can establish early on that 
-in the given subtree there are no more solutions (for example, 
-one of the rules has been violated). 
 
 
 
 
-| *(Initialize Backtracker with its initial state)*
-| :math:`B = \text{\sc Backtracker}(s:\text{\em State})`
-| *(Get moves available from the current state at the given tree level)*
-| :math:`B.\text{\sc moves}(\text{\em level}:int):\text{\sc Iterator}<\text{Move}>`
-| *(Is the move valid for the given backtracker state)*
-| :math:`B.\text{\sc valid}(\text{\em level}:int, \text{\em move}:Move):\text{\sc Boolean}`
-| *(Record the move to the backtracker -- move down in the search tree)*
-| :math:`B.\text{\sc record}(\text{\em level}:int, \text{\em move}:Move)`
-| *(Opposite to record -- undo the move to move up in the search tree)*
-| :math:`B.\text{\sc undo}(\text{\em level}:int, \text{\em move}:Move)`
-| *(Is the search successfully completed?)*
-| :math:`B.\text{\sc done}(\text{\em level}:int):\text{\sc Boolean}`
-| *(Output the successful state of the Backtracker object)*
-| :math:`B.\text{\sc output}()`
 
-Write the pseudocode for a function :math:`\text{\sc attempt}(\text{\em level}:int)` so as to 
-find the first solution (or all solutions) starting with the backtracker object on 
-level :math:`\text{\em level}`. 
+
+
 
 
 
@@ -329,12 +153,17 @@ level :math:`\text{\em level}`.
 Problems
 ----------
 
+.. _adts-and-implementations-P1:
+
 **Problem 1:** 
   In some Python's implementations, the dynamic array is grown by :math:`n/8` whenever 
   the list overflows. Assume that :math:`r` is the ratio between inserts and 
   reads for this dynamic array. Find the value :math:`r` for which this growth 
   factor is the optimal one.
-  
+ 
+
+.. _adts-and-implementations-P2:
+ 
 **Problem 2:** 
   Reverse the order of elements in stack :math:`S` in the following ways:
   
@@ -345,87 +174,206 @@ Problems
     Use one additional stack and some additional non-array variables (i.e. cannot use lists, sequences, stacks or queues).
 
 
+.. _adts-and-implementations-P3:
+
 **Problem 3:** 
   Read elements from an iterator and place them on a stack :math:`S` in ascending order using one 
   additional stack and some additional non-array variables.
-	
+
+
+.. _adts-and-implementations-P4:	
 
 **Problem 4:** 
   Given a data structure implementing the
   Sequence ADT, show how to use it to implement the Set interface. 
   (Your implementation does not need to be efficient.)
 
+
+.. _adts-and-implementations-P5:
+
 **Problem 5:** 
   What are the costs for each ADT operation, if a queue is implemented 
   as dynamic array?
+
+
+.. _adts-and-implementations-P6:
 
 **Problem 6:** 
   Which operations become asymptotically faster, if list ADT is implemented as a doubly linked 
   list (instead of a singly linked list)? 
    
+
+.. _adts-and-implementations-P7:
+
+**Problem 7: (Stack Implementation as Array):**
+  Stack is implemented as an array. In our case the array has size :math:`n = 5`.
+  Stack contains integer numbers; initially the array has
+  the following content.
+  
+  .. image:: figs-adts-and-implementations/stack-structure.png
+     :width: 2.2in
+      
+  Stack has the physical representation with :math:`\mathtt{length}=2`
+  (the number of elements in the stack), :math:`\mathtt{size}=5`
+  (maximal number of elements contained in the stack).
+  We have the following fragment:
+  
+  .. code-block:: cpp
+  
+    pop();
+    push(21);
+    push(22);
+    pop();
+    push(23);
+    push(24);
+    pop();
+    push(25);
+    
+
+  Draw the state of the array after every command.
+  (Every ``push(elt)`` command assigns a new element into the element ``array[length]``,
+  then increments ``length`` by :math:`1`.
+  The command ``pop()`` does not modify the array, but decreases ``length`` by :math:`1`.
+  
+  If the command cannot be executed (``pop()`` on an empty stack; ``push(elt)`` on a full stack),
+  then the stack structure does not change at all (``array`` or ``length`` are not modified).
+  To help imagine the state of this stack, you can shade those cells that do not belong to the array.
+  
+.. only:: Internal
+
+  **Answer:** 
+  
+    The figure below shows stack memory states after each of the 8 operations above are completed:
+    
+    .. image:: figs-adts-and-implementations/stack-solution.png
+       :width: 2.2in
+    
+  
+  :math:`\square`
+
+
+.. _adts-and-implementations-P8:
+
+**Problem 8 (Queue Implementation as a Circular Array):**
+  A queue is implemented as an array with ``size`` elements; it has two
+  extra variables ``front`` (pointer to the first element) and ``length``
+  (the current number of elements in the queue). Current state is shown in the figure:
+  
+
+  .. image:: figs-adts-and-implementations/queue-structure.png
+     :width: 2.3in
+      
+
+  Enumeration of array elements starts with :math:`0`. The array is filled in a circular
+  fashion. The command ``enqueue(elt)`` inserts a new element at
+  
+  .. math::
+    (\mathtt{front}+\mathtt{length})\;\mbox{mod}\;\mathtt{size},
+    
+  where "mod" means the remainder when dividing by ``size``. It also increments the
+  ``length`` element.
+  
+  The command ``dequeue()`` does not change anything in the array, but increments
+  ``front`` by :math:`1` and decreases :math:`length` by :math:`1`. Thus the queue becomes shorter by :math:`1`.
+  
+
+  .. code-block:: cpp
+  
+    dequeue();
+    enqueue(21);
+    dequeue();
+    enqueue(22);
+    enqueue(23);
+    enqueue(24);
+    dequeue();
+    
+
+  Show the state of the array after every command -- ``array, length, front``
+  variables after every line. (Shade the unused cells.)
+  
+.. only:: Internal
+
+  **Answer:** 
+  
+    The figure below shows queue memory states after each of the operations above are completed:
+    
+    .. image:: figs-adts-and-implementations/queue-solution.png
+       :width: 2.3in
+    
+  
+  :math:`\square`
+
+
+.. _adts-and-implementations-P9:
+
+**Problem 9:** 
+  We suggest a specialized Abstract Data Type (ADT) named ``Backtracker``
+  which can be used to solve backtracking tasks such as N-Queens problem, 
+  Sudoku and other combinatorial tasks. 
+
+  A backtracker object stores some (partially solved) instance of a backtracking 
+  problem, and an external driver can use it to visit all nodes rooted tree in the DFS order. 
+  As soon as it sees a complete valid solution, the solution can be output. 
+  Sometimes we want to find all solutions, if there exist more than one.   
+  *Backtracking is typically an inefficient exponential time algorithm, 
+  but it can be improved, if it can establish early that in the   
+  given subtree there are no more solutions.* 
+
+  Here is the ADT: 
+
+  | *(Initialize Backtracker with its initial state, e.g. an empty chessboard)*
+  | :math:`B = \text{\sc Backtracker}(s:\text{\em State})`
+  | *(Get available moves at the given level, e.g. all queen positions for some vertical)*
+  | :math:`B.\text{\sc moves}(\text{\em level}:int):\text{\sc List}<\text{Move}>`
+  | *(Is the move valid in the given state, e.g. is the chosen position attacked by earlier queens)*
+  | :math:`B.\text{\sc valid}(\text{\em level}:int, \text{\em move}:Move):\text{\sc Boolean}`
+  | *(Record the move to the backtracker, e.g. add one more chosen queen position)*
+  | :math:`B.\text{\sc record}(\text{\em level}:int, \text{\em move}:Move)`
+  | *(Opposite to record -- undo the move, e.g. remove the latest queen position)*
+  | :math:`B.\text{\sc undo}(\text{\em level}:int, \text{\em move}:Move)`
+  | *(Is the search successfully completed, e.g. all N queens already placed?)*
+  | :math:`B.\text{\sc done}(\text{\em level}:int):\text{\sc Boolean}`
+  | *(Output the successful solution for the Backtracker object, e.g. print the chessboard)*
+  | :math:`B.\text{\sc output}()`
+
+
+  **(A)**
+    Write the pseudocode for a function :math:`\text{\sc attempt}(b:\text{\sc Backtracker}, \text{\em level}:\text{\sc Int})` so as to 
+    find the first solution starting with the backtracker object on 
+    level :math:`\text{\em level}`. 
+    
+  **(B)** 
+    Modify the function :math:`\text{\sc attempt}(b:\text{\sc Backtracker}, \text{\em level}:\text{\sc Int})` so that it does not stop until 
+    it outputs all valid solutions. 
+
 .. only:: Internal 
 
   **Answer:** 
   
-  TBD
-  
+  **(A)**
+    Here is the  code to find just one solution for a backtracker: 
+    
+    | :math:`\text{\sc attempt}(b:\text{\sc Backtracker}, \text{\em level}:Int):Bool`
+    | :math:`\;\;\;\;\;` :math:`\text{\em successful} = \text{\sc False}`
+    | :math:`\;\;\;\;\;` :math:`\text{\em moves} = b.\text{\sc moves}(level)`
+    | :math:`\;\;\;\;\;` **for** :math:`\text{\em move}` **in** :math:`\text{\em moves}`:
+    | :math:`\;\;\;\;\;\;\;\;\;\;` **if** :math:`b.\text{\sc valid}(\text{\em level}, \text{\em move})`: 
+    | :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`b.\text{\sc record}(\text{\em level}, \text{\em move})`: 
+    | :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **if** :math:`b.\text{\sc done}(\text{\em level})`: 
+    | :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`\text{\em successful} = \text{\sc True}`: 
+    | :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **else**: 
+    | :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`\text{\em successful} = \text{\sc attempt}(\text{\em b}, \text{\em level})`
+    | :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **if** **not** :math:`\text{\em successful}`: 
+    | :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`b.\text{\sc undo}(\text{\em level}, \text{\em move})`
+    | :math:`\;\;\;\;\;\;\;\;\;\;` **if** :math:`\text{\sc successful}`: 
+    | :math:`\;\;\;\;\;` **return** :math:`\text{\em successful}`
+    
+
+    See Robert E. Noonan. `An Object-Oriented View on Backtracking <https://dl.acm.org/doi/pdf/10.1145/331795.331886>`_ 
+
   :math:`\square`
-  
-
-**Problem 7:** 
-  Write a pseudocode to implement the following two operations on the Backtracker object: 
-
-  **(A)**
-    :math:`\text{\sc findFirstSolution}(b:\text{\sc Backtracker})` -- a function that returns the
-    first solution (in fact -- any 1 solution) for the given backtracker object. 
-
-  **(B)**
-    :math:`\text{\sc findAllSolutions}(b:\text{\sc Backtracker})`
 
 
-**Problem 8:** 
-  `Koch snowflake <https://en.wikipedia.org/wiki/Koch_snowflake>`_ consists of three sides. 
-  Each side connects two vertices of an equilateral triangle :math:`ABC`. Consider, for example, 
-  two points :math:`A` and :math:`B` and the edge connecting them :math:`e`.
-
-  If the length of :math:`e` is :math:`1` unit or shorter, then :math:`AB` is connected by a straight line 
-  segment. Otherwise, the segment :math:`AB` is subdivided into three equal parts: :math:`e_1, e_2, e_3`. 
-  The middle part is complemented with two more line segments :math:`f_1` and :math:`g_1` to make 
-  another equilateral triangle (with side length three times smaller than the :math:`ABC`). 
-  Finally, the Koch snoflake's edge algorithm is called on each of the segments :math:`e_1, f_2, g_2, e_3`
-  recursively. 
-  
-  The initial call for :math:`e = AB` is :math:`\text{\sc SnowflakeEdge}(e,0)`, where :math:`d = 0` is the initial depth 
-  in the recursion tree. 
-  Here is the pseudocode for the algorithm: 
 
 
-  | :math:`\text{\sc SnowflakeEdge}(e, d)`: 
-  | :math:`\;\;\;\;\;` **if** :math:`|e| \leq 1`:
-  | :math:`\;\;\;\;\;\;\;\;\;\;` draw a straight edge :math:`e`
-  | :math:`\;\;\;\;\;` **else**: 
-  | :math:`\;\;\;\;\;\;\;\;\;\;` Split :math:`e` into three equal parts :math:`e_1, e_2, e_3`
-  | :math:`\;\;\;\;\;\;\;\;\;\;` Construct a regular triangle out of edges :math:`e_2, f_2, g_2` to the "outside"
-  | :math:`\;\;\;\;\;\;\;\;\;\;` :math:`\text{\sc SnowflakeEdge}(e_1, d+1)`
-  | :math:`\;\;\;\;\;\;\;\;\;\;` :math:`\text{\sc SnowflakeEdge}(f_2, d+1)`
-  | :math:`\;\;\;\;\;\;\;\;\;\;` :math:`\text{\sc SnowflakeEdge}(g_2, d+1)`
-  | :math:`\;\;\;\;\;\;\;\;\;\;` :math:`\text{\sc SnowflakeEdge}(e_3, d+1)`
-
-  In this algorithm we assume that the Koch snowflake is drawn as vector graphics on a device 
-  with infinite resolution. 
-
-  **(A)**
-    How many levels does the depth parameter :math:`d` reach, if the initial size of the edge is :math:`|e| = n`. 
-
-  **(B)**
-    Estimate the number of recursive calls of :math:`\text{\sc SnowflakeEdge}(e, d)`, if the initial size of the edge is :math:`|e| = n`.
-	
-  **(C)** 
-    Write a recursive time complexity of this algorithm :math:`T(n)` and estimate it with Master's theorem. 
-	
-	
-Bibliography
-------------------
-
-1. Robert E. Noonan. `An Object-Oriented View on Backtracking <https://dl.acm.org/doi/pdf/10.1145/331795.331886>`_ 
 

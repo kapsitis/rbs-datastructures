@@ -17,8 +17,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'ds-worksheet-search-trees'
-copyright = '2022, LU'
+project = 'ds-worksheet-augmented-structures'
+copyright = '2023, LU'
 author = 'LU'
 
 

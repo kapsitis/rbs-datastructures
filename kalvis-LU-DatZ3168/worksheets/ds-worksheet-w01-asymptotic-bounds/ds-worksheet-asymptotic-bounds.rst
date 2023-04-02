@@ -1,5 +1,5 @@
-Worksheet Week 01: Asymptotic Bounds
-======================================
+Worksheet 01: Asymptotic Bounds
+==================================
 
 Why study the asymptotic bounds or the "Big-O notation"?
 Efficiency of algorithms is largely determined by their behavior 
@@ -134,6 +134,8 @@ definitions of the Big-O, Big-Omega, and Big-Theta concepts directly.
 Problems
 ------------
 
+.. _asymptotic-bounds-P1:
+
 **Problem 1:**
   Are the following statement true or false? 
   Prove or disprove them using the definitions of :math:`O(g(n))`, :math:`\Omega(g(n))` or :math:`\Theta(g(n))`:
@@ -211,6 +213,8 @@ Problems
 
 
 
+.. _asymptotic-bounds-P2:
+
 **Problem 2:**
   Let us have a zero-based dictionary :math:`D` with :math:`n` items
   from :math:`D[0]` to :math:`D[n-1]`.
@@ -238,6 +242,8 @@ Problems
   
   :math:`\square`
 
+
+.. _asymptotic-bounds-P3:
 
 **Problem 3:**
   What is the worst running time to find, if the given input :math:`m` is a prime number. 
@@ -286,6 +292,8 @@ Problems
 
   :math:`\square` 
 
+
+.. _asymptotic-bounds-P4:
 
 **Problem 4:** 
   Answer the following Yes/No questions: 
@@ -396,6 +404,7 @@ Problems
   :math:`\square`
 
 
+.. _asymptotic-bounds-P5:
 
 **Problem 5:**
   Order these functions in increasing order regarding Big-O complexity
@@ -406,6 +415,8 @@ Problems
   * :math:`f_3(n) = 1.0001^n`
   * :math:`f_4(n) = n^2`
 
+
+.. _asymptotic-bounds-P6:
 
 **Problem 6:**
   Order these functions in increasing order regarding Big-O complexity:
@@ -418,6 +429,9 @@ Problems
   * :math:`f_6(n) = n!`
   * :math:`f_7(n) = n\sqrt{n}`
 
+
+.. _asymptotic-bounds-P7:
+
 **Problem 7:**
   Order these functions in increasing order regarding Big-O complexity:
 
@@ -426,7 +440,8 @@ Problems
   * :math:`f_3(n) = n^{10} \cdot 2^{n/2}`
   * :math:`{\displaystyle \sum\limits_{i = 1}^{n} (i + 1)}`.
 	
-	
+
+.. _asymptotic-bounds-P8:
 
 **Problem 8:**
   A black box :math:`\mathcal{B}` receives two numbers :math:`k_1,k_2 \in \{ 1,\ldots,n \}` 

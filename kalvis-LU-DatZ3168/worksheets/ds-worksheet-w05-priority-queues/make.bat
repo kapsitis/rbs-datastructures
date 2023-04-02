@@ -47,17 +47,17 @@ if [%2] == [] (
 		%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O% -t Internal
 		python replace.py
 		cd _build\latex
-		xelatex ds-worksheet-search-trees
-		ren ds-worksheet-search-trees.pdf ds-worksheet-search-trees-solutions.pdf
-		xcopy ds-worksheet-search-trees-solutions.pdf ..\.. /Y
+		xelatex ds-worksheet-priority-queues
+		ren ds-worksheet-priority-queues.pdf ds-worksheet-priority-queues-solutions.pdf
+		xcopy ds-worksheet-priority-queues-solutions.pdf ..\.. /Y
 		cd ..\..
 	) else (
 		echo.Building questions
 		%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
 		cd _build\latex
-		REM ren ds-worksheet-search-trees.pdf ds-worksheet-search-trees.pdf
-		REM xcopy ds-worksheet-search-trees.pdf ..\.. /Y
-		xcopy ds-worksheet-search-trees.pdf ..\.. /Y
+		REM ren ds-worksheet-priority-queues.pdf ds-worksheet-priority-queues.pdf
+		REM xcopy ds-worksheet-priority-queues.pdf ..\.. /Y
+		xcopy ds-worksheet-priority-queues.pdf ..\.. /Y
 		cd ..\..		
 	)
 )

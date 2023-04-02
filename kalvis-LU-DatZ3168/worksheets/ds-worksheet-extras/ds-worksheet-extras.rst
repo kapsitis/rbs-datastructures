@@ -776,12 +776,273 @@ and :math:`f \in O(g)`, but :math:`g \not\in O(f)`
 
 
 
+ADTs
+------------
+
+Some stuff from Python: 
+
+.. code-block:: python
+
+  L = ["Cacophony", "Imbibe", "Writhe", "Ubiquitous", "Paradox"]
+  S = {"Cacophony", "Imbibe", "Writhe", "Ubiquitous", "Paradox"}
+  for item in sorted(S):
+      print(i)
 
 
 
 
 
 
+**Questions**
+
+1. Is a list in Python ordered? (I.e. can we visit its elements in a predictable order?)
+   Is a set in Python ordered?
+2. Assume that you want to store a large alphabetically sorted dictionary in Python to enable 
+   binary search (it has :math:`O(\log n)` runtime).
+   Is it a set of words or a list of words?
+3. Occasionally we need to insert new words in that Python data structure. Assume that some 
+   item is inserted in a wrong order. What will be the consequences for subsequent operations? 
+
+
+
+Sorting in place vs. Returning a sorted copy
+---------------------------------------------
+
+
+.. code-block:: python
+
+  elevation = dict()
+  elevation[(0,0)] = 3
+  elevation[(0,1)] = 4
+
+  other_dict = { [0,0]: 3, [0,1]: 4} 
+  # What is "unhashable type"?
+
+  a = [0, 1]
+  a.insert(1,a)
+  a[1][1][0]
+  a[1][1][1]
+
+
+In Java you can easily create a set :math:`S` of sets :math:`s_0,s_1,\ldots,s_{k-1}` (and then modify one of the :math:`s_i`). 
+The larger set :math:`S` behaves in a funny way -- you can still check that the size of :math:`S` equals to :math:`k`, but 
+you cannot find the modified (or the original) set :math:`s_i` anymore. If you check, if :math:`s_i \in S`, Java returns false.
+
+
+
+
+Lists -- Redundant, but Convenient ADTs
+-------------------------------------------
+
+| # *(Constructor: Create an empty list)*
+| :math:`\text{\sc List}<T> L()` 
+| # *(Initializer list: Create a list with some elements in it)* 
+| :math:`\text{\sc List}<T> L (\{ item1:T, item2:T, \ldots \})`
+| # *(Insertion: Inserts an element at a specified position in the list)*
+| :math:`L.\text{\sc insert}(\text{index}:int, \text{item}:T)`
+| # *(Deletion: Deletes the element at a specified position in the list.)*
+| :math:`L.\text{\sc delete}(\text{index}:int)`
+| # *(Access the item at a specified position)*
+| :math:`L.\text{\sc get}(index:int): T`
+| # *(Traversal: Accesses each element in the list List<T> in its order)*
+| **for** :math:`\text{item}` **in** :math:`L` { do something with :math:`\text{item}` }
+| # *(Search: Finds the position of the first entry of item (>= initialPosition))*
+| :math:`L.\text{\sc find}(\text{item}:T): int`
+| :math:`L.\text{\sc find}(\text{item}:T, startFrom:int): int`
+| # *(Concatenation: Combines two lists into a single list)*
+| :math:`L.\text{\sc concatenate}(L1:\text{\sc List}<T>, L2:\text{\sc List}<T>): \text{\sc List}<T>`
+| # *(Sorting: Rearranges the list in sorted order)*
+| :math:`L.\text{\sc sort}(): void`
+| # *(Getting a sorted copy: Return a sorted copy of the list, but do not change the list)*
+| :math:`L.\text{\sc sortedCopy}(): \text{\sc List}<T>`
+| # *(Slicing: Extract a fragment of the list from startPos (inclusive) to endPos (exclusive))*
+| :math:`L.\text{\sc slice}(startPos:int, endPos:int)`
+| # *(Size: Returns the number of elements in the list.)*
+| :math:`L.\text{\sc size}(): int`
+
+
+.. subchapter ... 
+.. Examples in Python and C++ STD
+
+
+Mutable lists support insertion, deletion, appending elements, sorting (in place). 
+Both mutable and immutable lists support all the other operations. 
+From functional programming there are two more operations: 
+
+**Filtering:** 
+  Creating a new list that contains only the elements that satisfy a certain condition
+
+**Mapping:** 
+  Creating a new list that contains the results of applying a 
+  function to each element of the original list.
+
+
+
+Sequence ADT
+^^^^^^^^^^^^^^
+
+
+**Container operations:** (initializing sequence)
+
+| # given an iterable X, build sequence from items in iterator X
+| :math:`S = \text{\sc build}(X)`
+| # return the number of stored items
+| :math:`S.\text{\sc size}()`
+
+**Static operations:** (operations not affecting sequence size)
+
+| # return the stored items one-by-one in sequence order
+| :math:`S.\text{\sc iterSeq}()``
+| # return the ith item
+| :math:`S.\text{\sc get}(i)`
+| # replace the ith item with x
+| :math:`S.\text{\sc set}(i, x)`
+
+**Dynamic operations:** (operations affecting sequence size)
+
+| # add x as the ith item
+| :math:`S.\text{\sc insertAt}(i, x)`
+| # remove and return the ith item
+| :math:`S.\text{\sc deleteAt}(i)`
+| # add x as the first item
+| :math:`S.\text{\sc insertFirst}(x)`
+| # remove and return the first item
+| :math:`S.\text{\sc deleteFirst}()`
+| # add x as the last item
+| :math:`S.\text{\sc insertLast}(x)`
+| # remove and return the last item 
+| :math:`S.\text{\sc deleteLast}()`
+
+
+
+
+
+
+Iterator ADT
+^^^^^^^^^^^^^^
+
+In an iterator with :math:`n` items, the cursor typically has :math:`n+1` valid states (it can be 
+right before any of the elements, or it can be at the very end). Iterators are convenient 
+to write iterative **for** loops or otherwise process items one by one (as in bulk insert operations, 
+reading items from an input buffer, etc.). 
+
+
+| # Traversal: Accesses the next element in the iterator and moves 1 step ahead
+| :math:`it.\text{\sc next}()`
+| # Checking for more elements: Checks if there are more elements without moving 1 step ahead
+| :math:`it.\text{\sc hasNext}()`
+| # Removing the current element: Removes the current element from the data structure, point to the next one
+| :math:`it.\text{\sc remove}()`
+| # Peeking the current element: Returns the current element without moving the iterator 1 step ahead
+| :math:`it.\text{\sc peek}()`
+| # Rewinding: Resets the iterator to the beginning of the data structure (right before the 1st element)
+| :math:`it.\text{\sc rewind}()`
+| # Skipping: Skips a specified number of elements in the data structure.
+| :math:`it.\text{\sc skip}(n:int)`
+| # Filtering: Filters elements in the data structure based on a given predicate.
+| :math:`it.\text{\sc filter}(predicate:{item:T => isValid:Boolean})`
+| # Mapping: (Lazy) apply of a given function to each element, returns another iterator. 
+| :math:`it.\text{\sc map}(\text{\sc mapFunction}:{item:T => value:U})`
+
+
+
+
+
+.. (Very similar problem on queues exists...)
+
+**Problem 9:**
+  Denote :math:`a,b,c` to be the last :math:`3` digits of your Student ID, and compute the following numbers:
+  
+  * :math:`F = ((a+b+c)\;\operatorname{mod}\;3) + 2`
+  * :math:`\mathtt{x1} = (a+b+c)\;\operatorname{mod}\;10`
+  * :math:`\mathtt{x2} = ((a+b) \cdot 2)\;\operatorname{mod}\;10`
+  * :math:`\mathtt{x3} = ((b+c) \cdot 3)\;\operatorname{mod}\;10`
+  * :math:`\mathtt{x4} = ((c+a) \cdot 7)\;\operatorname{mod}\;10`
+  
+
+  The queue :math:`Q` is implemented as an array of size :math:`N=6`; its elements
+  have indices from :math:`\{0,1,2,3,4,5\}`.
+  
+  Initially the queue parameters are these:
+  
+  * :math:`\mathtt{Q.front} = \mathtt{F}`,
+  * :math:`\mathtt{Q.length} = 4`,
+  * :math:`\mathtt{Q.size} = 6`,
+  
+  And the content of the array is the following:
+  
+  .. image:: figs-stacks-queues-heaps/midterm-queue-structure.png
+     :width: 2in
+      
+
+  Somebody runs the following code on this queue:
+  
+  .. code-block:: cpp
+  
+    Q.enqueue(x1)
+    Q.enqueue(x2)
+    Q.dequeue()
+    Q.dequeue()
+    // show the state of Q
+    Q.enqueue(x3)
+    Q.enqueue(x4)
+    Q.dequeue()
+    // show the state of Q
+    
+
+  After Line 4 (and at the very end) show the current state of the queue :math:`\mathtt{Q}`.
+  The state should display the content of the array and also the values of
+  :math:`\mathtt{Q.front}` and :math:`\mathtt{Q.length}`.
+  
+  You can use shading, if it helps to visualize the array cells that are not
+  currently used by your queue.
+  
+
+  .. note::
+    Painting something gray is not required (since front/length indicate the state of your queue anyway).
+    But painting cells gray may be helpful, if you want to visualize where your queue has the useful values
+    (and what is some old garbage -- you can shade it over).
+    
+
+
+
+**Problem 8:** 
+  A *multiset* (or a *bag*) is any collection of items similar to a *set*, which can contain 
+  multiple copies of the same item. For example, :math:`X = \{ 2,2,2,3,3,5 \}` is a multiset.
+  The 2-quantile (also known as the *median*) for a multiset :math:`X = \{ x_1,x_2,\ldots,x_k \}` is the number :math:`m` satisfying 
+  the following probability inequalities (where :math:`x_i` is a randomly picked element from the multiset :math:`X` -- each element is selected 
+  with the same probability):
+  
+  .. math:: 
+  
+    P(x_i < m) \leq \frac{1}{2},\;\;\text{and}\;\; P(x_i \leq m) \geq \frac{1}{2}. 
+	
+  Suggest an efficient data structure to store "median-maintained multisets" :math:`X` containing integer numbers that support 
+  the following operations: 
+  
+  **Insert:** 
+    Add a new element :math:`x` to the multiset :math:`X`. 
+
+  **ExtractMedian:**
+    Remove and return the median from the multiset :math:`X`, if it belongs to :math:`X`. 
+
+  **Median:** 
+    Return the median from the multiset without removing it.
+	
+  **Size:** 
+    Return the number of elements in the multiset.
+
+
+
+.. note:: 
+  In Python you can compute this flavor of median like this: 
+  
+  .. code-block:: python
+  
+    import pandas as pd
+	a = pd.Series([1,2,3,4])
+	a.quantile(0.5, 'lower')  # should return 2
+	# statistics.median([1,2,3,4]) would be 2.5
 
 
 

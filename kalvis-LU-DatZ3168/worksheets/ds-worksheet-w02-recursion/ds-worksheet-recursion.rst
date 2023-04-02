@@ -1,4 +1,4 @@
-Worksheet Week 02: Recursion
+Worksheet 02: Recursion
 ===============================
 
 There is a proverb: *To understand recursion, you must first understand recursion*. 
@@ -327,6 +327,8 @@ This theorem can be used to find the asymptotic runtime for recursive algorithms
 Problems
 ------------
 
+.. _recursion-P1:
+
 **Problem 1:** 
   Answer the following questions regarding the asymptotic behavior of functions. 
 
@@ -357,6 +359,7 @@ Problems
     :math:`\sqrt{\log_2(n!)}`
 
 
+.. _recursion-P2:
 
 **Problem 2:** 
   Consider Euclid algorithm to find the greatest common divisor (written around 300 B.C. in *Elements*): 
@@ -382,7 +385,7 @@ Problems
 
 
 
-
+.. _recursion-P3:
 
 **Problem 3:** 
   Given a sequence :math:`a_i` (:math:`i = 0,\ldots,n-1`) we call its element :math:`a_i` a *peak*
@@ -406,6 +409,7 @@ Problems
 	  \lim_{n \rightarrow \infty} \frac{T(n)}{n} = 0. 
 	  
 
+.. _recursion-P4:
 
 **Question 4:**
   Select the correct asymptotic complexity of an algorithm with runtime
@@ -426,6 +430,8 @@ Problems
   e. :math:`\Theta(n^2)`.
   f. :math:`\Theta(2^n)`.
 
+
+.. _recursion-P5:
 
 **Question 5:** 
   Just like the tail-recursive factorial, write a tail-recursive Fibonacci program. This way you will also avoid excessive recursion -- 
@@ -456,7 +462,7 @@ Problems
 
 
 
-
+.. _recursion-P6:
 
 **Question 6:** 
   It is known that Taylor series for :math:`y = \sin x`) is given by formula: 
@@ -497,3 +503,44 @@ Problems
   :math:`\square`    
 
 
+.. _recursion-P7:
+
+**Problem 7:** 
+  `Koch snowflake <https://en.wikipedia.org/wiki/Koch_snowflake>`_ consists of three sides. 
+  Each side connects two vertices of an equilateral triangle :math:`ABC`. Consider, for example, 
+  two points :math:`A` and :math:`B` and the edge connecting them :math:`e`.
+
+  If the length of :math:`e` is :math:`1` unit or shorter, then :math:`AB` is connected by a straight line 
+  segment. Otherwise, the segment :math:`AB` is subdivided into three equal parts: :math:`e_1, e_2, e_3`. 
+  The middle part is complemented with two more line segments :math:`f_1` and :math:`g_1` to make 
+  another equilateral triangle (with side length three times smaller than the :math:`ABC`). 
+  Finally, the Koch snoflake's edge algorithm is called on each of the segments :math:`e_1, f_2, g_2, e_3`
+  recursively. 
+  
+  The initial call for :math:`e = AB` is :math:`\text{\sc SnowflakeEdge}(e,0)`, where :math:`d = 0` is the initial depth 
+  in the recursion tree. 
+  Here is the pseudocode for the algorithm: 
+
+
+  | :math:`\text{\sc SnowflakeEdge}(e, d)`: 
+  | :math:`\;\;\;\;\;` **if** :math:`|e| \leq 1`:
+  | :math:`\;\;\;\;\;\;\;\;\;\;` draw a straight edge :math:`e`
+  | :math:`\;\;\;\;\;` **else**: 
+  | :math:`\;\;\;\;\;\;\;\;\;\;` Split :math:`e` into three equal parts :math:`e_1, e_2, e_3`
+  | :math:`\;\;\;\;\;\;\;\;\;\;` Construct a regular triangle out of edges :math:`e_2, f_2, g_2` to the "outside"
+  | :math:`\;\;\;\;\;\;\;\;\;\;` :math:`\text{\sc SnowflakeEdge}(e_1, d+1)`
+  | :math:`\;\;\;\;\;\;\;\;\;\;` :math:`\text{\sc SnowflakeEdge}(f_2, d+1)`
+  | :math:`\;\;\;\;\;\;\;\;\;\;` :math:`\text{\sc SnowflakeEdge}(g_2, d+1)`
+  | :math:`\;\;\;\;\;\;\;\;\;\;` :math:`\text{\sc SnowflakeEdge}(e_3, d+1)`
+
+  In this algorithm we assume that the Koch snowflake is drawn as vector graphics on a device 
+  with infinite resolution. 
+
+  **(A)**
+    How many levels does the depth parameter :math:`d` reach, if the initial size of the edge is :math:`|e| = n`. 
+
+  **(B)**
+    Estimate the number of recursive calls of :math:`\text{\sc SnowflakeEdge}(e, d)`, if the initial size of the edge is :math:`|e| = n`.
+	
+  **(C)** 
+    Write a recursive time complexity of this algorithm :math:`T(n)` and estimate it with Master's theorem. 

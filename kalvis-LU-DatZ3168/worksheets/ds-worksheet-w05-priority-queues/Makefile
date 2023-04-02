@@ -18,13 +18,13 @@ help:
 solutions:
 	@$(SPHINXBUILD) -M latexpdf "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -t Internal
 	python replace.py
-	cd _build/latex && pdflatex ds-worksheet-search-trees
-	mv _build/latex/ds-worksheet-search-trees.pdf ds-worksheet-search-trees-solutions.pdf
+	cd _build/latex && pdflatex ds-worksheet-priority-queues
+	mv _build/latex/ds-worksheet-priority-queues.pdf ds-worksheet-priority-queues-solutions.pdf
 
 questions:
 	@$(SPHINXBUILD) -M latexpdf "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	cd _build/latex && pdflatex ds-worksheet-search-trees
-	mv _build/latex/ds-worksheet-search-trees.pdf .
+	cd _build/latex && pdflatex ds-worksheet-priority-queues
+	mv _build/latex/ds-worksheet-priority-queues.pdf .
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
