@@ -1,96 +1,40 @@
 Worksheet Week 01: Asymptotic Bounds
 ======================================
 
-Introduction
---------------
+Why study the asymptotic bounds or the "Big-O notation"?
+Efficiency of algorithms is largely determined by their behavior 
+for large inputs. It is not easy to describe the speed of an algorithm 
+for every single input, so it is described by some "smooth" function :math:`f(n)` -- 
+an estimate from above of how fast the algorithm is for inputs of length :math:`n`.
 
-**Goal:**  
-  The focus of this course is efficiency -- creating algorithms that can work on
-  large input data and handle complex structures sufficiently fast.
 
+Concepts and Facts
+---------------------
 
-**Why use Big-O Notation?** 
-  It is convenient to measure speed of algorithms -- for example, to find the best algorithms for 
-  a given problem. Or to find out which problems are easy (have fast algorithms) and which ones are hard 
-  (have only slow or unfeasible algorithms). 
+Informally, *asymptotic* means the behavior as some parameter goes to infinity; 
+upper and lower *bounds* are inequalities satisfied by something.
+
+**Definition:** 
+  The *runtime upper bound* (also called the *worst-case running time*)
+  for the given algorithm is a function
+  :math:`T\,:\,\mathbf{N} \mapsto \mathbf{N}` that equals to the maximum possible 
+  number of elementary steps needed to complete the 
+  algorithm for any input of length :math:`n`.  
   
-  * Measuring the speed should not depend on the speed of the computing hardware -- do not care about constant factors. 
-  * Measuring the speed should not depend on how fast it works on very short inputs. (One can "cheat" for short inputs -- 
-    just remember a large lookup table containing values for inputs of length :math:`n < n_0` with precomputed correct answers.
-    Clearly, this does not tell us anything about the performance of this algorithm for arbitrary inputs.)
-  * Measuring the speed should be conceptually easy, it should not take into account insignificant optimizations or count too many extra factors. 
-    
-**Example:** 
-  Energy needed to lift a stone of mass :math:`m` to the height :math:`h` is :math:`mgh`. (Is this 
-  the best-case estimate? The worst-case estimate? The exact value?)
-
-
-Running Time as a Complexity Measure
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**The Worst Running Time function:** 
-  Given an algorithm, denote by :math:`T(n)` 
-  the number of elementary steps that are needed to complete the algorithm for any input of length :math:`n`.
-  (It can be called the *upper bound* of the running time.)
+  (Here :math:`\mathbf{N}` is the set of all nonnegative integers.)
   
-**Discussions on the Worst-Case Running Time:**
 
-  * Is :math:`T(n)` the upper bound also for inputs shorter than :math:`n`?
-  * Is :math:`T(n)` a non-decreasing function (i.e. do longer inputs always imply a longer running time)?
-  * What counts as an elementary step? (Any CPU instruction? One line in a pseudocode? One comparison in a sorting algorithm?)
+Introductory Questions:
+
+  * What is the worst running time to multiply two square matrices of size :math:`n \times n`?  What is the size of input in this case?
   * Let :math:`T(n)` be a numeric algorithm receiving single natural numbers as input. 
-    Does the worst running time function change, if the input numbers are provided in binary (instead of decimal) notation? 
-  * What is the worst running time to multiply two square matrices of size :math:`n \times n`? 
-    What is the size of input in this case?
-
-Sometimes it is common to have :math:`n` as some important parameter of the input data (not necessarily the exact size of its encoding). 
-For matrix tasks -- the size of the matrices :math:`n`. For graph problems -- the number of vertices :math:`n` and the number of edges :math:`m`. 
-
-**Example:**
-  In order to multiply two :math:`n \times n` matrices using the "school algorithm", we spend :math:`n` multiplications 
-  and :math:`n-1` additions to calculate one entry in the result matrix. For example: 
-
-  .. math::
-
-    c_{ij} = a_{i1} \cdot b_{1j} + a_{i2} \cdot b_{12} + \ldots + a_{in} \cdot b_{nj}  = \sum_{k=1}^{n}  {ik} \cdot b_{kj}.
-
-  That is :math:`O(n)` time. To complete the calculation for the entire matrix :math:`C = A\cdot B` we 
-  should compute :math:`n^2` such entries (for each pair :math:`i,j \in \{ 1, \ldots, n`). 
-  So the total running time for matrix multiplication is :math:`O(n^3)`. 
-
-**Note 1:**
-  In strong accordance to the definition of the runtime, we should take into account that the lengh of input 
-  for a matrix muliplication task is :math:`2n^2` -- you need to input two matrices of size :math:`n \times n`. 
-  If we denote this input length by :math:`m = 2n^2`, then the running time becomes
-  :math:`O(n^3) = O(m^{1.5}) = O(m \sqrt{m})`, so it no longer looks as terrible. 
-  In theory books people still express the running time for matrix multiplication in terms of 
-  matrix size (not the square of the matrix size) -- just because it is a more convenient parameter. 
-
-**Note 2:** 
-  There exist faster algorithms than the "school algorithm". For example,
-  `Strassen algorithm <https://en.wikipedia.org/wiki/Strassen_algorithm>`_. 
-  It has runtime :math:`O(n^{\log_2 7}) \approx O(n^{2.807})` where :math:`n` is the size of the matrices being multiplied. 
-  The exponent :math:`\log_2 7` is smaller/better than :math:`\log_2 8 = 3`. 
-  To see actual performance gains (where Strassen algorithm is faster than the "school algorithm"), 
-  the matrices should be huge -- the size of matrix :math:`n` is multiple thousand. 
-
-  In 2022 the fastest bound for matrix multiplication was discovered. It is :math:`O(n^{2.37188})`; 
-  see `Matrix Multiplication Algorithm <https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm>`_.
+    Does the runtime upper bound function change, if the input numbers are provided in binary (instead of decimal) notation? 
+  * Is :math:`T(n)` a non-decreasing function (i.e. do longer inputs always imply a longer running time)?
+  * What counts as an elementary step in the runtime upper bound definition? 
+    (Any CPU instruction? One line in a pseudocode? One comparison in a sorting algorithm?)
 
 
-**Note 3:** 
-  Matrix multiplication is of large practical importance (computer graphics, neural networks, etc). 
-  The theory of Big-O notation disregards constant factors -- runtime of  :math:`T(n) = n^3` or 
-  :math:`T(n) = 1000n^3` or :math:`T(n) = 0.001n^3` is considered to be of the same "cubic complexity". 
-  But in practice it is common to use 
-  GPU (massive parallel computations) to multiply matrices. Parallelism can  
-  only speed up an algorithm by a constant factor, but sometimes even constant factors matter.
-
-
-Definitions
-^^^^^^^^^^^^^
-
-**Definition of Big-O:** 
+**Definition (Big-O):** 
   Let :math:`g \colon \mathbb{N} \rightarrow \mathbb{R}_{0+}` be a function from natural numbers (non-negative integers)
   to non-negative real numbers.
   Then :math:`O(g)` is the set of all functions :math:`f \colon \mathbb{N} \rightarrow \mathbb{R}^{0+}`
@@ -101,13 +45,13 @@ Definitions
     0 \leq f(n) \leq c \cdot g(n)\;\; \mbox{for all}\;\; n \geq n_0.
 
 
-**Definition of Big-Omega:**
+**Definition (Big-Omega):**
   Let :math:`g \colon \mathbb{N} \rightarrow \mathbb{R}_{0+}` be a function from natural numbers to non-negative real numbers. 
   Then :math:`\Omega(g(n))` is the set of all functions :math:`f \colon \mathbb{N} \rightarrow \mathbb{R}`
   such that there exist real constants :math:`c>0` and :math:`n_0 \in \mathbb{N}` satisfying
   :math:`{\displaystyle  \forall n \in \mathbb{N}\ \big( n \geq n_0 \rightarrow f(n) \geq c \cdot g(n) \big).}`
 
-**Definition of Big Theta:**
+**Definition (Big-Theta):**
   Let :math:`g \colon \mathbb{N} \rightarrow \mathbb{R}_{0+}` be a function from natural numbers to non-negative real numbers. 
   Then :math:`\Theta(g)` is the set of all functions :math:`f: \mathbb{N} \to \mathbb{R}`
   such that there exist positive constants :math:`c_1, c_2 > 0` and :math:`n_0 \in \mathbb{N}` satisfying
@@ -116,65 +60,53 @@ Definitions
 
     \forall n \in \mathbb{N}\ \big( n \geq n_0 \rightarrow  0 \leq   c_1 \cdot g(n) \leq  f(n) \leq c_2 \cdot g(n) \big).
 
+**Definition (Asymptotic bounds):** 
+  * If :math:`f(n) \in O(g(n))`, :math:`g(n)` is also called 
+    *asymptotic upper bound* of :math:`f(n)`.
+  * If :math:`f(n) \in \Omega(g(n))`, then :math:`g(n)` is called 
+    *asymptotic lower bound* of :math:`f(n)`.
+  * If :math:`f(n) \in \Theta(g(n))`, then :math:`g(n)` is called 
+    *asymptotic growth order* of :math:`f(n)`.
 
-Informally, the following terms are also usable:
-
-* If :math:`f(n) \in O(g(n))`, then :math:`g(n)` is called *asymptotic upper bound* of :math:`f(n)`.
-* If :math:`f(n) \in \Omega(g(n))`, then :math:`g(n)` is called *asymptotic lower bound* of :math:`f(n)`.
-* If :math:`f(n) \in \Theta(g(n))`, then :math:`g(n)` is called *asymptotic growth order* of :math:`f(n)`.
-
-
-All these concepts (Big-O, Big-Omega, Big-Theta) are related to calculus (real analysis); it is functional behavior as :math:`n \rightarrow \infty`.
-Predicting the speed of an algorithm for short input lengths :math:`n`, the dependence on :math:`n` is typically
-quite complex (and we cannot ignore "lower order"  terms). As :math:`n` becomes very large,
-only the "dominant parts" in the expression :math:`f(n)` matter.
-
-
-Properties of Big-O, Big-Omega, Big-Theta
---------------------------------------------
-
-Some commonly used properties of asymptotic growth rates 
-to find the complexity classes of functions easily without using the 
+Some bounds can be established without using the 
 definitions of the Big-O, Big-Omega, and Big-Theta concepts directly. 
-Using definitions is often tedious, typically we want to rely on our knowledge of 
-real analysis, limits, derivatives, integrals and so on. 
 
+**Properties of the asymptotic bounds:** 
 
+  **Dominant term:** 
+    If :math:`f(n) = f_1(n) + f_2(n)`, 
+    where :math:`f_2(n) < f_1(n)` for all sufficiently large :math:`n`, then :math:`O(f(n))` and :math:`O(f_1(n))` are the same.
 
-**Dominant term:** 
-  If :math:`f(n) = f_1(n) + f_2(n)`, 
-  where :math:`f_2(n) < f_1(n)` for all sufficiently large :math:`n`, then :math:`O(f(n))` and :math:`O(f_1(n))` are the same.
-
-  Consequently, if :math:`f(n) = f_1(n) + f_2(n) + \ldots + f_k(n)` can be written as a finite sum of other functions, 
-  then the fastest growing one determines 
-  the asymptotic growth order of the entire sum :math:`f(n)`
+    Consequently, if :math:`f(n) = f_1(n) + f_2(n) + \ldots + f_k(n)` can be written as a finite sum of other functions, 
+    then the fastest growing one determines 
+    the asymptotic growth order of the entire sum :math:`f(n)`
   
-**Additivity:** 
-  If :math:`f_1(n)` is in :math:`O(g_1(n))` and :math:`f_2(n)` is in :math:`g_2(n)`, then :math:`f_1(n) + f_2(n)` is in 
-  :math:`O(\max(g_1(n), g_2(n)))`. 
-  Typically, one of the :math:`g_1(n)` or :math:`g_2(n)` is asymptotically larger than the other (say, :math:`g_1(n)>g_2(n)` for 
-  all sufficiently large :math:`n`),  and instead of :math:`O(\max(g_1(n), g_2(n)))` we can simply take :math:`O(g_1(n))`. 
+  **Additivity:** 
+    If :math:`f_1(n)` is in :math:`O(g_1(n))` and :math:`f_2(n)` is in :math:`g_2(n)`, then :math:`f_1(n) + f_2(n)` is in 
+    :math:`O(\max(g_1(n), g_2(n)))`. 
+    Typically, one of the :math:`g_1(n)` or :math:`g_2(n)` is asymptotically larger than the other (say, :math:`g_1(n)>g_2(n)` for 
+    all sufficiently large :math:`n`),  and instead of :math:`O(\max(g_1(n), g_2(n)))` we can simply take :math:`O(g_1(n))`. 
 
-**Multiplicativity:** 
-  If :math:`f(n)` is in :math:`O(g(n))` and :math:`c>0` is a positive constant, then :math:`c\cdot f(n)` is also in :math:`O(g(n))`.
+  **Multiplicativity:** 
+    If :math:`f(n)` is in :math:`O(g(n))` and :math:`c>0` is a positive constant, then :math:`c\cdot f(n)` is also in :math:`O(g(n))`.
 
-**Transitivity:** 
-  If :math:`f(n)` is in :math:`O(g(n))` and :math:`g(n)` is in :math:`O(h(n))`, then :math:`f(n)` is also in :math:`O(h(n))`.
+  **Transitivity:** 
+    If :math:`f(n)` is in :math:`O(g(n))` and :math:`g(n)` is in :math:`O(h(n))`, then :math:`f(n)` is also in :math:`O(h(n))`.
 
-**Polynomial Dominance:** 
-  For any positive integer :math:`k`, :math:`n^k`` is dominated by :math:`cn^k` for all :math:`n \geq n0` and some constant :math:`c`.
+  **Polynomial Dominance:** 
+    For any positive integer :math:`k`, :math:`n^k`` is dominated by :math:`cn^k` for all :math:`n \geq n0` and some constant :math:`c`.
 
-**Big-O and the Limit of the Ratio:**
-  If the following limit exists and is finite:
+  **Big-O and the Limit of the Ratio:**
+    If the following limit exists and is finite:
 
-  .. math::
+    .. math::
+ 
+      \lim\limits_{n \rightarrow \infty} \frac{f(n)}{g(n)} = C < + \infty,
 
-    \lim\limits_{n \rightarrow \infty} \frac{f(n)}{g(n)} = C < + \infty,
-
-  then :math:`f(n)` is in :math:`O(g(n))`.
+   then :math:`f(n)` is in :math:`O(g(n))`.
 
 
-**Logarithms of any base:**
+**Theorem (Changing the Base of Logarithm):**
   If :math:`a,b > 1` are real numbers, then :math:`\log_a n` is in :math:`\Theta(log_b n)`. 
 
   **Proof:**
@@ -185,14 +117,14 @@ real analysis, limits, derivatives, integrals and so on.
       \forall a,b,m > 1 \left( \log_a b = \frac{ \log_m b }{ \log_m a } \right).
 
 
-  **Note:**
-    It is common to just one base (usually, it is base :math:`2` or
-    base :math:`e` of the natural logarithm), and write just :math:`O(\log n)` 
-    without specifying base at all. Formally speaking :math:`\log n` in our 
-    course denotes :math:`\log_2 n`. 
+.. note:: 
+  It is common to just one base (usually, it is base :math:`2` or
+  base :math:`e` of the natural logarithm), and write just :math:`O(\log n)` 
+  without specifying base at all. Formally, :math:`\log n` in our 
+  course denotes :math:`\log_2 n`. 
     
-    In other contexts (where constant factors matter)
-    the base of logarithm cannot be omitted. 
+  In other contexts (where constant factors matter)
+  the base of logarithm cannot be omitted. 
 
 
 

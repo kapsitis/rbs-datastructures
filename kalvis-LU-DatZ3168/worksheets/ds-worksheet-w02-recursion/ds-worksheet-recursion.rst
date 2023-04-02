@@ -1,255 +1,129 @@
 Worksheet Week 02: Recursion
-======================================
+===============================
 
-Introduction
---------------
+There is a proverb: *To understand recursion, you must first understand recursion*. 
+Recursion allows to analyze algorithms, to find their runtime even in 
+complex cases. 
 
-There is a proverb: *To understand recursion, you must first understand recursion*. In many cases complex problems can be 
-solved by breaking them down into subproblems multiple times. 
 
-Sequences defined by Recursion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Linear recursion example -- Fibonacci sequence: 
-
-.. math:: 
-
-  F(n) = \left\{ \begin{array}{ll}
-  0 & \mbox{if $n = 0$,}\\
-  1 & \mbox{if $n = 1$,}\\
-  F(n-1) + F(n - 2) & \mbox{if $n > 1$.}\\
-  \end{array} \right.
-
-
-It is known that the Fibonacci numbers (obtained by solving `Linear recurrence <https://brilliant.org/wiki/linear-recurrence-relations/>`_)
-can be computed by the following closed formula: 
-
-.. math:: 
-
-  F_m = \frac{1}{\sqrt{5}} \left( \left( \frac{1 + \sqrt{5}}{2} \right)^{\!m} - \left( \frac{1 + \sqrt{5}}{2} \right)^{\!m} \right).
-
-Essentially, Fibonacci numbers are the sum of two geometric series. 
-The common ratios in both geometric series are the roots of the *characteristic polynomial* :math:`x^2 = x + 1`. 
-
-.. math:: 
-
-  n! = \left\{ \begin{array}{ll}
-  1 & \mbox{if $n = 0$,}\\
-  n \cdot (n-1)! & \mbox{if $n > 0$.}\\
-  \end{array} \right.
-
-If you need to evaluate factorials for large :math:`n`, you can apply 
-`Stirling's approximation <https://en.wikipedia.org/wiki/Stirling%27s_approximation>`_: 
-
-.. math:: 
-
-  n! \approx \sqrt{2\pi n} \left( \frac{n}{e} \right)^n. 
-
-The ratio of both expressions has limit :math:`1` as :math:`n \rightarrow \infty`. 
-
-
-
-.. math:: 
-
-  S(n, x) = \left\{ \begin{array}{ll}
-  x & \mbox{if $n = 0$,}\\
-  S(n - 1, x) + \frac{(-1)^n \cdot x^{2n-1}}{(2n-1)!} & \mbox{if $n > 0$.}\\
-  \end{array} \right.
-
-For a constant :math:`x` build the sequence :math:`S(0,x), S(1,x), S(2,x), \ldots` recursively.
-It has the limit (Taylor series for :math:`y = \sin x`): 
-
-.. math:: 
-
-  \lim_{n \rightarrow \infty} S(x,n) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \ldots = \sin x. 
-
-Structural Recursion 
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Recursion in mathematics is not necessarily adding :math:`1` to a parameter :math:`n`. 
-It is possible to define valid mathematical expressions recursively using a grammar: 
-
-* Any number is a mathematical expression, 
-* Any variable :math:`x,y,\ldots` is a mathematical expression, 
-* If :math:`E` is a mathematical expression, then :math:`(E)` is also a mathematical expression, 
-* If :math:`E_1` and :math:`E_2` are mathematical expressions, then also :math:`E_1 + E_2`, 
-  :math:`E_1 - E_2`, :math:`E_1 \cdot E_2`, and :math:`E_1 / E_2` are mathematical expressions. 
-
-To compute mathematical expressions, one can proceed recursively: Find which is the "outermost"
-production to make the expression; break it down to one of the above cases, evaluate the subexpressions 
-and finally compute the answer. 
-
-Even fancier recursive expressions (language statements) can be obtained defining programming languages 
-with `Context-free grammars <https://en.wikipedia.org/wiki/Context-free_grammar>`_.
-*Parsers* are responsible for breaking down such recursively built expressions (or 
-programming language constructs) and converting them to some representation that can be executed. 
-
-
-
-
-Implementing the Recursion 
-------------------------------
-
-Run-time stack
-^^^^^^^^^^^^^^^^
-
-Every time one function calls another (in most imperative languages -- both compiled or interpreted), 
-a new activation record is created and pushed to the *run-time stack*. It consists of the following elements: 
-
-**Activation Record:** 
-
-  * Parameters and local variables (everything passed to the function call or defined therein), 
-  * Dynamic link (a pointer to the activation record of the caller), 
-  * Access link (used by the function to access non-local data), 
-  * Return value (will contain the value needed by the caller). 
-
-Activation records are quite large data structures, but programmer does not need to create them -- 
-they are maintained automatically as the functions call each other. 
-
-If a function is defined recursively, the run-time stack can contain multiple activation records of the
-same function (but with different parameters). 
-
-
-
-
-
-
-
-
-
-Situations when run-time stacks should be avoided?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Sometimes user can choose to implement recursion without explicit function calls (user-defined data structures). 
-Here are some downsides to the run-time stacks:
-
-**Stack Overflow:** 
-  The runtime stack has a limited amount of space, and if the recursion goes too deep, it can result in a stack overflow error. 
-  Explicit stack can be more efficient, as you can control the size of the stack and avoid the overflow error.
-
-**Performance:** 
-  When using the runtime stack, there is overhead involved in pushing and popping function calls, as well as managing the stack pointers. 
-  For a large number of recursive calls, this overhead can be significant.
-
-**Memory:** 
-  The runtime stack is typically stored in the memory with limited access time, so accessing it can be slow. 
-  In contrast, an explicit stack can be implemented as an array or a linked list, which can be stored in the heap with better access time.
-
-**Debugging:** 
-  When using the runtime stack, it can be difficult to debug the recursive algorithm, as you have limited visibility into the stack. 
-
-
-
-
-Tail, Non-Tail and Excessive Recursion 
----------------------------------------
-
-There are several ways to implement factorial algorithmically. Consider these two Python examples: 
-
-.. code-block:: python 
-
-  def factorial_tail(n, result): 
-      if n == 0:
-          return result
-      else:
-          return factorial_tail(n - 1, n * result)
-
-.. code-block:: python 
-
-  def factorial_classic(n):
-      if n == 0:
-          return 1
-      else:
-          return n * factorial_classic(n - 1)
-
-
-
-
-
-
-.. code-block:: python
-
-  # Non-Tail Recursive function to calculate nth Fibonacci number F(n)
-  def fibonacci_bad(n):
-      if n <= 1:
-          return n
-      else:
-          return fibonacci_bad(n - 1) + fibonacci_bad(n - 2)
-
-This is much worse than the non-tail recursive factorial, since every call to ``fibonacci_bad``
-leads to two more calls (the number of recursive calls grows exponentially!). 
-
-
-
-
-
-Solving Recursions 
+Concepts and Facts
 ----------------------
 
-Recursive algorithms are somewhat harder to analyze in terms of running time. 
-Unlike algorithms that use straightforward loops and data structures (where it is possible to add up 
-elementary steps that are necessary to complete the function), recursive algorithms 
-call themselves, but on different arguments. 
 
-The natural way to solve recursive algorithms is to write recursions on the runtime. 
-
-**Binary Search Problem:** 
-  There exists a *divide and conquer* algorithm to search for an item in an ordered list (see previous worksheet). 
-  Let :math:`B(n)` denote the running time of Binary search to find an item in an array of length :math:`n`. 
-
-  Express the number of comparisons needed to complete Binary search (your expression of :math:`B(n)` can use 
-  values of :math:`B(m)` for smaller input values :math:`m < n`). 
-  Solve the recursion for :math:`B(m)` and find a closed formula for :math:`B(n)`. 
+**Definition:** 
+  A Fibonacci sequence is defined by the following recurrent formula: 
 
 
-
-
-
-For some problems excessive recursion is necessary (just because the structure to be generated is rather large). 
-
-**Hanoi Tower Problem:**
-  You need to move a set of disks (enumerated :math:`1,2,\ldots,n` from smallest to largest) 
-  from one peg to another, one disk at a time, while obeying the rule that a larger disk 
-  cannot be placed on top of a smaller disk. You have altogether three pegs: ``from_peg`` is the peg, 
-  where all the disks are placed originally (smallest disk :math:`1` at the top); ``to_peg`` is the peg, 
-  where these disks must end up at the very end. And there is also ``aux_peg`` -- auxiliary peg that 
-  can be used during the movements, but should be freed at the end. 
-
-  *Input:* The parameter :math:`n`; *Output:* A valid schedule describing valid movements of the disks. 
+  .. math:: 
   
-  Let :math:`H(n)` denote the running time of Hanoi tower problem. Express :math:`H(n)` (the number of disk movements in the algorithm)
-  in terms of previous values :math:`H(m)`, where :math:`m < n`. Solve the recursion and find a closed formula 
-  for :math:`H(n)`. 
+    F(n) = \left\{ \begin{array}{ll}
+    0 & \mbox{if $n = 0$,}\\
+    1 & \mbox{if $n = 1$,}\\
+    F(n-1) + F(n - 2) & \mbox{if $n > 1$.}\\
+    \end{array} \right.
+
+**Statement:** 
+  For every nonnegative integer :math:`n` the Fibonacci number :math:`F(n)` can be 
+  computed by the following expression: 
+
+  .. math:: 
+
+    F(n) = \frac{1}{\sqrt{5}} \left( \left( \frac{1 + \sqrt{5}}{2} \right)^{\!n} - \left( \frac{1 - \sqrt{5}}{2} \right)^{\!n} \right).
 
 
-.. code-block:: python 
-
-  def tower_of_hanoi(n, from_peg, to_peg, aux_peg):
-      if n == 1:
-          print("Move disk 1 from peg {} to peg {}".format(from_peg, to_peg))
-          return
-
-      tower_of_hanoi(n-1, from_peg, aux_peg, to_peg)
-      print("Move disk {} from peg {} to peg {}".format(n, from_peg, to_peg))
-      tower_of_hanoi(n-1, aux_peg, to_peg, from_peg)
+Such expressions are named *closed formulas*, since they can be evaluated directly, without repeating recurrent formula many times. 
+See its proof -- <https://brilliant.org/wiki/linear-recurrence-relations/>`_. 
+The expression shows that (apart from an expression :math:`((1 - \sqrt{5})/2)^n` that goes to :math:`0`) Fibonacci numbers grow 
+as a geometric series. 
 
 
-**Karatsuba Multiplication Algorithm:** 
-  Given two non-negative integer numbers of the same length :math:`n` (written in binary), 
-  write an algorithm to multiply these numbers. 
-  We need an algorithm that is faster than the "school algorithm" that multiplies two 
-  numbers of length :math:`n` in :math:`O(n^2)` time. 
+**Definition:** 
+  A factorial for any non-negative integer is defined by the following recurrent formula: 
+
+  .. math:: 
+
+    n! = \left\{ \begin{array}{ll}
+    1 & \mbox{if $n = 0$,}\\
+    n \cdot (n-1)! & \mbox{if $n > 0$.}\\
+    \end{array} \right.
+
+**Statement:** 
+  Factorials for large :math:`n` satisfy 
+  `Stirling's approximation <https://en.wikipedia.org/wiki/Stirling%27s_approximation>`_: 
+
+  .. math:: 
+
+    n! \sim \sqrt{2\pi n} \left( \frac{n}{e} \right)^n. 
+
+.. note::
+  The asymptotic equality :math:`f(n) \sim g(n)` for two positive functions :math:`f(n),g(n)` 
+  denotes that the ratio :math:`f(n)/g(n)` has limit :math:`1` as :math:`n \rightarrow \infty`. 
+  Such relation also would imply that :math:`f(n)` and :math:`g(n)` are in Big-Theta of each other. 
+  In fact, :math:`f(n) \sim g(n)` is stronger than Big-Theta, since :math:`f(n) \in \Theta(g(n))` does allow 
+  any finite and bounded ratios :math:`f(n)/g(n)`. 
+
+
+**Definition:**
+  Function code that invokes itself (with different arguments to avoid infinite loops) 
+  is called a *function implemented with recursion*. 
   
-  .. note:: 
-    Here multiplication of long numbers 
-    cannot be done in constant time; instead you can assume that operations on individual bits
-    can be done in constant time (Boolean logic, bit arithmetic, checking bits for condition statements). 
+  
+**Example:** 
+  This is a straightforward recursive implementation of factorial: 
+
+  .. code-block:: python 
+
+    def factorial(n):
+        if n == 0:
+            return 1
+        else:
+            return n * factorial(n - 1)
+
+  For large ``n`` this implementation is problematic, since it keeps too many function calls 
+  on the activation stack. 
+  Therefore in practice factorial is usually implemented without recursion (one can multiply the numbers in a loop), 
+  or using a tail recursion. 
+  
+**Definition:** 
+  Function code that contain recursive call in just one place and the recursive call is 
+  the entire return expression of the function is called *function implemented with tail-recursion*. 
+
+
+**Example:** 
+  Here is tail-recursive factorial: 
+
+  .. code-block:: python 
+
+    def factorial_tail(n, result): 
+        if n == 0:
+            return result
+        else:
+            return factorial_tail(n - 1, n * result)
+
+Algorithms using divide-and-conquer paradigm (such as MergeSort, Quicksort)
+may call themselves multiple times. In these cases we must be very careful regarding 
+the depth of recursion tree as the number of function calls grows exponentially. 
+Here is an extremely inefficient algorithm to compute Fibonacci numbers: 
+any call to ``fibonacci_bad(n)`` (where :math:`n \geq 2`) leads to two more calls. 
+Such implementations are called *excessive recursion*. 
+
+**Example:** 
+
+
+  .. code-block:: python
     
+    def fibonacci_bad(n):
+        if n <= 1:
+            return n
+        else:
+            return fibonacci_bad(n - 1) + fibonacci_bad(n - 2)
 
 
 
-Master Theorem
-^^^^^^^^^^^^^^^^^^^
+
+
+
+
 
 **Master Theorem:**
   Let :math:`f(n)` be an increasing function that satisfies the recurrence relation:
@@ -271,132 +145,179 @@ Master Theorem
     \end{array} \right.
 
 
+This theorem can be used to find the asymptotic runtime for recursive algorithms. 
 
 
 
 
-Lindenmayer Systems
-^^^^^^^^^^^^^^^^^^^^^^
+**Example (Binary Search):** 
+  Binary search searches items in a sorted array of :math:`n` elements: 
+  :math:`A[0]<A[1]<\ldots<A[n-2]<A[n-1]`.
+  At every point it maintains a search interval :math:`[\ell, r]` so that the searchable item :math:`w`
+  satisfies inequalities :math:`D[\ell] < w < D[r]`.
+  The initial call is :math:`\text{\sc BinarySearch}(A,0,n-1,w)`.
+  After that the binary search calls itself recursively on shorter intervals:
 
 
+  | :math:`\text{\sc BinarySearch}(D,\ell, r, w)`
+  | 1. :math:`\;\;\;\;\;` **if** :math:`\ell > r`:
+  | 2. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc not found}` :math:`w`
+  | 3. :math:`\;\;\;\;\;` :math:`m = \lfloor (\ell + r)/2 \rfloor`
+  | 4. :math:`\;\;\;\;\;` **if** :math:`w` ``==`` :math:`D[m]`:
+  | 5. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc found}` :math:`w` at location :math:`m`
+  | 6. :math:`\;\;\;\;\;` **else** **if** :math:`w < D[m]`:
+  | 7. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc BinarySearch}(D,\ell, m-1, w)`
+  | 8. :math:`\;\;\;\;\;` **else**:
+  | 9. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc BinarySearch}(D,m+1, r, w)`
 
-
-
-
-
-
-
-
-Backtracking
-----------------
-
-**N-Queens Problem:** 
-  The task is to place :math:`N`` queens on an :math:`N \times N` chessboard such that no two queens threaten each other. 
-  This is the best known example of backtracking; you can place queens one by one and backtrack if a placement 
-  causes a conflict. 
-
-  *Input:* Parameter :math:`N`; *Output:* Any chess-board of size :math:`N \times N` with all :math:`N` queens placed.
-  (In fact, N-Queens is solvable for all :math:`N \geq 4`, and for any such :math:`N` 
-  some solutions are easy to get without any backtracking.)
-
-  **Related decision Problem:** 
-    Completion problem is a variant, in which some queens are already placed
-    and the solver is asked, if it is possible to place the rest (the output of the decision problems is Yes/No). 
-    This problem is NP-complete.
-    See `I.P.Gent Complexity of n-Queens Completion. <https://www.ijcai.org/proceedings/2018/0794.pdf>`_.
-
-
-**The Traveling salesman problem (TSP):**
-  There exists a connected graph of cities, some cities are connected with roads of known lengths. 
-  It asks for the shortest possible "tour" that visits every city from a given set of cities
-  exactly once and returns to the origin city.
-  For small input sizes, TSP can be solved using a brute-force backtracking, 
-  where all possible paths are generated and their lengths are compared to find the shortest one.
-
-  **Input:** The input graph :math:`G(V,E)`
+  Denote the  runtime of this algorithm on an array of length :math:`n` by :math:`T(n)`. 
+  Denote by a constant :math:`K` the upper bound
+  of the time necessary to compute the middlepoint :math:`m` on Line 3 and to do all the comparisons. 
+  Use the Master's theorem to find the time complexity for :math:`T(n)`. 
   
-  **Related decision problem:** 
-    Given the length, find, if there exists a route less or equal than the given length. 
-    This problem is NP-complete.
+  
+.. only:: Internal 
 
-**The Subset Sum Problem:** 
-  It asks if a given set of numbers can be divided into two subsets such that the sum of numbers in one subset is 
-  equal to a given target. This problem can be solved using backtracking by generating all possible subsets and 
-  checking if any of them have the desired sum.
-
-**Sudoku Solver:** 
-  The task is to fill in a :math:`9 \times 9`` grid with digits so that each column, each row, and each of the nine 
-  :math:`3 \times 3` sub-grids contains all of the digits from :math:`1`` to :math:`9`. 
-  Backtracking can be used to solve this problem by trying each possible digit in a cell and backtracking 
-  if it leads to an invalid solution.
-
-  *Input:* Partially filled in array of size :math:`9 \times 9`; *Output:* Completed array of size :math:`9 \times 9`. 
-  (It is often assumed that the input array is such that there exists exactly one solution. For backtracking it does not matter -- 
-  it is possible to find any feasible solution, or all feasible solutions, or find out that there is no solution.)
-
-
-**Generating Permutations:** 
-  The task is to generate all possible permutations of a given set of elements. 
-  Backtracking can be used to generate permutations by fixing elements one by one and swapping them to generate new permutations.
-
-**Maze Generation:** 
-  The task is to generate a random maze using backtracking. In this problem, you can start at a random cell 
-  and move to unvisited cells, marking them as visited, until you have visited all cells. 
-  If you reach a dead end, you backtrack to the previous cell.
-
-**Cryptarithmetic Puzzles:** 
-  The task is to solve puzzles where a mathematical expression is written using words and each letter represents 
-  a unique digit. Backtracking can be used to solve these puzzles by trying different values for each letter 
-  and backtracking if a solution leads to a conflict.
-
-
-
-Backtracking algorithms are not hard to implement -- they do not do much more besides an exhaustive search 
-in a large tree representing the space of potential solutions (potentially very inefficient). 
-Nevertheless, it is desirable to 
+  **Answer:** 
+  
+    The runtime :math:`T(n)` satisfies the following recurrence: 
+  
+    .. math:: 
+  
+      T(n) = \left\{ \begin{array}{ll}
+      K, & \mbox{if $n = 1$,}\\
+      K + T(\lfloor n/2 \rfloor), & \mbox{if $n > 1$.}\\
+      \end{array} \right.
+    
+    In the Master's theorem :math:`a = 1`, :math:`b = 2`, :math:`c = K`, :math:`d = 0`. 
+    Since :math:`a = b^d`, we have :math:`T(n) \in O(n^d \log n) = O(\log n)`. 
+    We conclude that the :math:`\text{\sc BinarySearch}(\ldots)` algorithm runs in 
+    logarithmic time :math:`O(\log n)`, where :math:`n` is the length of the array. 
+  
+  :math:`\square`
 
 
 
 
-Solving Asymptotic Bounds Exercises
--------------------------------------
 
-In C++ the computer program is easy to imagine being run on real hardware (measure the runtime with 
-the calls to system time). For Python or pseudocode it is more complicated.
-For example, package `numpy` offers different integers (4 byte long) compared to Python's default 
-integer numbers (unlimited size). All this can get complicated. 
+  
+**Example (Hanoi Tower):** 
+  You need to move a set of disks (enumerated :math:`1,2,\ldots,n` from smallest to largest) 
+  from one peg to another, one disk at a time, while obeying the rule that a larger disk 
+  cannot be placed on top of a smaller disk. You have altogether three pegs: ``from_peg`` is the peg, 
+  where all the disks are placed originally (smallest disk :math:`1` at the top); ``to_peg`` is the peg, 
+  where these disks must end up at the very end. And there is also ``aux_peg`` -- auxiliary peg that 
+  can be used during the movements, but should be freed at the end. 
 
-Model of computation
-^^^^^^^^^^^^^^^^^^^^^^^
+  .. code-block:: python 
 
-We often cannot list all the assumptions regarding the runtime, 
-therefore we can state, how Python code can be analyzed: 
+    def tower_of_hanoi(n, from_peg, to_peg, aux_peg):
+        if n == 1:
+            print("Move disk 1 from peg {} to peg {}".format(from_peg, to_peg))
+            return
 
-* Start with the Word-RAM model. Machine word: block of :math:`w` bits. 
-* Operations can be performed in :math:`O(1)` time -- operations on words: 
-  Integer arithmetic: (``+``, ``-``, ``*``, ``//``, ``%``), logical operators, bitwise arithmetic, input/output.
-* Memory address must be able to access every place in memory
-  32-bit words can address 4 GiB memory, 64-bit words can address :math:`16` exabytes of memory. 
-  (One exabyte is :math:`10^{18}` or one quintillion bytes.)
+        tower_of_hanoi(n-1, from_peg, aux_peg, to_peg)
+        print("Move disk {} from peg {} to peg {}".format(n, from_peg, to_peg))
+        tower_of_hanoi(n-1, aux_peg, to_peg, from_peg)
 
-C++, Python and other languages commonly use external calls (if we know the complexity of some library call such as "sort", we can apply it).
-There are some predefined data structures in Python (and STL data structures in C++): 
 
-* Arrays, Lists, Sets, Dictionaries are used to store non-constant data. Each data structure 
-  supports a set of operations. A collection of operations is called an *interface* (for well-known data structures 
-  also ADT - *Abstract Data Type*). 
-* Example data structure: Static Array -- fixed width slots, fixed length of the array itself. 
-  Its functions supported in pseudocode:
+  The input of this algorithm is :math:`n` (the number of disks), its output is a valid schedule describing valid movements of the disks.   
+  Let :math:`H(n)` denote the running time of this algorithm expressed as the number of ``print()`` statements. 
+  Express :math:`H(n)` (the number of disk movements in the algorithm)
+  in terms of previous values :math:`H(m)`, where :math:`m < n`. Solve the recursion and find a closed formula 
+  for :math:`H(n)`. 
 
-  * :math:`A = \text{\sc Array}(n)`: allocate static array of size :math:`n` in :math:`\Theta(n)` time
-  * :math:`\text{\sc Array}.get(i)`: return word stored at array index :math:`i`` in :math:`\Theta(1)` time
-  * :math:`\text{\sc Array}.set(i,x)`: write value :math:`x` to array index :math:`i` in :math:`\Theta(1)` time
+.. only:: Internal 
 
-  In many languages it is common to write "get" and "set" commmands with array notation :math:`A[i]`.
+  **Answer:**
+  
+    The runtime :math:`H(n)` satisfies the following recurrence:
+  
+    .. math:: 
+  
+      H(n) = \left\{ \begin{array}{ll}
+      1, & \mbox{if $n = 1$,}\\
+      1 + 2 \cdot H(n-1), & \mbox{if $n > 1$.}\\
+      \end{array} \right.  
+  
+    In this case Master's theorem cannot be applied, since :math:`H(n)` is expressed via :math:`H(n-1)` 
+    rather than in terms of :math:`H(n/b)` for some constant :math:`b`. 
+    Fortunately, :math:`H(n)` can be evaluated directly. 
+    
+    Observe that :math:`H(1) = 1`, :math:`H(1) = 1 + 2 \cdot H(1) = 3`, :math:`H(3) = 1 + 2 \cdot H(2) = 7`, and so on. 
+    We observe that :math:`H(n) = 2^n - 1`. This can be proven by induction. 
+    
+    **Base:** 
+      :math:`n = 1`. In this case :math:`H(1) = 1`, and also :math:`H(1) = 2^1 - 1`; so the formula :math:`H(n) = 2^n - 1` is 
+      true in this case. 
+      
+    **Inductive Hypothesis:** 
+      Assume that for :math:`n = k` disks the number of print statements is indeed :math:`H(k) = 2^{k} - 1`. 
+      
+    **Induction Step:** 
+      We now prove that the statement is also true for :math:`n = k+1`. In this case :math:`H(k+1) = 1 + 2 \cdot H(k)` by 
+      the given recurrent formula. On the other hand, by inductive hypothesis, 
+      
+      .. math:: 
+      
+        H(k+1) = 1 + 2 \cdot (2^k - 1) = 1 + 2 \cdot 2^k - 2 = 2^{k+1} + 1 - 2 = 2^{k+1} - 1. 
+        
+      We now see that :math:`H(k+1) = 2^{k+1} - 1`, which means that the formula :math:`H(n) = 2^n - 1` is also true 
+      for :math:`n = k+1`. Inductive step is completed. 
+      
+  :math:`\square`
+    
 
-* Example data structure: List -- same as above, but no longer fixed length. 
-  If it is implemented as a physical array, the operation times do not change. 
-  But occasionally need to reallocate memory, if the number of elements exceeds the size of the current array. 
+
+**Example (Karatsuba Multiplication Algorithm):** 
+  Given two non-negative integer numbers of the same length :math:`n` (written in binary), 
+  write an algorithm to multiply these numbers. 
+  Consider an algorithm that is faster than the "school algorithm" (it would multiply two 
+  numbers of length :math:`n` in :math:`O(n^2)` time):  
+  
+  | :math:`\text{\sc Karatsuba}(n_1, n_2)`
+  | 1. :math:`\;\;\;\;\;` if :math:`(n_1 < 10)` **or** :math:`(n_2 < 10)`:
+  | 2. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`n_1 \cdot n_2` :math:`\;\;\;\;\;` (*fall back to traditional multiplication*)
+  | 3. :math:`\;\;\;\;\;` :math:`m = \max(\text{\sc size}(n_1), \text{\sc size}(n_2))`
+  | 4. :math:`\;\;\;\;\;` :math:`m_2 = \lfloor m/2 \rfloor`
+  | 5. :math:`\;\;\;\;\;` :math:`h_1, \ell_1 = \text{\sc splitAt}(n_1, m_2)`
+  | 6. :math:`\;\;\;\;\;` :math:`h_2, \ell_2 = \text{\sc splitAt}(n_2, m_2)`
+  | :math:`\;\;\;\;\;\;\;\;\;\;` (*Three recursive calls of Karatsuba's algorithm.*)
+  | 7. :math:`\;\;\;\;\;` :math:`z_0 = \text{\sc Karatsuba}(\ell_1, \ell_2)`
+  | 8. :math:`\;\;\;\;\;` :math:`z_1 = \text{\sc Karatsuba}(\ell_1 + h_1, \ell_2 + h_2)`
+  | 9. :math:`\;\;\;\;\;` :math:`z_2 = \text{\sc Karatsuba}(h_1, h_2)`
+  | 12. :math:`\;\;\;\;\;` :math:`y = z_1 - z_2 - z_0`
+  | 13. :math:`\;\;\;\;\;` **return** :math:`(z_2 \cdot 10^{2 \cdot m_2}) + (y \cdot 10^{m_2}) + z_0`
+
+
+  By :math:`T(n)` denote the runtime of Karatsuba's algorithm 
+  on two numbers having length :math:`n` each. (Assume that non-recursive parts take some constant time :math:`K`.) 
+  Provide the asymptotic bound extimate for :math:`K(n)`. 
+
+  .. note::  
+    We typically assume that addition and multiplication take :math:`\Theta(1)` time 
+    as they are CPU operations. But multiplication of very long numbers cannot be done in constant time. 
+    Instead assume that operations on individual bits
+    are done in constant time. Things like Boolean operations, bit arithmetic, checking conditional statements.
+ 
+.. only:: Internal
+
+  **Answer:** 
+  
+    In this algorithm one call causes three recursive calls; each call has arguments that are half the size.
+    It means that :math:`T(n) = 3 \cdot T(n/2) + K`. 
+  
+    In Master's theorem we would have :math:`a =3`, :math:`b = 2`, :math:`c = K`, :math:`d = 0`. 
+    In this case :math:`a > b^d`, so :math:`{\displaystyle T(n) \in O\left( n^{\log_b a} \right) = O\left( n^{\log_2 3} \right)}`. 
+    So the time complexity of this is :math:`O(n^{1.58})` which is significantly better than :math:`O(n^2)`. 
+  
+  
+  :math:`\square`
+
+
+
+
+
 
 
 
@@ -532,4 +453,47 @@ Problems
         return fibonacci_tail_recursive(n, 0, 1)
       
   :math:`\square`
+
+
+
+
+
+**Question 6:** 
+  It is known that Taylor series for :math:`y = \sin x`) is given by formula: 
+
+  .. math:: 
+
+    \lim_{n \rightarrow \infty} S(x,n) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \ldots = \sin x. 
+
+  The series converges for every :math:`x \in \mathbb{R}`.   
+  Write a tail-recursive function that for any argument :math:`x` computes the approximation for :math:`\sin x`
+  by adding up the first 50 terms of the Taylor series. 
+  The use of global variables is not allowed -- all data manipulation should be done with local variables 
+  function calls and their return values. 
+  Your solution should use as few multiplications and divisions as possible. 
+  
+
+.. only:: Internal 
+
+  **Answer:** 
+  
+    As the global variables are not allowed, we can accumulate the partial sum 
+    as one of the arguments passed to the recursive method calls. 
+    
+    .. math:: 
+
+      S(n, x) = \left\{ \begin{array}{ll}
+      x & \mbox{if $n = 0$,}\\
+      S(n - 1, x) + \frac{(-1)^n \cdot x^{2n-1}}{(2n-1)!} & \mbox{if $n > 0$.}\\
+      \end{array} \right.
+
+    For a constant :math:`x` build the sequence :math:`S(0,x), S(1,x), S(2,x), \ldots` using the recursive calls. 
+    You can write a recursive function in pseudocode that computes :math:`S(50,x)`. 
+    
+    This answer is incomplete as the number of multiplications and divisions is not minimized.  
+    In fact, computing :math:`x^{2n-1}` would require many multiplications; same as :math:`(2n-1)!`. 
+    So you can try to optimize this further. 
+
+  :math:`\square`    
+
 

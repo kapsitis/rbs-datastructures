@@ -1,6 +1,103 @@
 Worksheet, Week 08: Sorting
 =============================
 
+Various sorting algorithms are introduced here, because they 
+illustrate algorithm building paradigms (*Anany Levitin. 
+Introduction to the design & analysis of algorithms*). 
+Depending on the context different sorting algorithms may be needed. 
+
+
+Concepts and Facts
+---------------------
+
+**Statement (lower bound for sorting):** 
+  Any general sorting algorithm receiving an input of :math:`n` distinct 
+  items and producing a sorted output of these items (without assuming anything 
+  additional about the input) needs at least :math:`\lceil \log_2 n! \rceil` 
+  comparisons. 
+  
+**Proof:** 
+  Any decision tree with :math:`k` levels (i.e. a sorting algorithm making 
+  :math:`k` comparisons, can distinguish at most :math:`2^k` different cases. 
+  On the other hand, there are :math:`n!` different ways how :math:`n` sortable items 
+  can be arranged in the input. Thus we must have :math:`2^k \geq n!` or 
+  :math:`k \geq \lceil \log_2 n! \rceil`. 
+  (See `Comparison Sort <https://en.wikipedia.org/wiki/Comparison_sort#Number_of_comparisons_required_to_sort_a_list>`_.)
+
+**Definition:** 
+  A sorting algorithm is called *stable* iff any two items with equal keys 
+  are not swapped: (and thus preserve their initial order). 
+  Algorithms that are not guaranteed to preserve such order are *unstable*. 
+  
+**Definition:** 
+  A sorting algorithm that does not need to know the number of sortable items 
+  ahead of the time is called *online*. Those algorithms that receive full sortable 
+  array right at the start are called *offline*. 
+  
+**Definition:** 
+  A sorting algorithm is called in-place, iff it uses just the original array 
+  to store the sortable items (plus some local variables). 
+  Sorting algorithms that need to allocate new memory for the sortable items are 
+  *outplace*. 
+  
+
+
+**MergeSort algorithm:** 
+  This algorithm is a typical illustration of the Divide and Conquer paradigm.
+
+  | :math:`\text{\sc MergeSort}(A,p,r)`:
+  | :math:`1\;\;` **if** :math:`p < r`
+  | :math:`2\;\;\;\;\;\;\;\;` :math:`q = \left\lfloor (p+r)/2 \right\rfloor`
+  | :math:`3\;\;\;\;\;\;\;\;` :math:`\text{\sc MergeSort}(A,p,q)`
+  | :math:`4\;\;\;\;\;\;\;\;` :math:`\text{\sc MergeSort}(A,q+1,r)`
+  | :math:`5\;\;\;\;\;\;\;\;` :math:`\text{\sc Merge}(A,p,q,r)`
+
+MergeSort is outplace algorithm -- it may waste memory, if run on large arrays. 
+On the other hand, MergeSort is nearly optimal regarding the number of comparisons needed, 
+so it may be helpful, if comparing two items takes much time. 
+
+
+
+**Quicksort algorithm:**
+  QuickSort has several flavors; this is one of the easiest, but it sometimes
+  needs one extra swap -- see Line 13. 
+  This variant of Quicksort always uses the leftmost element of the input area as a pivot -- 
+  it is easy to understand, but may be inefficient, if the input array is nearly sorted already. 
+  More advanced Quicksort flavors are randomized or choose the pivot differently.
+
+  | :math:`\text{\sc Quicksort}(A[\ell\;\ldots\;r])`:
+  | 1. :math:`\;\;\;\;\;` **if** :math:`\ell < r`:
+  | 2. :math:`\;\;\;\;\;\;\;\;\;\;` :math:`i = \ell` :math:`\;\;\;\;\;\;\;\;\;` :math:`\textcolor{teal}{\text{\em ($i$ increases from the left, searches elements $\geq$ than pivot)}}`
+  | 3. :math:`\;\;\;\;\;\;\;\;\;\;` :math:`j = r+1`	:math:`\;\;` :math:`\textcolor{teal}{\text{\em ($j$ decreases from the right, searches elements $\leq$ than pivot.)}}`
+  | 4. :math:`\;\;\;\;\;\;\;\;\;\;` :math:`v = A[\ell]` :math:`\;\;\;\;` :math:`\textcolor{teal}{\text{\em ($v$ is the pivot.)}}`
+  | 5. :math:`\;\;\;\;\;\;\;\;\;\;` **while** :math:`i<j`:
+  | 6. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`i = i+1`
+  | 7. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **while** :math:`i<r` **and** :math:`A[i]<v`:
+  | 8. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`i = i+1`
+  | 9. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`j = j-1`
+  | 10. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;` **while** :math:`j>\ell` **and** :math:`A[j]>v`:
+  | 11. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`j = j-1`
+  | 12. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`A[i] \leftrightarrow A[j]`
+  | 13. :math:`\;\;\;\;\;\;\;\;` :math:`A[i] \leftrightarrow A[j]` :math:`\;\;` :math:`\textcolor{teal}{\text{\em (Undo the extra swap at the end)}}`
+  | 14. :math:`\;\;\;\;\;\;\;\;` :math:`A[j] \leftrightarrow A[\ell]` :math:`\;\;` :math:`\textcolor{teal}{\text{\em (Move pivot to its proper place)}}`
+  | 15. :math:`\;\;\;\;\;\;\;\;` :math:`\text{\sc Quicksort}(A[\ell\;\ldots\;j-1])`
+  | 16. :math:`\;\;\;\;\;\;\;\;` :math:`\text{\sc Quicksort}(A[j+1\;\ldots\;r])`
+   
+Quicksort algorithm has good characteristics for nearly all inputs -- it sorts in place (does not need much memory), 
+it usually is quite optimal and also easy to implement. 
+It may behave badly for certain special inputs (for example, if the input array is nearly sorted already). 
+
+  | :math:`\text{\sc BubbleSort}(A[0 \ldots n-1])`:
+  | 1. :math:`\;\;\;\;\;` **do**:
+  | 2. :math:`\;\;\;\;\;\;\;\;\;\;` :math:`swapped = \text{\sc False}`
+  | 3. :math:`\;\;\;\;\;\;\;\;\;\;` **for** :math:`i` **in** :math:`\text{\sc range}(1,n)`: :math:`\;\;` :math:`\textcolor{teal}{\text{\em (from $1$ to $n-1$ inclusive)}}`
+  | 4. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **if** :math:`A[i-1] > A[i]`:
+  | 5. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`A[i-1] \leftrightarrow A[i]`
+  | 6. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` :math:`swapped = \text{\sc True}`
+  | 7. :math:`\;\;\;\;\;` **while** :math:`swapped`:
+
+
+
 
 
 Problems
@@ -95,33 +192,6 @@ Problems
   :math:`\square`
   
   
-  
-
-**QuickSort Algorithm:**
-  This variant of Quicksort uses the leftmost element of the input area as a pivot.
-  It is taken from the lecture slides. There are other Quicksort flavors (randomized or choosing a pivot differently).
-
-  .. math::
-
-    \begin{array}{rl}
-     & \text{\textsc{Quicksort}}(A[\ell\;\ldots\;r]):\\
-    1 & \text{\textbf{if\ }} l<r:\\
-    2 & \hspace{.5cm} i = \ell \;\;\;\;\;\;\;\;\; \textcolor{teal}{\text{\em ($i$ increases from the left and searches elements $\geq$ than pivot)}}\\
-    3 & \hspace{.5cm} j = r+1	\;\; \textcolor{teal}{\text{\em ($j$ decreases from the right and searches elements $\leq$ than pivot.)}}\\
-    4 & \hspace{.5cm} v = A[\ell] \;\;\;\; \textcolor{teal}{\text{\em ($v$ is the pivot.)}}\\
-    5 & \hspace{.5cm} \text{\textbf{while\ }} i<j:\\
-    6 & \hspace{1.0cm} i = i+1\\
-    7 & \hspace{1.0cm} \text{\textbf{while\ }} i<r \text{\textbf{\ and\ }} A[i]<v:\\
-    8 & \hspace{1.5cm} i = i+1\\
-    9 & \hspace{1.0cm} j = j-1\\
-    10 & \hspace{1.0cm} \text{\textbf{while\ }} j>\ell \text{\textbf{\ and\ }} A[j]>v:\\
-    11 & \hspace{1.5cm} j = j-1\\
-    12 & \hspace{1.0cm} A[i] \leftrightarrow A[j] \;\; \textcolor{teal}{\text{\em (Undo the extra swap at the end)}}\\
-    13 & \hspace{0.5cm} A[i] \leftrightarrow A[j] \;\; \textcolor{teal}{\text{\em (Undo the extra swap at the end)}}\\
-    14 & \hspace{0.5cm} A[j] \leftrightarrow A[\ell] \;\; \textcolor{teal}{\text{\em (Move pivot to its proper place)}}\\
-    15 & \hspace{0.5cm} \text{\textsc{Quicksort}}(A[\ell\;\ldots\;j-1])\\
-    16 & \hspace{0.5cm} \text{\textsc{Quicksort}}(A[j+1\;\ldots\;r])\\
-    \end{array}
 
 
 
@@ -157,6 +227,7 @@ Problems
 .. only:: Internal 
 
   **Answer:**
+  
     Your answer can be simple lists of numbers (without any grid lines or additional
     markings). Just try to keep the lists of numbers aligned.
 
@@ -201,10 +272,8 @@ Problems
 
 **Problem 4:**
 
-  .. image:: figs-sorting/bubblesort.png
-     :width: 4in
 
-  The image shows Bubble sort pseudocode for a 0-based array :math:`A[0]\ldots{}A[n-1]` of :math:`n` elements.
+  Consider the BubbleSort algorithm (see the beginning of the worksheet) for a 0-based array :math:`A[0]\ldots{}A[n-1]` of :math:`n` elements.
 
   **(A)** 
     How many comparisons (``A[i-1] > A[i]``) in this algorithm are used to sort the given array. 
@@ -285,14 +354,7 @@ Problems
   
   We have a 1-based array with 11 elements: :math:`A[1],\ldots,A[11]`. 
   We want to sort it efficiently. 
-  Consider the following Merge sort pseudocode: 
-  
-  | :math:`\text{\sc MergeSort}(A,p,r)`:
-  | :math:`1\;\;` **if** :math:`p < r`
-  | :math:`2\;\;\;\;\;\;\;\;` :math:`q = \left\lfloor (p+r)/2 \right\rfloor`
-  | :math:`3\;\;\;\;\;\;\;\;` :math:`\text{\sc MergeSort}(A,p,q)`
-  | :math:`4\;\;\;\;\;\;\;\;` :math:`\text{\sc MergeSort}(A,q+1,r)`
-  | :math:`5\;\;\;\;\;\;\;\;` :math:`\text{\sc Merge}(A,p,q,r)`
+  Run the MergeSort on this array (see the beginning of the worksheet). 
   
   Assume that initially you call this function as :math:`\text{\sc MergeSort(A,1,11)}`, 
   where :math:`p = 1` and :math:`r = 11` are the left and the right endpoint of the 

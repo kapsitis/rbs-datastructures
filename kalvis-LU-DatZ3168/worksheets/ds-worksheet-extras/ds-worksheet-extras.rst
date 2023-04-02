@@ -8,60 +8,39 @@ Introduction
 Goals of this Course
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Programming courses where we solve problems using language like C++ can have different focus.
-
-* The programming language itself and its expressive power (for example, could have entire semester on various advanced features of C++).
-* Object Oriented Programming and design. This could include creating the most appropriate OO design at the level of UML diagrams and Design patterns.
-* Software engineering process -- approaches to insure optimum quality and testability of the software.
-* Efficiency of the algorithms being used -- their time and space complexity.
-
-The focus of this course is obviously the efficiency; namely -- creating algorithms that can work on
-large input data sets or handle complex mathematical structures sufficiently fast.
-All the other aspects of programming serve the purpose of learning about algorithms and their efficiency.
-
-* C++ language features being used -- console applications (plaintext files for input and output).
-  STL and C++ template classes are used to implement data structures.
-* Object orientation serves to isolate concerns by separating data structure code from the remaining algorithms.
-  Design patterns and other advanced OO stuff can be used, if students find it useful -- but algorithm learning
-  is largely independent from it.
-* Ability to test our software (including unit tests) and also to measure the speed of our code is essential.
+**Goal:**  
+  The focus of this course is efficiency -- creating algorithms that can work on
+  large input data and handle complex structures sufficiently fast.
 
 
-Formal Requirements
-^^^^^^^^^^^^^^^^^^^^^
-
-The maximum overall grade is 100% (100 percentage points).
-Your numeric grade will be obtained by dividing your actual percentage points by :math:`10` and by
-rounding to the nearest integer.
-For example, the minimum number of percentage points to get the grade "10" is 95% (and the minimum number of
-percentage points to get the grade "4" is 35%).
-
-All the percentage points in this section are relative to the overall maximum grade.
-
-1. Four programming tasks (40% total; 10% per task). These problems ask you to solve some problem using algorithms and data structures
-   covered in the class. (The first tasks let you use any data structures you want, but
-   tasks #3 and #4 may ask you to refrain from using the built-in STL libraries and similar data structure implementations
-   and to use your own.)
-2. One design and solution description (20% total): Algorithm analysis, class design, test creation and finally -- test-driven development.
-   Half of the credit -- 10 percentage points are given for the submitted analysis paper. Another 10 percentage points are given for the implementation.
-3. Midterm (20%) -- algorithmic tasks done on paper (writing pseudocode, drawing pictures of data structures and running
-   some algorithmic steps there).
-4. Final (20%) -- similar to the midterm, but refers to the second half of the course.
-
-Midterm and final will not ask you to implement any code.
-To prepare for these exams we will solve problems (especially on Wednesday 14:30 lab sessions) that resemble midterms and finals.
-Such training tasks will not affect your grade, but you are encouraged to practice them.
+**Why use Big-O Notation?** 
+  It is convenient to measure speed of algorithms -- for example, to find the best algorithms for 
+  a given problem. Or to find out which problems are easy (have fast algorithms) and which ones are hard 
+  (have only slow or unfeasible algorithms). 
+  
+  * Measuring the speed should not depend on the speed of the computing hardware -- do not care about constant factors. 
+  * Measuring the speed should not depend on how fast it works on very short inputs. (One can "cheat" for short inputs -- 
+    just remember a large lookup table containing values for inputs of length :math:`n < n_0` with precomputed correct answers.
+    Clearly, this does not tell us anything about the performance of this algorithm for arbitrary inputs.)
+  * Measuring the speed should be conceptually easy, it should not take into account insignificant optimizations or count too many extra factors. 
+    
+**Example:** 
+  Energy needed to lift a stone of mass :math:`m` to the height :math:`h` is :math:`mgh`. (Is this 
+  the best-case estimate? The worst-case estimate? The exact value?)
 
 
-Office Hours
-^^^^^^^^^^^^^
+Other topics are also sometimes mentioned, but they are not the 
+main goal: 
 
-Use a link to register -- `<https://calendly.com/kalvis-apsitis/office-hours?month=2022-02>`_;
-instructor will send a Zoom link. You are encouraged to come in groups as well.
-
-There will be strongly suggested office hours (about one 30 minute session) **before** the first programming task is due.
-This would help to ensure that your directory layout, compilation and testing approach is the same as that used
-by the instructor.
+* Various features of C++ or other programming languages. 
+* Practical aspects of running data structures with C++ libraries 
+  such as STL or Boost, other built-in data structures or 
+  large database systems. 
+* Object Oriented Programming and design, creating UML diagrams and Design patterns
+  to solve problems. 
+* Software engineering process to ensure the quality and the testability of 
+  the software. 
+* Building and Debugging your code efficiently. 
 
 
 
@@ -69,6 +48,268 @@ by the instructor.
 
 How to Determine Algorithm Efficiency?
 ----------------------------------------
+
+
+
+**Example:**
+  In order to multiply two :math:`n \times n` matrices using the "school algorithm", we spend :math:`n` multiplications 
+  and :math:`n-1` additions to calculate one entry in the result matrix. For example: 
+
+  .. math::
+
+    c_{ij} = a_{i1} \cdot b_{1j} + a_{i2} \cdot b_{12} + \ldots + a_{in} \cdot b_{nj}  = \sum_{k=1}^{n}  {ik} \cdot b_{kj}.
+
+  That is :math:`O(n)` time. To complete the calculation for the entire matrix :math:`C = A\cdot B` we 
+  should compute :math:`n^2` such entries (for each pair :math:`i,j \in \{ 1, \ldots, n`). 
+  So the total running time for matrix multiplication is :math:`O(n^3)`. 
+
+**Note 1:**
+  In strong accordance to the definition of the runtime, we should take into account that the lengh of input 
+  for a matrix muliplication task is :math:`2n^2` -- you need to input two matrices of size :math:`n \times n`. 
+  If we denote this input length by :math:`m = 2n^2`, then the running time becomes
+  :math:`O(n^3) = O(m^{1.5}) = O(m \sqrt{m})`, so it no longer looks as terrible. 
+  In theory books people still express the running time for matrix multiplication in terms of 
+  matrix size (not the square of the matrix size) -- just because it is a more convenient parameter. 
+
+**Note 2:** 
+  There exist faster algorithms than the "school algorithm". For example,
+  `Strassen algorithm <https://en.wikipedia.org/wiki/Strassen_algorithm>`_. 
+  It has runtime :math:`O(n^{\log_2 7}) \approx O(n^{2.807})` where :math:`n` is the size of the matrices being multiplied. 
+  The exponent :math:`\log_2 7` is smaller/better than :math:`\log_2 8 = 3`. 
+  To see actual performance gains (where Strassen algorithm is faster than the "school algorithm"), 
+  the matrices should be huge -- the size of matrix :math:`n` is multiple thousand. 
+
+  In 2022 the fastest bound for matrix multiplication was discovered. It is :math:`O(n^{2.37188})`; 
+  see `Matrix Multiplication Algorithm <https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm>`_.
+
+
+**Note 3:** 
+  Matrix multiplication is of large practical importance (computer graphics, neural networks, etc). 
+  The theory of Big-O notation disregards constant factors -- runtime of  :math:`T(n) = n^3` or 
+  :math:`T(n) = 1000n^3` or :math:`T(n) = 0.001n^3` is considered to be of the same "cubic complexity". 
+  But in practice it is common to use 
+  GPU (massive parallel computations) to multiply matrices. Parallelism can  
+  only speed up an algorithm by a constant factor, but sometimes even constant factors matter.
+
+
+
+All these concepts (Big-O, Big-Omega, Big-Theta) are related to calculus (real analysis); it is functional behavior as :math:`n \rightarrow \infty`.
+Predicting the speed of an algorithm for short input lengths :math:`n`, the dependence on :math:`n` is typically
+quite complex (and we cannot ignore "lower order"  terms). As :math:`n` becomes very large,
+only the "dominant parts" in the expression :math:`f(n)` matter.
+
+
+
+
+Recursion 
+---------------
+
+
+
+
+Structural Recursion 
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Recursion in mathematics is not necessarily adding :math:`1` to a parameter :math:`n`. 
+It is possible to define valid mathematical expressions recursively using a grammar: 
+
+* Any number is a mathematical expression, 
+* Any variable :math:`x,y,\ldots` is a mathematical expression, 
+* If :math:`E` is a mathematical expression, then :math:`(E)` is also a mathematical expression, 
+* If :math:`E_1` and :math:`E_2` are mathematical expressions, then also :math:`E_1 + E_2`, 
+  :math:`E_1 - E_2`, :math:`E_1 \cdot E_2`, and :math:`E_1 / E_2` are mathematical expressions. 
+
+To compute mathematical expressions, one can proceed recursively: Find which is the "outermost"
+production to make the expression; break it down to one of the above cases, evaluate the subexpressions 
+and finally compute the answer. 
+
+Even fancier recursive expressions (language statements) can be obtained defining programming languages 
+with `Context-free grammars <https://en.wikipedia.org/wiki/Context-free_grammar>`_.
+*Parsers* are responsible for breaking down such recursively built expressions (or 
+programming language constructs) and converting them to some representation that can be executed. 
+
+
+
+Run-time stack
+^^^^^^^^^^^^^^^^
+
+Every time one function calls another (in most imperative languages -- both compiled or interpreted), 
+a new activation record is created and pushed to the *run-time stack*. It consists of the following elements: 
+
+**Activation Record:** 
+
+  * Parameters and local variables (everything passed to the function call or defined therein), 
+  * Dynamic link (a pointer to the activation record of the caller), 
+  * Access link (used by the function to access non-local data), 
+  * Return value (will contain the value needed by the caller). 
+
+Activation records are quite large data structures, but programmer does not need to create them -- 
+they are maintained automatically as the functions call each other. 
+
+If a function is defined recursively, the run-time stack can contain multiple activation records of the
+same function (but with different parameters). 
+
+
+
+
+
+
+
+
+
+Situations when run-time stacks should be avoided?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sometimes user can choose to implement recursion without explicit function calls (user-defined data structures). 
+Here are some downsides to the run-time stacks:
+
+**Stack Overflow:** 
+  The runtime stack has a limited amount of space, and if the recursion goes too deep, it can result in a stack overflow error. 
+  Explicit stack can be more efficient, as you can control the size of the stack and avoid the overflow error.
+
+**Performance:** 
+  When using the runtime stack, there is overhead involved in pushing and popping function calls, as well as managing the stack pointers. 
+  For a large number of recursive calls, this overhead can be significant.
+
+**Memory:** 
+  The runtime stack is typically stored in the memory with limited access time, so accessing it can be slow. 
+  In contrast, an explicit stack can be implemented as an array or a linked list, which can be stored in the heap with better access time.
+
+**Debugging:** 
+  When using the runtime stack, it can be difficult to debug the recursive algorithm, as you have limited visibility into the stack. 
+
+
+
+Lindenmayer Systems
+^^^^^^^^^^^^^^^^^^^^^^
+
+Define Koch snowflake or Hanoi tower in terms of Lindenmayer systems. 
+
+
+
+
+
+
+
+Backtracking
+----------------
+
+**N-Queens Problem:** 
+  The task is to place :math:`N`` queens on an :math:`N \times N` chessboard such that no two queens threaten each other. 
+  This is the best known example of backtracking; you can place queens one by one and backtrack if a placement 
+  causes a conflict. 
+
+  *Input:* Parameter :math:`N`; *Output:* Any chess-board of size :math:`N \times N` with all :math:`N` queens placed.
+  (In fact, N-Queens is solvable for all :math:`N \geq 4`, and for any such :math:`N` 
+  some solutions are easy to get without any backtracking.)
+
+  **Related decision Problem:** 
+    Completion problem is a variant, in which some queens are already placed
+    and the solver is asked, if it is possible to place the rest (the output of the decision problems is Yes/No). 
+    This problem is NP-complete.
+    See `I.P.Gent Complexity of n-Queens Completion. <https://www.ijcai.org/proceedings/2018/0794.pdf>`_.
+
+
+**The Traveling salesman problem (TSP):**
+  There exists a connected graph of cities, some cities are connected with roads of known lengths. 
+  It asks for the shortest possible "tour" that visits every city from a given set of cities
+  exactly once and returns to the origin city.
+  For small input sizes, TSP can be solved using a brute-force backtracking, 
+  where all possible paths are generated and their lengths are compared to find the shortest one.
+
+  **Input:** The input graph :math:`G(V,E)`
+  
+  **Related decision problem:** 
+    Given the length, find, if there exists a route less or equal than the given length. 
+    This problem is NP-complete.
+
+**The Subset Sum Problem:** 
+  It asks if a given set of numbers can be divided into two subsets such that the sum of numbers in one subset is 
+  equal to a given target. This problem can be solved using backtracking by generating all possible subsets and 
+  checking if any of them have the desired sum.
+
+**Sudoku Solver:** 
+  The task is to fill in a :math:`9 \times 9`` grid with digits so that each column, each row, and each of the nine 
+  :math:`3 \times 3` sub-grids contains all of the digits from :math:`1`` to :math:`9`. 
+  Backtracking can be used to solve this problem by trying each possible digit in a cell and backtracking 
+  if it leads to an invalid solution.
+
+  *Input:* Partially filled in array of size :math:`9 \times 9`; *Output:* Completed array of size :math:`9 \times 9`. 
+  (It is often assumed that the input array is such that there exists exactly one solution. For backtracking it does not matter -- 
+  it is possible to find any feasible solution, or all feasible solutions, or find out that there is no solution.)
+
+
+**Generating Permutations:** 
+  The task is to generate all possible permutations of a given set of elements. 
+  Backtracking can be used to generate permutations by fixing elements one by one and swapping them to generate new permutations.
+
+**Maze Generation:** 
+  The task is to generate a random maze using backtracking. In this problem, you can start at a random cell 
+  and move to unvisited cells, marking them as visited, until you have visited all cells. 
+  If you reach a dead end, you backtrack to the previous cell.
+
+**Cryptarithmetic Puzzles:** 
+  The task is to solve puzzles where a mathematical expression is written using words and each letter represents 
+  a unique digit. Backtracking can be used to solve these puzzles by trying different values for each letter 
+  and backtracking if a solution leads to a conflict.
+
+
+
+Backtracking algorithms are not hard to implement -- they do not do much more besides an exhaustive search 
+in a large tree representing the space of potential solutions (potentially very inefficient). 
+Nevertheless, it is desirable to 
+
+
+
+
+Solving Asymptotic Bounds Exercises
+-------------------------------------
+
+In C++ the computer program is easy to imagine being run on real hardware (measure the runtime with 
+the calls to system time). For Python or pseudocode it is more complicated.
+For example, package `numpy` offers different integers (4 byte long) compared to Python's default 
+integer numbers (unlimited size). All this can get complicated. 
+
+Model of computation
+^^^^^^^^^^^^^^^^^^^^^^^
+
+We often cannot list all the assumptions regarding the runtime, 
+therefore we can state, how Python code can be analyzed: 
+
+* Start with the Word-RAM model. Machine word: block of :math:`w` bits. 
+* Operations can be performed in :math:`O(1)` time -- operations on words: 
+  Integer arithmetic: (``+``, ``-``, ``*``, ``//``, ``%``), logical operators, bitwise arithmetic, input/output.
+* Memory address must be able to access every place in memory
+  32-bit words can address 4 GiB memory, 64-bit words can address :math:`16` exabytes of memory. 
+  (One exabyte is :math:`10^{18}` or one quintillion bytes.)
+
+C++, Python and other languages commonly use external calls (if we know the complexity of some library call such as "sort", we can apply it).
+There are some predefined data structures in Python (and STL data structures in C++): 
+
+* Arrays, Lists, Sets, Dictionaries are used to store non-constant data. Each data structure 
+  supports a set of operations. A collection of operations is called an *interface* (for well-known data structures 
+  also ADT - *Abstract Data Type*). 
+* Example data structure: Static Array -- fixed width slots, fixed length of the array itself. 
+  Its functions supported in pseudocode:
+
+  * :math:`A = \text{\sc Array}(n)`: allocate static array of size :math:`n` in :math:`\Theta(n)` time
+  * :math:`\text{\sc Array}.get(i)`: return word stored at array index :math:`i`` in :math:`\Theta(1)` time
+  * :math:`\text{\sc Array}.set(i,x)`: write value :math:`x` to array index :math:`i` in :math:`\Theta(1)` time
+
+  In many languages it is common to write "get" and "set" commmands with array notation :math:`A[i]`.
+
+* Example data structure: List -- same as above, but no longer fixed length. 
+  If it is implemented as a physical array, the operation times do not change. 
+  But occasionally need to reallocate memory, if the number of elements exceeds the size of the current array. 
+
+
+
+
+
+
+
+
+
 
 Looking Up an Item in a List
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -105,31 +346,6 @@ about the word order in the dictionary -- the algorithm would work equally well 
 totally unordered list of words.
 
 
-**Binary Search Solution:**
-
-Binary search is a different algorithm that relies on the alphabetical sorting of the
-dictionary :math:`D[0]<D[1]<\ldots<D[n-2]<D[n-1]`.
-At every point we maintain a closed interval :math:`[\ell, r]` so that the index :math:`D[i]=w` we want to
-find satisfies the inequalities :math:`\ell \leq i \leq r`.
-
-
-The initial call is :math:`\text{\sc BinarySearch}(D,\ell, r,w)`, where :math:`\ell = 0` and :math:`r = n-1`.
-After that the binary search may call itself recursively on shorter intervals.
-
-
-.. image:: figs-asymptotic-bounds/binary-search.png
-   :width: 4in
-
-| :math:`\text{\sc BinarySearch}(D,\ell, r, w)`
-| 1. :math:`\;\;\;\;\;` **if** :math:`\ell > r`:
-| 2. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc not found}` :math:`w`
-| 3. :math:`\;\;\;\;\;` :math:`{\displaystyle m = \left\lfloor \frac{\ell + r}{2} \right\rfloor}`
-| 4. :math:`\;\;\;\;\;` **if** :math:`w` ``==`` :math:`D[m]`:
-| 5. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc found}` :math:`w` at location :math:`m`
-| 6. :math:`\;\;\;\;\;` **else** **if** :math:`w < D[m]`:
-| 7. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc BinarySearch}(D,\ell, m-1, w)`
-| 8. :math:`\;\;\;\;\;` **else**:
-| 9. :math:`\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc BinarySearch}(D,m+1, r, w)`
 
 
 
@@ -554,6 +770,25 @@ and :math:`f \in O(g)`, but :math:`g \not\in O(f)`
   This immediately follows from the previous Lemma, where :math:`a = 2^{10000}`.
   The values of :math:`n` for which :math:`n!` grows faster than :math:`2^{10000n}`
   are very large; they start at :math:`2^{10000}`.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
