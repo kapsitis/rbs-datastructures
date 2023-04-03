@@ -112,18 +112,6 @@ Problems
     Find the :math:`O(g(n))` for the following function: :math:`\log_2 n!``. 
 	
   **(B)** 
-    Some algorithm receives :math:`n` items as its input and then calls
-    function :math:`f(x_1,x_2,x_3,x_4)`
-    for any ordered quadruplet :math:`x_1, x_2, x_3, x_4` received in the input. 
-    Assume that :math:`f(\ldots)` runs in constant time. Find the time complexity of the whole algorithm. 
-	
-  **(C)** 
-    Some algorithm receives :math:`n` items as its input and then calls a function 
-    :math:`f` on all subsets of 
-    the received items having size :math:`\lfloor n/4 \rfloor`. 
-    Assume that :math:`f(\ldots)` runs in constant time. Find the time complexity of the whole algorithm. 
-
-  **(D)** 
     What is the lower bound of comparisons needed to sort an array of :math:`5` 
     elements (assume they are all different)? 
 	
@@ -397,4 +385,20 @@ Problems
   
   :math:`\square`
   
-  
+
+.. _sorting-P6:
+
+**Problem 6:** 
+
+  **(A)** 
+    Some algorithm receives :math:`n` items as its input and then calls
+    function :math:`f(x_1,x_2,x_3,x_4)`
+    for any ordered quadruplet :math:`x_1, x_2, x_3, x_4` received in the input. 
+    Assume that :math:`f(\ldots)` runs in constant time. Find the time complexity of the whole algorithm. 
+	
+  **(B)** 
+    Some algorithm receives :math:`n` items as its input and then calls a function 
+    :math:`f` on all subsets of 
+    the received items having size :math:`\lfloor n/4 \rfloor`. 
+    Assume that :math:`f(\ldots)` runs in constant time. Find the time complexity of the whole algorithm. 
+

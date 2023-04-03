@@ -1,9 +1,18 @@
 Worksheet 04: Build and Debug on Linux
 =============================================
 
+This worksheet covers build tools (Makefile, CMake), 
+unit testing (Catch2) and memory leak detection (Valgrind). 
+Since the exams do not include practice part with computing devices
+or C++, this is the only worksheet that does not contribute 
+any problems to the midterm or final exams.
+
+
+Concepts and Facts
+---------------------
 
 Building with Makefile
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 This is a minimalistic Makefile that builds ``myprogram`` from 
 a single source file ``myprogram.cpp``. 
@@ -61,20 +70,23 @@ The snippet `|| true` prevents stopping the ``make`` task,
 if some of the program execution returns non-zero return code or crashes.
 
 
-.. note:: 
-  Currently C++ developers use mostly `CMake` -- a "meta-build" tool 
-  that creates makefiles or other build artefacts from a description 
-  of the project and its dependencies described in the 
-  ``CMakeLists.txt`` file. CMake can participate 
-  in other build chains -- such as Gradle 
-  build tasks, where Android app written in Java or Kotlin
-  needs some native code in C++.
+
+Building with CMake 
+^^^^^^^^^^^^^^^^^^^^^^
+
+Currently C++ developers use mostly `CMake` -- a "meta-build" tool 
+that creates makefiles or other build artefacts from a description 
+of the project and its dependencies described in the 
+``CMakeLists.txt`` file. CMake can participate 
+in other build chains -- such as Gradle 
+build tasks, where Android app written in Java or Kotlin
+needs some native code in C++.
   
-  In other cases custom Bash shell, Python or Groovy can be 
-  used instead of Makefile or ``CMakeLists.txt``. 
-  Build tools are often part of larger build infrastructures using 
-  ``crontab`` time-scheduling, Continuous Integration tools such as 
-  Jenkins, 
+In other cases custom Bash shell, Python or Groovy can be 
+used instead of Makefile or ``CMakeLists.txt``. 
+Build tools are often part of larger build infrastructures using 
+``crontab`` time-scheduling, Continuous Integration tools such as 
+Jenkins. 
 	
 
 **CMakeLists.txt Example:** 
@@ -96,7 +108,7 @@ Here is how to use it:
 
 
 Unit-tests with Catch2
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To run a project with Catch2 tests we need 
 two different build goals in `Makefile`. One of them is builds the
@@ -232,7 +244,7 @@ The Makefile to compile such project is shown below:
 
 
 Debugging with gdb
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 ``gdb myprogram``: 
   Start gdb and load the myprogram executable.
@@ -294,19 +306,9 @@ Debugging with gdb
 
 
 
-The Lifecycle of Data Structures
-----------------------------------
-
-* Constructors for empty data structures and initializer lists. 
-* Copy constructors during assignments or function calls. 
-* When are the destructors called. 
-* When is a proper time to release memory?
-
-
-
 
 Valgrind
-----------
+^^^^^^^^^^^
 
 
 **Memory leak detection:**
@@ -348,8 +350,16 @@ Valgrind
   Can use a tool like ``kcachegrind`` to visualize the profiling data.
 	
 
+To address typical reasons of memory leaks, one should pay attention to 
+the data structures (including built-in ones from STL).
+Every time a data structure is created, passed as a parameter, 
+copied as a class object or deep-copied (cloned), can be related 
+to a leak or a crash if memory is released in a wrong place.
 
-    
+  * What constructors create empty data structures or structures with initializer lists?
+  * What are copy constructors doing during assignments or function calls?
+  * When are the destructors called?
+  * When is a proper time to release memory?   
 
 
 

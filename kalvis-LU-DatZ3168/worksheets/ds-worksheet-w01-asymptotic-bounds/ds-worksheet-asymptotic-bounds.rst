@@ -255,8 +255,8 @@ Problems
   | :math:`\text{\sc isPrime}(m)`
   | 1. :math:`\;\;\;\;\;` **for** :math:`d` **in** :math:`\text{\sc range}(2, \sqrt{m} + 1)`:
   | 2. :math:`\;\;\;\;\;\;\;\;\;\;` **if** :math:`m` ``%`` :math:`d` ``==`` :math:`0`:
-  | 3. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc false}`
-  | 4. :math:`\;\;\;\;\;` **return** :math:`\text{\sc true}`
+  | 3. :math:`\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;` **return** :math:`\text{\sc False}`
+  | 4. :math:`\;\;\;\;\;` **return** :math:`\text{\sc True}`
 
 .. only:: Internal 
 
@@ -445,7 +445,7 @@ Problems
 
 **Problem 8:**
   A black box :math:`\mathcal{B}` receives two numbers :math:`k_1,k_2 \in \{ 1,\ldots,n \}` 
-  as inputs and returns a value :math:`v = \mathcal{B}(k_1,k_2)`. 
+  as inputs and returns a value :math:`v = \mathcal{B}(k_1,k_2)` after :math:`O(1)` time. 
   What is the worst-case time complexity to find the maximum possible value 
   :math:`v = \mathcal{B}(k_1,k_2)` for any two inputs.
   
