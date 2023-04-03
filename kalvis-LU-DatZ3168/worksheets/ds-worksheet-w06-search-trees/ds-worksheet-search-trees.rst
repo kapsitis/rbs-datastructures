@@ -312,5 +312,5 @@ Problems
     :math:`T.\text{\sc insert}(22)`, :math:`T.\text{\sc insert}(60)`, :math:`T.\text{\sc delete}(11)`. 
 
   **(B)**
-    Suggest a sequence of inserts/deletes for the original tree :math;`T` (with :math:`7` nodes) so that 
+    Suggest a sequence of inserts/deletes for the original tree :math:`T` (with :math:`7` nodes) so that 
     the last delete operation in that sequence causes two rotations. 

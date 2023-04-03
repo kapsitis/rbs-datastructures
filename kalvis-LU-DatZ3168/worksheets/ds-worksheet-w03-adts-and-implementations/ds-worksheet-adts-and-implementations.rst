@@ -131,7 +131,7 @@ searching requires scanning through the list in :math:`O(n)` time. And predecess
   
 STL class ``vector`` in C++ supports the deque operations, but 
 also allows random access just as in array (returning an element by its index). Similar things are supported by Python lists
-or by :math:``java.util.List`` interface. Such data structures are more powerful than either stacks, queues or deques -- 
+or by ``java.util.List`` interface. Such data structures are more powerful than either stacks, queues or deques -- 
 they behave like arrays (without strict limit on size). 
 
 
