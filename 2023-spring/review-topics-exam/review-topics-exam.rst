@@ -30,67 +30,32 @@ The guidelines for the exams:
 Question Types 
 -----------------
 
-[MathStatements] Mathematical statements about algorithms:
-  Formulate your own facts about algorithms and explain 
-  why they are or aren't true.
-  Questions are typically about algorithm complexity -- asymptotic 
-  bounds for time and space, counting comparisons or 
-  other calls performed by algorithms. 
-  Mathematical reasoning is also used to prove correctness, 
-  for example, proving or disproving data structure invariants: 
-  facts that stay true as operations are performed.
+[MathStatements] 
+  Prove or disprove mathematical statements about algorithms or create your own. Most often they are about asymptotic bounds for time complexity, some probabilistic reasoning or verifying that some invariant stays true.
   
-[DrawDiagrams] Draw diagrams with the memory states of a data structure:
-  Given the initial state of some data structure 
-  and the operations that are performed on it. 
-  Typical examples are diagrams showing the state of arrays 
-  (representing stacks, queues, lists or heaps), 
-  linked lists (representing stacks, queues, lists), 
-  subsequent steps for sorting algorithms, 
-  graphs or trees augmented with DFS or BFS traversal information.
+[DrawDiagrams]
+  Draw memory states of some data structure (such as array, linked list, heap, tree, graph) as some operations are performed.
 
-[UnderstandAlgorithms] Given an algorithm, show its behavior in certain situations.
-  Typical examples include drawing a tree of recursive calls or
-  showing the values of local variables as some event happens. 
-  In some cases this overlaps with the (DrawDiagrams) question as it 
-  asks to show the memory state of some data structure. 
-  But in this case the operations on the data structure are 
-  not given in advance -- they depend on the algorithm being used. 
+[UnderstandAlgorithms]
+  Given a pseudocode of some algorithm, draw trees of recursive calls, local variables or other processed data as the algorithm executes.  
 
-[CompareImplementations] Compare implementations of algorithms or data container APIs:
-  Given a simple algorithmic task suggest an optimal implementation, 
-  write as a pseudocode and analyze its time-complexity. 
-  For example, some algorithm may need to be faster than 
-  quadratic time to get full credit.
-  You may be asked to provide several implementations for the same 
-  abstract data type (such as a priority queue or a dictionary)
-  and write the time complexity.   
+[CompareImplementations] 
+  Given an ADT with several implementation alternatives or an algorithmic task with one or more ways to implement it, compare the implementations by writing and analyzing relevant pseudocode and finding its time complexity.   
 
-[DesignByParadigm] Write a pseudocode for an algorithm following some paradigm: 
-  Given an algorithmic task, write its solution while observing some 
-  guidelines. For example, the solution may need to contain 
-  tail-recursion. Or it has to use some paradigm of algorithm creation 
-  (paradigms are the chapter titles in 
-  *Anany Levitin. Introduction to the Design and Analysis of Algorithms 3rd Edition. Pearson, 2011.*).
+[DesignByParadigm] Write a pseudocode for an algorithmic task observing some limitations or using one or more paradigms for algorithm creation (see chapter titles in *Anany Levitin. Introduction to the Design and Analysis of Algorithms 3rd Edition. Pearson, 2011.*).
 
-[ProblemAnalysis] Given a real-world algorithmic problem, 
-  analyze it a human language: 
-  Given a problem description, list your assumptions to formalize it and 
-  suggest a method how to decompose it into simpler problems and how
-  to solve it algorithmically. 
+[ProblemAnalysis] Given a real-world algorithmic problem, formalize it by listing your assumptions, breaking it into subproblems and suggesting their solutions in human language. 
 
 Please note the following: 
 
 * Questions related to algorithm implementations in C++ 
-  are not part of the exam. Understanding at the pseudocode level 
-  (and hand-drawn memory structures) is typically sufficient. 
-* Advanced question types such as (DesignByParadigm) and (ProblemAnalysis)
-  will be present in the final exam mostly. Still, both exams will also 
-  contain simpler, more specific questions. 
-* A single question may contain multiple related subtasks (A), (B), (C) 
-  that refer to each other. You can still receive partial credit, 
-  if you succeed with some
-  subtask, but use a wrong input obtained from an earlier subtask.
+  are not part of the exam. Reasoning at the pseudocode level, Python 
+  and hand-drawn memory states is typically sufficient. 
+* The latter two question types ((DesignByParadigm) and (ProblemAnalysis)) 
+  are more suitable for the Final exam as they take more time. 
+* A single question may contain related subtasks (A), (B), (C).
+  If you do only some subtasks correctly, they will get positive grades
+  even when they use incorrect input from earlier subtasks. 
   
 
 
