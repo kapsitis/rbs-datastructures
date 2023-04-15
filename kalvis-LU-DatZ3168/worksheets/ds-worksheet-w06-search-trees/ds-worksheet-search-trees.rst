@@ -205,16 +205,6 @@ Problems
   Find the values :math:`B_3` and :math:`B_4` (the number of binary search trees).
 
 
-**Problem 7:**
-  Consider the binary tree shown below.
-
-  .. image:: figs-search-trees/bst-search.png
-     :width: 2in
-
-  Every key in this tree is being searched with the same probability.
-  Find the expected number of pointers that are followed as we search for a random key in this tree.
-  (For example, searching the key at the root means following :math:`1` pointer, searching the key that is a child
-  of the root means following :math:`2` pointers and so on.)
 
 
 .. _search-trees-P4:
@@ -312,5 +302,19 @@ Problems
     :math:`T.\text{\sc insert}(22)`, :math:`T.\text{\sc insert}(60)`, :math:`T.\text{\sc delete}(11)`. 
 
   **(B)**
-    Suggest a sequence of inserts/deletes for the original tree :math;`T` (with :math:`7` nodes) so that 
+    Suggest a sequence of inserts/deletes for the original tree :math:`T` (with :math:`7` nodes) so that 
     the last delete operation in that sequence causes two rotations. 
+
+
+.. _search-trees-P8:
+
+**Problem 8:**
+  Consider the binary tree shown below.
+
+  .. image:: figs-search-trees/bst-search.png
+     :width: 2in
+
+  Every key in this tree is being searched with the same probability.
+  Find the expected number of pointers that are followed as we search for a random key in this tree.
+  (For example, searching the key at the root means following :math:`1` pointer, searching the key that is a child
+  of the root means following :math:`2` pointers and so on.)
