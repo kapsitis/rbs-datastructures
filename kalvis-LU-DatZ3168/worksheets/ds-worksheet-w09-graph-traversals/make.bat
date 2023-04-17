@@ -25,8 +25,44 @@ if errorlevel 9009 (
 	exit /b 1
 )
 
-%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+IF "%language%" == "de" (
+	goto languageDE
+) ELSE (
+	IF "%language%" == "en" (
+		goto languageEN
+	) ELSE (
+		echo Not found.
+	)
+)
+
+
+REM ./make latexpdf solutions
+REM ./make latexpdf questions
+REM ./make latexpdf
+if [%2] == [] (
+	%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+) else (
+	if [%2] == [solutions] (
+		echo.Building solutions
+		%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O% -t Internal
+		python replace.py
+		cd _build\latex
+		xelatex ds-worksheet-graph-traversals
+		ren ds-worksheet-graph-traversals.pdf ds-worksheet-graph-traversals-solutions.pdf
+		xcopy ds-worksheet-graph-traversals-solutions.pdf ..\.. /Y
+		cd ..\..
+	) else (
+		echo.Building questions
+		%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+		cd _build\latex
+		REM ren ds-worksheet-graph-traversals.pdf ds-worksheet-graph-traversals.pdf
+		REM xcopy ds-worksheet-graph-traversals.pdf ..\.. /Y
+		xcopy ds-worksheet-graph-traversals.pdf ..\.. /Y
+		cd ..\..		
+	)
+)
 goto end
+
 
 :help
 %SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
