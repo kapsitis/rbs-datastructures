@@ -1047,6 +1047,60 @@ reading items from an input buffer, etc.).
 
 
 
+Bloom Filters
+---------------
+
+Often we have to find patterns in a very large collection of documents.
+Optimal hashtables that use linear probing to resolve collisions typically
+have load factors (number of keys stored divided by the size of the hashtable)
+around :math:`\ln 2 \approx 0.7`. Namely, if the expected load for a hashtable
+is expected to fluctuate around :math:`1000` items, then the optimal hashtable
+would have about :math:`1400` slots.
+Consequently, very large text documents (multiple megabytes) would require many
+millions of slots in the hashtable.
+This is not practical, so there is a useful optimization called *Bloom Filter*.
+
+*Bloom Filter* creates a single set-like data structure
+that supports two operations:
+
+* Add a new item to a set: ``BF.add(item)``.
+* Tests, if an item belongs to a set: ``BF.contains(item)`` (return Boolean true/false).
+
+.. note::
+  Unlike regular hashtables Bloom Filters often do not support remove
+  operations. They are useful in contexts where we need to
+  check membership of a comparatively large set, but we have limited space to store
+  that set.
+
+It can be implemented  by creating :math:`k` hash functions -- each one randomly
+and independently from other hash functions maps an item to one of :math:`m` bits.
+Assume that we have inserted :math:`n` elements, the probability that a certain
+bit is still :math:`0` is:
+
+.. math::
+
+  p = \left(1-\frac{1}{m}\right)^{kn} \approx e^{-kn/m};
+
+Now test membership of an element that is not in the set.
+Each of the :math:`k` array positions computed by the hash functions is :math:`1` with a probability :math:`(1-p)`.
+The probability of all of them being :math:`1`, which would cause the Bloom filter to erroneously claim
+that the element is in the set, is the following:
+
+
+.. math::
+
+  \varepsilon = \left(1-\left[1-\frac{1}{m}\right]^{kn}\right)^k \approx \left( 1-e^{-kn/m} \right)^k.
+
+Given the size of the bit-array :math:`m` and the number of items to be inserted :math:`n`, we can find
+the optimal number :math:`k`:
+
+.. math::
+
+  k = \frac{m}{n} \ln 2
+
+If we know the maximum tolerance of false positives :math:`\varepsilon`, then we can adjust the value :math:`m` accordingly
+so that we have limited number of false positives.
+
 
 
 
