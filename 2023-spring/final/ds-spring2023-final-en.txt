@@ -1,0 +1,87 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,multicol,tikz,enumitem}
+\usepackage{hyperref}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyvrb}
+\usetikzlibrary{calc}
+
+\newcommand\N{\mathbf{N}}
+\newcommand\Q{\mathbf{Q}}
+\newcommand\R{\mathbf{R}}
+\newcommand\Z{\mathbf{Z}}
+
+\newcommand\rem{\textup{rem}}
+
+% Comment out one or the other
+
+\newcommand\answer[1]{}
+\newcommand\ans[1]{}
+\newcommand\anscommand[1]{}
+%\newcommand\answer[1]{${}$\\[5pt]{\color{blue}{#1}}\hfill{\color{blue}$\qed$}\\[-5pt]} 
+%\newcommand\ans[1]{{\color{blue}{#1}}}
+%\newcommand\anscommand[1]{#1}
+
+
+\begin{document}
+
+\begin{center}
+{\bf\Huge Final} \\[5pt]
+Data Structures and Algorithms, DatZ3168-EN\\
+Wednesday, May 17, 2023\\[5pt]
+\text{\em You must justify all your answers to get full credit}
+\end{center}
+
+\hrule
+\vspace{2pt}
+\hrule
+\vspace{12pt}
+
+\noindent
+The time limit is 3 hours. 
+It is allowed to have a A4 page with your own reference material. 
+It has to be handed in along with your exam.  
+
+\begin{enumerate}
+\item {\bf Dictionary (5 points).} Explain the concept of {\em Dictionary} abstract data type. Describe different sensible ways to implement dictionaries. 
+Compare advantages and disadvantages for each implementation -- for criteria such as time and space complexity, ease of implementation, adaptability and adding extra features to the original ADT, real-time performance on certain architectures.
+
+\item {\bf Raising to a Power (5 points).} Show the design strategies (paradigms) that can be used to raise a number $X$ to a power $n$ 
+and to return $X^n$. For each strategy write its pseudocode or verbal description. 
+For each algorithm estimate the number of multiplication operations in terms of $n$. The number of multiplications can be 
+given by as exact formula $f(n)$ (or with an asymptotic bound $\Theta(g(n))$).
+
+\item {\bf Catching an Elephant (5 points).} Describe the common structure of {\em Transform and Conquer} method, provide several variants for it and explain them with examples from the lectures or your own examples. 
+Additionally, show how this method can be used to find the most frequent word in the text of an electronic book. 
+
+\item {\bf Improving Quicksort (5 points).}
+Show several ways to improve the basic QuickSort algorithm in order to accelerate it.
+Explain why the time complexity can be improved.
+The starting point is the algorithm given below: 
+
+
+%\includegraphics[width=5.5in]{quicksort}
+
+\begin{quote}
+$\text{\sc Quicksort}(A[\ell\;\ldots\;r])$:\\
+1. $\;\;\;\;\;$ {\bf if} $\ell < r$:\\
+2. $\;\;\;\;\;\;\;\;\;\;$ $i = \ell$ $\;\;\;\;\;\;\;\;\;$ $\textcolor{teal}{\text{\em ($i$ increases from the left, searches elements $\geq$ than pivot)}}$\\
+3. $\;\;\;\;\;\;\;\;\;\;$ $j = r+1$	$\;\;$ $\textcolor{teal}{\text{\em ($j$ decreases from the right, searches elements $\leq$ than pivot.)}}$\\
+4. $\;\;\;\;\;\;\;\;\;\;$ $v = A[\ell]$ $\;\;\;\;$ $\textcolor{teal}{\text{\em ($v$ is the pivot.)}}$\\
+5. $\;\;\;\;\;\;\;\;\;\;$ {\bf while} $i<j$:\\
+6. $\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;$ $i = i+1$\\
+7. $\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;$ {\bf while} $i<r$ {\bf and} $A[i]<v$:\\
+8. $\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;$ $i = i+1$\\
+9. $\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;$ $j = j-1$\\
+10. $\;\;\;\;\;\;\;\;\;\;\;\;\;$ {\bf while} $j>\ell$ {\bf and} $A[j]>v$:\\
+11. $\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;$ $j = j-1$\\
+12. $\;\;\;\;\;\;\;\;\;\;\;\;\;$ $A[i] \leftrightarrow A[j]$\\
+13. $\;\;\;\;\;\;\;\;$ $A[i] \leftrightarrow A[j]$ $\;\;$ $\textcolor{teal}{\text{\em (Undo the extra swap at the end)}}$\\
+14. $\;\;\;\;\;\;\;\;$ $A[j] \leftrightarrow A[\ell]$ $\;\;$ $\textcolor{teal}{\text{\em (Move pivot to its proper place)}}$\\
+15. $\;\;\;\;\;\;\;\;$ $\text{\sc Quicksort}(A[\ell\;\ldots\;j-1])$\\
+16. $\;\;\;\;\;\;\;\;$ $\text{\sc Quicksort}(A[j+1\;\ldots\;r])$
+\end{quote}
+
+\end{enumerate}
+
+\end{document}
