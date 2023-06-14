@@ -10,7 +10,7 @@ Welcome to Handout11's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   ho-hashtables
+   ds-worksheet-hashtables
 
 
 .. Indices and tables

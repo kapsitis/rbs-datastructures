@@ -1,4 +1,4 @@
-Worksheet, Week 11: Hashtables
+Worksheet 11: Hashtables
 =================================
 
 A hash function :math:`\mathcal{U} \rightarrow \{ 0, 1, \ldots, m-1 \}`
